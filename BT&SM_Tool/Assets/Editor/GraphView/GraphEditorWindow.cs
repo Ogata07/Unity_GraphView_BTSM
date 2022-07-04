@@ -13,4 +13,9 @@ public class GraphEditorWindow : EditorWindow
         graphEditorWindow.Show();
 
     }
+    private void OnEnable()
+    {
+        var GraphviewManeger = new GraphViewManager();
+        this.rootVisualElement.Add(GraphviewManeger);
+    }
 }
