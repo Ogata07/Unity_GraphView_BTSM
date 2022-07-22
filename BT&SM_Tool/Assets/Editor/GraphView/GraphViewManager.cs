@@ -1,6 +1,9 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEditor.Experimental.GraphView;
+using System.Collections.Generic;
+using System.Linq;
+
 public class GraphViewManager : GraphView
 {
     public GraphViewManager() : base()
@@ -22,5 +25,24 @@ public class GraphViewManager : GraphView
         this.Insert(0, new GridBackground());
         this.AddElement(new TestNode());
         this.AddElement(new TestNode());
+    }
+
+    public override List<Port> GetCompatiblePorts(Port startAnchor, NodeAdapter nodeAdapter) {
+        var compatiblePorts = new List<Port>();
+        compatiblePorts.AddRange(ports.ToList().Where(Port =>
+        {
+            //“¯‚¶ƒm[ƒh‚É‚Í‚Â‚È‚°‚È‚¢  
+            if (startAnchor.node == Port.node)
+                return false;
+            //Int“¯mAOut“¯m‚Å‚Í‚Â‚È‚°‚È‚¢
+            if (Port.direction == startAnchor.direction)
+                return false;
+            //ƒ|[ƒg‚ÌŒ^‚ªˆê’v‚µ‚Ä‚¢‚È‚¢ê‡‚Í‚Â‚È‚°‚È‚¢
+            if (Port.portType != startAnchor.portType)
+                return false;
+
+            return true;
+        }));
+        return compatiblePorts;
     }
 }
