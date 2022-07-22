@@ -20,6 +20,7 @@ public class GraphViewManager : GraphView
 
         // ”wŒi‚ðˆê”ÔŒã‚ë‚É’Ç‰Á
         this.Insert(0, new GridBackground());
-        //this.AddElement(new TestNode());
+        this.AddElement(new TestNode());
+        this.AddElement(new TestNode());
     }
 }
