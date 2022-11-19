@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine.UIElements;
+
 /// <summary>
 /// エディターウィンドウの表示
 /// </summary>
@@ -11,6 +12,8 @@ public class GraphEditorWindow : EditorWindow
 {
     GraphAsset m_GraphAsset;
     GraphViewManager m_GraphViewManager;
+    GraphAsset m_SaveGraphAsset;
+    public VisualElement a = default;
     [MenuItem("Tool/GraphEditorWindow")]
     public static void ShowWindow() {
         GraphEditorWindow graphEditorWindow = CreateInstance<GraphEditorWindow>();
@@ -32,12 +35,17 @@ public class GraphEditorWindow : EditorWindow
         visualElement.Add(toolbar);
         var btn1 = new ToolbarButton(m_GraphViewManager.SaveStart) { text = "Save" };
         toolbar.Add(btn1);
-        var btn2 = new UnityEditor.UIElements.ToolbarBreadcrumbs() {};
+        var btn2 = new UnityEditor.UIElements.ObjectField("保存先") {};//value = m_SaveGraphAsset
+        btn2.objectType=typeof(GraphAsset);
+        //コールバック
+        btn2.RegisterCallback<ChangeEvent<string>>(events => {
+            Debug.Log(btn2.value.name);
+            m_GraphViewManager.SaveLog(btn2.value as GraphAsset);
+        });
         toolbar.Add(btn2);
         var GraphviewManeger = new GraphViewManager();
         visualElement.Add(m_GraphViewManager);
 
         rootVisualElement.Add(toolbar);
-        //rootVisualElement.Add(m_SampleGraphViewt);
     }
 }

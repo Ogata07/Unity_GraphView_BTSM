@@ -5,7 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor.UIElements;
 using UnityEditor;
-
+/// <summary>
+/// セーブやロードに必要な機能の管理所
+/// </summary>
 public class GraphViewManager : GraphView
 {
     public GraphAsset m_GraphAsset;
@@ -21,6 +23,11 @@ public class GraphViewManager : GraphView
     }
     public void SaveStart() {
         m_GraphViewSave.SaveNodeElement(m_GraphAsset,this);
+        Debug.Log("セーブをしました");
+    }
+    public void SaveLog(GraphAsset graphAsset) {
+        m_GraphAsset = graphAsset;
+        Debug.Log("セーブ先は"+graphAsset.name+"に更新しました");
     }
     public override List<Port> GetCompatiblePorts(Port startAnchor, NodeAdapter nodeAdapter) {
         var compatiblePorts = new List<Port>();
