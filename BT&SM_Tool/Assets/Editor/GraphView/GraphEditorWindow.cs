@@ -39,7 +39,6 @@ public class GraphEditorWindow : EditorWindow
         btn2.objectType=typeof(GraphAsset);
         //コールバック
         btn2.RegisterCallback<ChangeEvent<string>>(events => {
-            Debug.Log(btn2.value.name);
             m_GraphViewManager.SaveLog(btn2.value as GraphAsset);
         });
         toolbar.Add(btn2);

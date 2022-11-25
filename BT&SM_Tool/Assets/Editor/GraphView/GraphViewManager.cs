@@ -11,7 +11,6 @@ using UnityEditor;
 public class GraphViewManager : GraphView
 {
     public GraphAsset m_GraphAsset;
-    private GraphViewSave m_GraphViewSave = new GraphViewSave();
     public GraphViewManager() : base()
     {
         setInitial();
@@ -22,8 +21,14 @@ public class GraphViewManager : GraphView
         setInitial(); 
     }
     public void SaveStart() {
-        m_GraphViewSave.SaveNodeElement(m_GraphAsset,this);
-        Debug.Log("セーブをしました");
+        if (m_GraphAsset != null)
+        {
+            Debug.Log("<color=green>セーブをしました</color>");
+            GraphViewSave.SaveNodeElement(m_GraphAsset, this);
+        }
+        else
+            Debug.LogError("セーブ先がありません");
+        
     }
     public void SaveLog(GraphAsset graphAsset) {
         m_GraphAsset = graphAsset;
@@ -47,7 +52,7 @@ public class GraphViewManager : GraphView
         }));
         return compatiblePorts;
     }
-    public void setInitial() {
+    public  void setInitial() {
         //親のサイズに合わせてサイズ変更
         this.StretchToParentSize();
         //拡大縮小
@@ -61,7 +66,7 @@ public class GraphViewManager : GraphView
         // ussファイルを読み込んでスタイルに追加
         this.styleSheets.Add(Resources.Load<StyleSheet>("GraphViewBackGround"));
 
-
+        
         this.AddElement(new TestNode());
         this.AddElement(new TestNode());
 

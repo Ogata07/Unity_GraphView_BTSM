@@ -4,6 +4,7 @@ using UnityEditor.Experimental.GraphView;
 /// </summary>
 public class TestNode : Node
 {
+    public int NodeID { get; set; } = 0;
     public TestNode() 
     {
         title = "Test";

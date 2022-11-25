@@ -8,7 +8,7 @@ using UnityEngine;
 public class GraphAsset :ScriptableObject
 {
     public List<NodeData> nodes = new List<NodeData>();
-    public List<EdgsData> fildNodes = new List<EdgsData>();
+    public List<EdgeData> edges = new List<EdgeData>();
 }
 [System.Serializable]
 public class NodeData{
@@ -17,7 +17,7 @@ public class NodeData{
 
 }
 [System.Serializable]
-public class EdgsData{
+public class EdgeData{
     //ノードのインプット番号
     public int inputNodeId;
     //ノードのアウトプット番号

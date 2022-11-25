@@ -12,5 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95ff673f3edc65d40bd9ac6eed66050b, type: 3}
   m_Name: Test01
   m_EditorClassIdentifier: 
-  nodes: []
-  fildNodes: []
+  nodes:
+  - position: {x: 142, y: 39}
+  - position: {x: -1, y: 10}
+  edges:
+  - inputNodeId: 0
+    outputNodeId: 0
