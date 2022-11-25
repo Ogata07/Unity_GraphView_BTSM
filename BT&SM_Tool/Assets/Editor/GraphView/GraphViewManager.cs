@@ -3,30 +3,37 @@ using UnityEngine.UIElements;
 using UnityEditor.Experimental.GraphView;
 using System.Collections.Generic;
 using System.Linq;
-
+using UnityEditor.UIElements;
+using UnityEditor;
+/// <summary>
+/// セーブやロードに必要な機能の管理所
+/// </summary>
 public class GraphViewManager : GraphView
 {
+    public GraphAsset m_GraphAsset;
     public GraphViewManager() : base()
     {
-        //親のサイズに合わせてサイズ変更
-        this.StretchToParentSize();
-        //拡大縮小
-        SetupZoom(ContentZoomer.DefaultMinScale, ContentZoomer.DefaultMaxScale);
-        //ドラッグで描画範囲を移動
-        this.AddManipulator(new ContentDragger());
-        //ドラッグで選択した要素を移動
-        this.AddManipulator(new SelectionDragger());
-        //ドラッグで範囲選択
-        this.AddManipulator(new RectangleSelector());
-        // ussファイルを読み込んでスタイルに追加
-        this.styleSheets.Add(Resources.Load<StyleSheet>("GraphViewBackGround"));
-
-        // 背景を一番後ろに追加
-        this.Insert(0, new GridBackground());
-        this.AddElement(new TestNode());
-        this.AddElement(new TestNode());
+        setInitial();
     }
 
+    public GraphViewManager(EditorWindow editorWindow, GraphAsset graphAsset)
+    {
+        setInitial(); 
+    }
+    public void SaveStart() {
+        if (m_GraphAsset != null)
+        {
+            Debug.Log("<color=green>セーブをしました</color>");
+            GraphViewSave.SaveNodeElement(m_GraphAsset, this);
+        }
+        else
+            Debug.LogError("セーブ先がありません");
+        
+    }
+    public void SaveLog(GraphAsset graphAsset) {
+        m_GraphAsset = graphAsset;
+        Debug.Log("セーブ先は"+graphAsset.name+"に更新しました");
+    }
     public override List<Port> GetCompatiblePorts(Port startAnchor, NodeAdapter nodeAdapter) {
         var compatiblePorts = new List<Port>();
         compatiblePorts.AddRange(ports.ToList().Where(Port =>
@@ -44,5 +51,26 @@ public class GraphViewManager : GraphView
             return true;
         }));
         return compatiblePorts;
+    }
+    public  void setInitial() {
+        //親のサイズに合わせてサイズ変更
+        this.StretchToParentSize();
+        //拡大縮小
+        SetupZoom(ContentZoomer.DefaultMinScale, ContentZoomer.DefaultMaxScale);
+        //ドラッグで描画範囲を移動
+        this.AddManipulator(new ContentDragger());
+        //ドラッグで選択した要素を移動
+        this.AddManipulator(new SelectionDragger());
+        //ドラッグで範囲選択
+        this.AddManipulator(new RectangleSelector());
+        // ussファイルを読み込んでスタイルに追加
+        this.styleSheets.Add(Resources.Load<StyleSheet>("GraphViewBackGround"));
+
+        
+        this.AddElement(new TestNode());
+        this.AddElement(new TestNode());
+
+        // 背景を一番後ろに追加
+        this.Insert(0, new GridBackground());
     }
 }
