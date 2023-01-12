@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using Unity.VisualScripting.YamlDotNet.Core.Events;
 using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEngine;
@@ -7,7 +9,7 @@ using UnityEngine;
 public class GraphViewOpen 
 {
     /// <summary>
-    /// GraphViewのスクリプタブルオブジェクトを選択時にウィンドウを表示する
+    /// GraphViewのscriptableobjectを選択時にウィンドウを表示する
     /// </summary>
     [OnOpenAsset]
     static bool OnOppenAsset(int instanceId)
@@ -16,6 +18,9 @@ public class GraphViewOpen
         if (EditorUtility.InstanceIDToObject(instanceId) is GraphAsset)
         {
             Debug.Log("対象Assetです");
+            Object selectObject = Selection.activeObject;
+            GraphAsset graphAsset = (GraphAsset)selectObject;
+            GraphViewLoad.LoadNodeElement(graphAsset);
             return true;
         }
         return false;

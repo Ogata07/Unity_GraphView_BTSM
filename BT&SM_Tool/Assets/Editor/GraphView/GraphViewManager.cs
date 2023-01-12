@@ -18,8 +18,11 @@ public class GraphViewManager : GraphView
 
     public GraphViewManager(EditorWindow editorWindow, GraphAsset graphAsset)
     {
+        m_GraphAsset= graphAsset;
+        
         setInitial(); 
     }
+    //TODO　保存機能の分離を行う可能性あり
     public void SaveStart() {
         if (m_GraphAsset != null)
         {
@@ -34,6 +37,7 @@ public class GraphViewManager : GraphView
         m_GraphAsset = graphAsset;
         Debug.Log("セーブ先は"+graphAsset.name+"に更新しました");
     }
+    //GraphView上のルール
     public override List<Port> GetCompatiblePorts(Port startAnchor, NodeAdapter nodeAdapter) {
         var compatiblePorts = new List<Port>();
         compatiblePorts.AddRange(ports.ToList().Where(Port =>
@@ -66,7 +70,7 @@ public class GraphViewManager : GraphView
         // ussファイルを読み込んでスタイルに追加
         this.styleSheets.Add(Resources.Load<StyleSheet>("GraphViewBackGround"));
 
-        
+        //初期のノード（本来は必要ない）
         this.AddElement(new TestNode());
         this.AddElement(new TestNode());
 

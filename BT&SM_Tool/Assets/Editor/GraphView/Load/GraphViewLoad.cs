@@ -6,6 +6,7 @@ using UnityEngine;
 /// </summary>
 public static class GraphViewLoad 
 {
-    public static void LoadNodeElement(GraphAsset m_GraphAsset) { 
+    public static void LoadNodeElement(GraphAsset m_GraphAsset) {
+        GraphEditorWindow.ShowWindow(m_GraphAsset);
     }
 }
