@@ -11,6 +11,7 @@ using UnityEditor;
 public class GraphViewManager : GraphView
 {
     public GraphAsset m_GraphAsset;
+
     public GraphViewManager() : base()
     {
         setInitial();
@@ -19,7 +20,6 @@ public class GraphViewManager : GraphView
     public GraphViewManager(EditorWindow editorWindow, GraphAsset graphAsset)
     {
         m_GraphAsset= graphAsset;
-        
         setInitial(); 
     }
     //TODO　保存機能の分離を行う可能性あり
@@ -70,10 +70,9 @@ public class GraphViewManager : GraphView
         // ussファイルを読み込んでスタイルに追加
         this.styleSheets.Add(Resources.Load<StyleSheet>("GraphViewBackGround"));
 
-        //初期のノード（本来は必要ない）
-        this.AddElement(new TestNode());
-        this.AddElement(new TestNode());
 
+        //データからの生成
+        GraphViewLoad.CreateGraphView(this);
         // 背景を一番後ろに追加
         this.Insert(0, new GridBackground());
     }

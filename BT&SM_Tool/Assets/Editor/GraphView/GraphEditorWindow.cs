@@ -18,39 +18,49 @@ public class GraphEditorWindow : EditorWindow
         set { m_SaveField = value; }
     }
     GraphAsset m_SaveGraphAsset;
-    public VisualElement a = default;
     //メニューバーから選択時用
     [MenuItem("Tool/GraphEditorWindow")]
     public static void ShowWindow() {
         GraphEditorWindow graphEditorWindow = CreateInstance<GraphEditorWindow>();
         graphEditorWindow.Show();
-        graphEditorWindow.Intialize();
+        //graphEditorWindow.Intialize();
 
     }
     //scriptableobjectを選択時用
+    
     public static void ShowWindow(GraphAsset graphAsset) {
         GraphEditorWindow graphEditorWindow = CreateInstance<GraphEditorWindow>();
         graphEditorWindow.m_GraphAsset= graphAsset;
         graphEditorWindow.Show();
-        graphEditorWindow.Intialize();
-        //graphEditorWindow.CreateGraohView();
+        graphEditorWindow.Intialize(graphAsset);
         graphEditorWindow.m_SaveField.value = graphAsset;
-    }
-    private void OnEnable()
-    {
-        //TODO 要検討
-        //Intialize();
-        //TODOコンパイル時別で表示を行っているので何も出なくなる
-        //表示とその他で分けるべきか
 
     }
+    
+    private void OnEnable()
+    {
+        if (m_GraphAsset != null){
+            Intialize(m_GraphAsset);
+        }
+        else {
+            //TODO 初期時に保存先がないのに空のObjectが入ってしまう
+            //m_GraphAssetなしのIntializeを作るべきか？
+            m_GraphAsset = new GraphAsset();
+            //TODO ↓を追加するとデータのロード時に不具合が起きる
+            //Intialize(m_GraphAsset);
+        }
+
+    }
+
     /// <summary>
     /// 初期動作
     /// </summary>
-    public void Intialize(){//GraphAsset graphAsset
-        //m_GraphAsset = graphAsset;
-        //GraphViewウィンドウの作製
+    public void Intialize(GraphAsset graphAsset)
+    {//GraphAsset graphAsset
+        m_GraphAsset = graphAsset;
         m_GraphViewManager = new GraphViewManager(this, m_GraphAsset);
+
+
         m_GraphViewManager.style.flexGrow = 1;
         VisualElement visualElement = this.rootVisualElement;
 
@@ -59,10 +69,11 @@ public class GraphEditorWindow : EditorWindow
         visualElement.Add(toolbar);
         var btn1 = new ToolbarButton(m_GraphViewManager.SaveStart) { text = "Save" };
         toolbar.Add(btn1);
-        if (m_SaveField == null)
-        {
+
+        if (m_SaveField == null){
             m_SaveField = new UnityEditor.UIElements.ObjectField("保存先") { };//value = m_SaveGraphAsset
             m_SaveField.objectType = typeof(GraphAsset);
+            m_SaveField.value = m_GraphAsset;
         }
         //コールバック
         m_SaveField.RegisterCallback<ChangeEvent<string>>(events => {
