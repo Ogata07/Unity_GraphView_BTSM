@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Test01
   m_EditorClassIdentifier: 
   nodes:
-  - position: {x: 142, y: 39}
-  - position: {x: -1, y: 10}
+  - position: {x: 258, y: 55}
+  - position: {x: 45, y: -3}
   edges:
   - inputNodeId: 0
     outputNodeId: 0
