@@ -2,17 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DebugNode : MonoBehaviour
+public class DebugNode : GraphViewScriptBase
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void BTStart()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Debug.Log("OK="+Time.realtimeSinceStartup);
     }
 }
