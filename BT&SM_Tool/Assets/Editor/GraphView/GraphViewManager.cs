@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor.UIElements;
 using UnityEditor;
+using System.Runtime.Remoting.Contexts;
 /// <summary>
 /// セーブやロードに必要な機能の管理所
 /// </summary>
@@ -14,13 +15,14 @@ public class GraphViewManager : GraphView
 
     public GraphViewManager() : base()
     {
-        setInitial();
+        //TODO 初期作成ができなくなる
+        //setInitial();
     }
 
     public GraphViewManager(EditorWindow editorWindow, GraphAsset graphAsset)
     {
         m_GraphAsset= graphAsset;
-        setInitial(); 
+        setInitial(editorWindow); 
     }
     //TODO　保存機能の分離を行う可能性あり
     public void SaveStart() {
@@ -56,7 +58,7 @@ public class GraphViewManager : GraphView
         }));
         return compatiblePorts;
     }
-    public  void setInitial() {
+    public  void setInitial(EditorWindow editorWindow) {
         //親のサイズに合わせてサイズ変更
         this.StretchToParentSize();
         //拡大縮小
@@ -69,7 +71,13 @@ public class GraphViewManager : GraphView
         this.AddManipulator(new RectangleSelector());
         // ussファイルを読み込んでスタイルに追加
         this.styleSheets.Add(Resources.Load<StyleSheet>("GraphViewBackGround"));
-
+        //ノード追加用のウィンドウ表示
+        var nodeSearcWindow = new NodeSearchWindow();
+        nodeSearcWindow.Initialize(this, editorWindow);
+        nodeCreationRequest += context =>
+        {
+            SearchWindow.Open(new SearchWindowContext(context.screenMousePosition), nodeSearcWindow);
+        };
 
         //データからの生成
         GraphViewLoad.CreateGraphView(this);

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GraphViewScriptBase : MonoBehaviour
+public class GraphViewScriptBase : ScriptNode
 {
     public int NodeNumbar = 0;
     public enum State{
