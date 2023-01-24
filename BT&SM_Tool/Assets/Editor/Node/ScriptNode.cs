@@ -6,6 +6,7 @@ public class ScriptNode : Node
 {
     public int NodeID { get; set; } = 0;
     public ScriptNode():base(){
+        title = "ScriptNode";
         var inputPort = Port.Create<Edge>(Orientation.Horizontal, Direction.Input,
             Port.Capacity.Single, typeof(Port));
         inputContainer.Add(inputPort);

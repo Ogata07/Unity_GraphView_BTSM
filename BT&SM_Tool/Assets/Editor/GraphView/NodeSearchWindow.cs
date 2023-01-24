@@ -43,12 +43,14 @@ public class NodeSearchWindow : ScriptableObject,ISearchWindowProvider
         if (type.IsSubclassOf(typeof(GraphViewScriptBase))) {
             var assets = AssetDatabase.FindAssets(SearchTreeEntry.userData.ToString());
             //TODO 現在はデバックNodeしか生成されません
+            var node=Activator.CreateInstance(type)as GraphViewScriptBase;
             DebugNode debugNode = new DebugNode();
             var worldMousePosition = m_EditorWindow.rootVisualElement.ChangeCoordinatesTo(m_EditorWindow.rootVisualElement.parent, context.screenMousePosition - m_EditorWindow.position.position);
             var localMousePosition = m_GraphViewManager.contentViewContainer.WorldToLocal(worldMousePosition);
 
             debugNode.SetPosition(new Rect(localMousePosition, new Vector2(100,100)));
-            m_GraphViewManager.AddElement(debugNode);
+            node.SetPosition(new Rect(localMousePosition, new Vector2(100, 100)));
+            m_GraphViewManager.AddElement(node);
         }
         Debug.Log("未作製です");
         return true;
