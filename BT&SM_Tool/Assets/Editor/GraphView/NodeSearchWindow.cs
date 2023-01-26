@@ -29,7 +29,7 @@ public class NodeSearchWindow : ScriptableObject,ISearchWindowProvider
         };
         foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies()) {
             foreach (var type in assembly.GetTypes()) {
-                if (type.IsSubclassOf(typeof(ScriptNode))) {
+                if (type.IsSubclassOf(typeof(GraphViewScriptBase))) {
                     entries.Add(new SearchTreeEntry(new GUIContent(type.Name)) { level = 2, userData = type });
                 }
             }
@@ -45,14 +45,13 @@ public class NodeSearchWindow : ScriptableObject,ISearchWindowProvider
         if (type.IsSubclassOf(typeof(GraphViewScriptBase))) {
             var assets = AssetDatabase.FindAssets(SearchTreeEntry.userData.ToString());
 
-            var node=Activator.CreateInstance(type)as GraphViewScriptBase;
-            DebugNode debugNode = new DebugNode();
+            ScriptNode debugNode = new ScriptNode();
             var worldMousePosition = m_EditorWindow.rootVisualElement.ChangeCoordinatesTo(m_EditorWindow.rootVisualElement.parent, context.screenMousePosition - m_EditorWindow.position.position);
             var localMousePosition = m_GraphViewManager.contentViewContainer.WorldToLocal(worldMousePosition);
 
             debugNode.SetPosition(new Rect(localMousePosition, new Vector2(100,100)));
-            node.SetPosition(new Rect(localMousePosition, new Vector2(100, 100)));
-            m_GraphViewManager.AddElement(node);
+            debugNode.SetPosition(new Rect(localMousePosition, new Vector2(100, 100)));
+            m_GraphViewManager.AddElement(debugNode);
         }
         Debug.Log("ñ¢çÏêªÇ≈Ç∑");
         return true;
