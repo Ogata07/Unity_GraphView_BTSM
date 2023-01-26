@@ -1,6 +1,10 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using Unity.VisualScripting;
+using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 /// <summary>
@@ -24,13 +28,29 @@ public static class GraphViewSave
         var fieldNodelist = m_GraphView.nodes.ToList();
         //リストの初期化
         m_GraphAsset.nodes = new List<NodeData>();
-        //テスト用に簡素で
-        foreach (var node in fieldNodelist.Select((v,i)=> new {value=v,Index=i})) 
+        foreach (var node in fieldNodelist)
         {
             //場所の追加
             m_GraphAsset.nodes.Add(new NodeData());
-            //ノードの位置を挿入
-            m_GraphAsset.nodes[node.Index].position = node.value.GetPosition().position;
+            int listNumber = m_GraphAsset.nodes.ToList().Count - 1;
+
+            //位置の保存
+            m_GraphAsset.nodes[listNumber].position = node.GetPosition().position;
+
+            //スクリプトの保存
+            if (node is DebugNode)
+            {
+                m_GraphAsset.nodes[listNumber].scriptObject = new DebugNode();
+                //m_GraphAsset.nodes[listNumber].GetObject
+            }
+            if (node is RealTimeNode) {
+                m_GraphAsset.nodes[listNumber].scriptObject = new RealTimeNode();
+            }
+
+            //管理番号の保存
+            //m_GraphAsset.nodes[listNumber].controlNumber = node.GetPosition().;
+
+
         }
     }
     //エッジの保存
