@@ -37,12 +37,14 @@ public class NodeSearchWindow : ScriptableObject,ISearchWindowProvider
         return entries;
     }
 
+
+    //選択されたのでノードの作成
     public bool OnSelectEntry(SearchTreeEntry SearchTreeEntry, SearchWindowContext context)
     {
         var type = SearchTreeEntry.userData as System.Type;
         if (type.IsSubclassOf(typeof(GraphViewScriptBase))) {
             var assets = AssetDatabase.FindAssets(SearchTreeEntry.userData.ToString());
-            //TODO 現在はデバックNodeしか生成されません
+
             var node=Activator.CreateInstance(type)as GraphViewScriptBase;
             DebugNode debugNode = new DebugNode();
             var worldMousePosition = m_EditorWindow.rootVisualElement.ChangeCoordinatesTo(m_EditorWindow.rootVisualElement.parent, context.screenMousePosition - m_EditorWindow.position.position);
