@@ -20,7 +20,8 @@ public class ScriptNode : Node
         set
         {
             //if (m_ObjectField.value==value.value)
-                m_ObjectField.value = value.value;
+            //m_ObjectField.objectType = typeof(UnityEngine.Object);
+            m_ObjectField.value = value.value;
         }
     }
     public int NodeID { get; set; } = 0;
@@ -47,6 +48,7 @@ public class ScriptNode : Node
     }
     private void TitleChange() {
         Debug.Log("ílÇ™ïœçXÇ≥ÇÍÇ‹ÇµÇΩ");
-        title = m_ObjectField.value.name;
+        if(m_ObjectField.value!=null)
+            title = m_ObjectField.value.name;
     }
 }

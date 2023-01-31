@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
+using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 /// <summary>
@@ -42,18 +43,28 @@ public class NodeSearchWindow : ScriptableObject,ISearchWindowProvider
     public bool OnSelectEntry(SearchTreeEntry SearchTreeEntry, SearchWindowContext context)
     {
         var type = SearchTreeEntry.userData as System.Type;
+        //選択されたのがGraphViewScriptBaseを継承していた場合
         if (type.IsSubclassOf(typeof(GraphViewScriptBase))) {
-            var assets = AssetDatabase.FindAssets(SearchTreeEntry.userData.ToString());
 
+            //スクリプトノードの作成と各種設定
             ScriptNode debugNode = new ScriptNode();
             var worldMousePosition = m_EditorWindow.rootVisualElement.ChangeCoordinatesTo(m_EditorWindow.rootVisualElement.parent, context.screenMousePosition - m_EditorWindow.position.position);
             var localMousePosition = m_GraphViewManager.contentViewContainer.WorldToLocal(worldMousePosition);
 
-            debugNode.SetPosition(new Rect(localMousePosition, new Vector2(100,100)));
+            //ノードの位置を設定
             debugNode.SetPosition(new Rect(localMousePosition, new Vector2(100, 100)));
+            //ノードの中身を設定
+            var assets = AssetDatabase.FindAssets(SearchTreeEntry.userData.ToString());
+            var assetspath = AssetDatabase.GUIDToAssetPath(assets[0]);
+            //ObjectFieldのタイプを設定
+            debugNode.ObjectField.objectType = typeof(UnityEngine.Object);
+            //ObjectFieldに挿入
+            debugNode.ObjectField.value = AssetDatabase.LoadMainAssetAtPath(assetspath);
+
+            //画面に追加
             m_GraphViewManager.AddElement(debugNode);
         }
-        Debug.Log("未作製です");
+        Debug.Log("ノードを追加しました");
         return true;
     }
 }
