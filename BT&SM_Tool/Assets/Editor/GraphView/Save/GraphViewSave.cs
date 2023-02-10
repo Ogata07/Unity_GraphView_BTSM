@@ -40,11 +40,11 @@ public static class GraphViewSave
             //スクリプトの保存
             if (node is DebugNode)
             {
-               // m_GraphAsset.nodes[listNumber].scriptObject = new DebugNode();
+                m_GraphAsset.nodes[listNumber].Object = new DebugNode();
                 //m_GraphAsset.nodes[listNumber].GetObject
             }
             if (node is RealTimeNode) {
-                //m_GraphAsset.nodes[listNumber].scriptObject = new RealTimeNode();
+                m_GraphAsset.nodes[listNumber].Object = new RealTimeNode();
             }
 
             //管理番号の保存
