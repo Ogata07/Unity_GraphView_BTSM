@@ -10,6 +10,7 @@ public class GraphAsset :ScriptableObject
 {
     public List<NodeData> nodes = new List<NodeData>();
     public List<EdgeData> edges = new List<EdgeData>();
+    public List<Objects> GetObject=new List<Objects>();
 }
 [System.Serializable]
 public class NodeData{
@@ -19,8 +20,9 @@ public class NodeData{
     //ノード内のスクリプト管理(GUID)
     public string scriptID;
     //TODO スクリプトの保存が未決定
-    public System.Object scriptObject;
+    //public System.Object scriptObject;
     //public UnityEngine.Object GetObject;
+    public UnityEngine.Object Object;
     //ノード内の管理番号
     public int controlNumber;
 }
@@ -30,4 +32,9 @@ public class EdgeData{
     public int inputNodeId;
     //ノードのアウトプット番号
     public int outputNodeId;
+}
+[System.Serializable]
+public class Objects
+{
+    public UnityEngine.Object Object;
 }

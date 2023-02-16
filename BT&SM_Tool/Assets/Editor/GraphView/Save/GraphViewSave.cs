@@ -19,16 +19,31 @@ public static class GraphViewSave
         Debug.Log("ノードの数は"+m_GraphView.nodes.ToList().Count+"個");
         //エッジ
         Debug.Log("エッジの数は" + m_GraphView.edges.ToList().Count + "個");
+        ControlNumberAdd(m_GraphView);
         SaveNode(m_GraphAsset,m_GraphView);
-        SaveEdgs(m_GraphAsset, m_GraphView);
+        SaveEdgs(m_GraphAsset,m_GraphView);
+    }
+    //TODO セーブ時に管理番号を付与しているが他で使うことはないのか？
+    //各ノードに管理番号を付与
+    private static void ControlNumberAdd(GraphView m_GraphView) {
+        var NodeList=m_GraphView.nodes.ToList();
+        int Number = 0;
+        foreach (var node in NodeList) {
+            if (node is ScriptNode) {
+                ScriptNode castScriptNode = node as ScriptNode;
+                castScriptNode.NodeID = Number;
+                
+            }
+            Number++;
+        }
     }
     //ノードの保存
     private static void SaveNode(GraphAsset m_GraphAsset,GraphView m_GraphView) {
         //ウィンドウ上のノードのリスト
-        var fieldNodelist = m_GraphView.nodes.ToList();
+        var fieldNodeList = m_GraphView.nodes.ToList();
         //リストの初期化
         m_GraphAsset.nodes = new List<NodeData>();
-        foreach (var node in fieldNodelist)
+        foreach (var node in fieldNodeList)
         {
             //場所の追加
             m_GraphAsset.nodes.Add(new NodeData());
@@ -37,26 +52,26 @@ public static class GraphViewSave
             //位置の保存
             m_GraphAsset.nodes[listNumber].position = node.GetPosition().position;
 
+
             //スクリプトの保存
-            if (node is DebugNode)
-            {
-                m_GraphAsset.nodes[listNumber].scriptObject = new DebugNode();
-                //m_GraphAsset.nodes[listNumber].GetObject
-            }
-            if (node is RealTimeNode) {
-                m_GraphAsset.nodes[listNumber].scriptObject = new RealTimeNode();
+            if (node is ScriptNode) {
+                ScriptNode castScriptNode = node as ScriptNode;
+                m_GraphAsset.nodes[listNumber].Object = castScriptNode.ObjectField.value;
             }
 
             //管理番号の保存
-            //m_GraphAsset.nodes[listNumber].controlNumber = node.GetPosition().;
-
-
+            if (node is ScriptNode)
+            {
+                ScriptNode castScriptNode = node as ScriptNode;
+                m_GraphAsset.nodes[listNumber].controlNumber = castScriptNode.NodeID;
+            }
         }
     }
     //エッジの保存
     private static void SaveEdgs(GraphAsset m_GraphAsset, GraphView m_GraphView) {
         //ウィンドウ上のエッジのリスト
         var fieldEdgslist = m_GraphView.edges.ToList();
+        Debug.Log(fieldEdgslist.Count());
         //リストの初期化
         m_GraphAsset.edges = new List<EdgeData>();
         //テスト用に簡素で
@@ -64,12 +79,18 @@ public static class GraphViewSave
         {
             //場所の追加
             m_GraphAsset.edges.Add(new EdgeData());
-            //ノードの生成番号を取得
-            var a = edge.value.output.node as TestNode;
-            //エッジのインノードをいれる
-            m_GraphAsset.edges[edge.Index].inputNodeId = a.NodeID;
-            //エッジのアウトノードをいれる
-            m_GraphAsset.edges[edge.Index].outputNodeId = a.NodeID;
+            if (edge.value.input.node is ScriptNode){
+                ScriptNode castScriptNode= edge.value.input.node as ScriptNode;
+                m_GraphAsset.edges[edge.Index].inputNodeId = castScriptNode.NodeID;
+            }
+            else
+                Debug.LogError("input側での接続先が保存できませんでした。管理番号が振られていない可能性があります");
+            if (edge.value.output.node is ScriptNode){
+                ScriptNode castScriptNode = edge.value.output.node as ScriptNode;
+                m_GraphAsset.edges[edge.Index].outputNodeId = castScriptNode.NodeID;
+            }
+            else
+                Debug.LogError("output側での接続先が保存できませんでした。管理番号が振られていない可能性があります");
 
         }
     }
