@@ -13,15 +13,19 @@ MonoBehaviour:
   m_Name: Test01
   m_EditorClassIdentifier: 
   nodes:
-  - position: {x: 279, y: 88}
+  - position: {x: 162, y: 192}
     scriptID: 
+    Object: {fileID: 0}
     controlNumber: 0
-  - position: {x: 365, y: 210}
+  - position: {x: 199, y: 323}
     scriptID: 
-    controlNumber: 0
-  - position: {x: 117, y: 270}
+    Object: {fileID: 0}
+    controlNumber: 1
+  - position: {x: 347, y: 115}
     scriptID: 
-    controlNumber: 0
+    Object: {fileID: 0}
+    controlNumber: 2
   edges:
   - inputNodeId: 0
     outputNodeId: 0
+  GetObject: []
