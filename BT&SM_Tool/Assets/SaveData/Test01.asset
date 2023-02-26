@@ -20,11 +20,11 @@ MonoBehaviour:
   - position: {x: 536, y: 244}
     scriptID: 
     Object: {fileID: 11500000, guid: 6c39fee95d671f14b806964dd5497915, type: 3}
-    controlNumber: 1
+    controlNumber: 0
   - position: {x: 114, y: 136}
     scriptID: 
     Object: {fileID: 11500000, guid: 6c39fee95d671f14b806964dd5497915, type: 3}
-    controlNumber: 2
+    controlNumber: 0
   edges:
   - inputNodeId: 0
     outputNodeId: 2

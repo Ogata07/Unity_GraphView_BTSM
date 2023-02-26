@@ -43,7 +43,7 @@ public static class GraphViewSave
         //(ビヘイビアツリー限定)
 
         //スタートノードを取得
-        var StartNode = NodeList.Find(x=>x.name == "StartNode") as StartNode;
+        var StartNode = NodeList.Find(x=>x.title == "StartNode") as StartNode;
         //つながっているノードを取得(0番)
         var NextNode = StartNode.OutputPort.connections.FirstOrDefault().input.node;
         
@@ -82,8 +82,10 @@ public static class GraphViewSave
         //繋がっているノードを取得
         if (node is ScriptNode) {
             ScriptNode castScriptNode = node as ScriptNode;
-            Node nexeNode= castScriptNode.OutputPort.connections.FirstOrDefault().input.node;
-            return nexeNode;
+            if (castScriptNode.OutputPort.connections.FirstOrDefault().input.node != null) {
+                Node inputNode = castScriptNode.OutputPort.connections.FirstOrDefault().input.node;
+                return inputNode;
+            }
         }
         return null;
     }
