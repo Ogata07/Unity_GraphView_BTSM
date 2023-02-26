@@ -11,6 +11,7 @@ using UnityEngine.UIElements;
 public class ScriptNode : Node
 {
     private ObjectField m_ObjectField = default;
+    public Port OutputPort { get; set; }
     public ObjectField ObjectField
     {
         get
@@ -42,9 +43,9 @@ public class ScriptNode : Node
         var inputPort = Port.Create<Edge>(Orientation.Horizontal, Direction.Input,
         Port.Capacity.Single, typeof(Port));
         inputContainer.Add(inputPort);
-        var outPort = Port.Create<Edge>(Orientation.Horizontal, Direction.Output,
+        OutputPort = Port.Create<Edge>(Orientation.Horizontal, Direction.Output,
             Port.Capacity.Single, typeof(Port));
-        outputContainer.Add(outPort);
+        outputContainer.Add(OutputPort);
     }
     private void TitleChange() {
         Debug.Log("ílÇ™ïœçXÇ≥ÇÍÇ‹ÇµÇΩ");

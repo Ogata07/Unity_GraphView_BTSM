@@ -81,6 +81,8 @@ public class GraphViewManager : GraphView
 
         //データからの生成
         GraphViewLoad.CreateGraphView(this);
+        //TODO スタートノードの追加
+        this.AddElement(new StartNode());
         // 背景を一番後ろに追加
         this.Insert(0, new GridBackground());
     }
