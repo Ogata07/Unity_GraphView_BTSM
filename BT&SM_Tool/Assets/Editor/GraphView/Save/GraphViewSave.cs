@@ -82,6 +82,7 @@ public static class GraphViewSave
         //Œq‚ª‚Á‚Ä‚¢‚éƒm[ƒh‚ğæ“¾
         if (node is ScriptNode) {
             ScriptNode castScriptNode = node as ScriptNode;
+            Debug.Log("•Û‘¶ƒm[ƒh"+castScriptNode.OutputPort.connections.FirstOrDefault().input.node);
             if (castScriptNode.OutputPort.connections.FirstOrDefault().input.node != null) {
                 Node inputNode = castScriptNode.OutputPort.connections.FirstOrDefault().input.node;
                 return inputNode;
