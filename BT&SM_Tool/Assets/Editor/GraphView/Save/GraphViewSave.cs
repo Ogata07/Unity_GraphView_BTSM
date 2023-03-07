@@ -82,8 +82,7 @@ public static class GraphViewSave
         //繋がっているノードを取得
         if (node is ScriptNode) {
             ScriptNode castScriptNode = node as ScriptNode;
-            Debug.Log("保存ノード＝"+castScriptNode.OutputPort.connections.FirstOrDefault().input.node);
-            if (castScriptNode.OutputPort.connections.FirstOrDefault().input.node != null) {
+            if (castScriptNode.OutputPort.connections.FirstOrDefault() != null) {
                 Node inputNode = castScriptNode.OutputPort.connections.FirstOrDefault().input.node;
                 return inputNode;
             }
@@ -94,6 +93,9 @@ public static class GraphViewSave
     private static void SaveNode(GraphAsset m_GraphAsset,GraphView m_GraphView) {
         //ウィンドウ上のノードのリスト
         var fieldNodeList = m_GraphView.nodes.ToList();
+        //除外対象を排除
+        fieldNodeList.RemoveAll(node => node is StartNode);
+       
         //リストの初期化
         m_GraphAsset.nodes = new List<NodeData>();
         foreach (var node in fieldNodeList)
@@ -119,6 +121,8 @@ public static class GraphViewSave
                 m_GraphAsset.nodes[listNumber].controlNumber = castScriptNode.NodeID;
             }
         }
+        //管理番号のソート
+        m_GraphAsset.nodes.Sort((node1,node2)=>node1.controlNumber-node2.controlNumber);
     }
     //エッジの保存
     private static void SaveEdgs(GraphAsset m_GraphAsset, GraphView m_GraphView) {
@@ -127,6 +131,8 @@ public static class GraphViewSave
         Debug.Log(fieldEdgslist.Count());
         //リストの初期化
         m_GraphAsset.edges = new List<EdgeData>();
+        //除外対象を排除
+        fieldEdgslist.RemoveAll(i => i.output.node is StartNode);
         //テスト用に簡素で
         foreach (var edge in fieldEdgslist.Select((v, i) => new { value = v, Index = i }))
         {
