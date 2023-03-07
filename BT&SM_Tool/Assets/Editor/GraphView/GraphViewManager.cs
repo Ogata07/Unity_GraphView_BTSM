@@ -30,6 +30,8 @@ public class GraphViewManager : GraphView
         {
             Debug.Log("<color=green>セーブをしました</color>");
             GraphViewSave.SaveNodeElement(m_GraphAsset, this);
+            EditorUtility.SetDirty(m_GraphAsset);
+            AssetDatabase.SaveAssets();
         }
         else
             Debug.LogError("セーブ先がありません");
