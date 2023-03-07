@@ -1,4 +1,5 @@
 using JetBrains.Annotations;
+using PlasticGui.WorkspaceWindow.Replication;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,11 +24,12 @@ public static class GraphViewSave
         SaveNode(m_GraphAsset,m_GraphView);
         SaveEdgs(m_GraphAsset,m_GraphView);
     }
-    //TODO セーブ時に管理番号を付与しているが他で使うことはないのか？
     //各ノードに管理番号を付与
     private static void ControlNumberAdd(GraphView m_GraphView) {
-        var NodeList=m_GraphView.nodes.ToList();
         int Number = 0;
+        var NodeList = m_GraphView.nodes.ToList();
+        //順番がおかしくなるので変更
+        /*
         foreach (var node in NodeList) {
             if (node is ScriptNode) {
                 ScriptNode castScriptNode = node as ScriptNode;
@@ -36,11 +38,64 @@ public static class GraphViewSave
             }
             Number++;
         }
+        */
+        //スタートノードから順番を探索して管理番号を付与する
+        //(ビヘイビアツリー限定)
+
+        //スタートノードを取得
+        var StartNode = NodeList.Find(x=>x.title == "StartNode") as StartNode;
+        //つながっているノードを取得(0番)
+        var NextNode = StartNode.OutputPort.connections.FirstOrDefault().input.node;
+        
+        //ノードが繋がっているか？
+        if (NextNode != null) {
+            AddNumbar(NextNode,Number);
+            Debug.Log("現在の管理番号は" + Number + "です");
+            Number++;
+            //次に繋がっている確認する
+            NextNode=ChackNode(NextNode);
+            while(NextNode!=null)
+            {
+                AddNumbar(NextNode, Number);
+                Debug.Log("現在の管理番号は" + Number + "です");
+                Number++;
+
+                //次に繋がっている確認する
+                NextNode = ChackNode(NextNode);
+            }
+            //TODO 現在は分岐ノードを作っていないので分岐には未対応
+        }
+    }
+    //管理番号を付与する
+    private static void AddNumbar(Node node,int Numbar) {
+        //管理番号を付与する
+        //スクリプトノードしか番号を振れない
+        if (node is ScriptNode){
+            ScriptNode castScriptNode = node as ScriptNode;
+            castScriptNode.NodeID = Numbar;
+        }
+        else
+            Debug.LogError("番号を振るのに対応していません");
+    }
+    //次のノードを検索する
+    private static Node ChackNode(Node node) {
+        //繋がっているノードを取得
+        if (node is ScriptNode) {
+            ScriptNode castScriptNode = node as ScriptNode;
+            if (castScriptNode.OutputPort.connections.FirstOrDefault() != null) {
+                Node inputNode = castScriptNode.OutputPort.connections.FirstOrDefault().input.node;
+                return inputNode;
+            }
+        }
+        return null;
     }
     //ノードの保存
     private static void SaveNode(GraphAsset m_GraphAsset,GraphView m_GraphView) {
         //ウィンドウ上のノードのリスト
         var fieldNodeList = m_GraphView.nodes.ToList();
+        //除外対象を排除
+        fieldNodeList.RemoveAll(node => node is StartNode);
+       
         //リストの初期化
         m_GraphAsset.nodes = new List<NodeData>();
         foreach (var node in fieldNodeList)
@@ -66,6 +121,8 @@ public static class GraphViewSave
                 m_GraphAsset.nodes[listNumber].controlNumber = castScriptNode.NodeID;
             }
         }
+        //管理番号のソート
+        m_GraphAsset.nodes.Sort((node1,node2)=>node1.controlNumber-node2.controlNumber);
     }
     //エッジの保存
     private static void SaveEdgs(GraphAsset m_GraphAsset, GraphView m_GraphView) {
@@ -74,6 +131,8 @@ public static class GraphViewSave
         Debug.Log(fieldEdgslist.Count());
         //リストの初期化
         m_GraphAsset.edges = new List<EdgeData>();
+        //除外対象を排除
+        fieldEdgslist.RemoveAll(i => i.output.node is StartNode);
         //テスト用に簡素で
         foreach (var edge in fieldEdgslist.Select((v, i) => new { value = v, Index = i }))
         {
