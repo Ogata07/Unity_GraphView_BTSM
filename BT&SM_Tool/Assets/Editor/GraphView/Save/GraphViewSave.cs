@@ -23,6 +23,7 @@ public static class GraphViewSave
         ControlNumberAdd(m_GraphView);
         SaveNode(m_GraphAsset,m_GraphView);
         SaveEdgs(m_GraphAsset,m_GraphView);
+        AssetDatabase.SaveAssets();
     }
     //各ノードに管理番号を付与
     private static void ControlNumberAdd(GraphView m_GraphView) {
