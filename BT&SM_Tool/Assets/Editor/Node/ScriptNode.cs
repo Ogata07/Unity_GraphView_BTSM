@@ -33,7 +33,8 @@ public class ScriptNode : Node
         PortAdd();
         //ObjectFieldÇÃí«â¡
         m_ObjectField = new ObjectField();
-        m_ObjectField.objectType = typeof(MonoScript);
+        //TODO MonoScriptÇ©ÇÁïœçX
+        m_ObjectField.objectType = typeof(UnityEngine.Object);
         mainContainer.Add(m_ObjectField);
         m_ObjectField.RegisterCallback<ChangeEvent<String>>(events =>{
             TitleChange();

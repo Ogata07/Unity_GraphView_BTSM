@@ -114,7 +114,6 @@ public static class GraphViewSave
                 ScriptNode castScriptNode = node as ScriptNode;
                 m_GraphAsset.nodes[listNumber].Object = castScriptNode.ObjectField.value;
             }
-
             //ä«óùî‘çÜÇÃï€ë∂
             if (node is ScriptNode)
             {
