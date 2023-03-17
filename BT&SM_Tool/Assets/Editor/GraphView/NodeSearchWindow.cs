@@ -8,6 +8,7 @@ using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 using ScriptFlow;
+using Codice.Client.BaseCommands;
 /// <summary>
 /// GraohView上で作成可能なノードのウィンドウ管理
 /// </summary>

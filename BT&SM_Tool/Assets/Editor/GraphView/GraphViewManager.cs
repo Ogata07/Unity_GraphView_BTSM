@@ -80,7 +80,8 @@ public class GraphViewManager : GraphView
         {
             SearchWindow.Open(new SearchWindowContext(context.screenMousePosition), nodeSearcWindow);
         };
-
+        var SelectionDraggerWindow = new SelectionDraggerWindow();
+        SelectionDraggerWindow.BuildContextualMenu(new ContextualMenuPopulateEvent());
         //データからの生成
         GraphViewLoad.CreateGraphView(this);
         //TODO スタートノードの追加
