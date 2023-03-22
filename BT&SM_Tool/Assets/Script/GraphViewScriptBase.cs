@@ -16,6 +16,12 @@ namespace ScriptFlow
         {
 
         }
+        public virtual void BTStart(SMManager sMManager)
+        {
+        }
+        public virtual void BTStart(BTManager bTManager)
+        {
+        }
         public virtual void BTUpdate()
         {
 
@@ -27,7 +33,7 @@ namespace ScriptFlow
         /// <summary>
         /// Ÿ‚Ìƒm[ƒh‚ÖˆÚs
         /// </summary>
-        public void BTNext(SMManager sMManager)
+        public virtual void BTNext(SMManager sMManager)
         {
             sMManager.Next();
         }

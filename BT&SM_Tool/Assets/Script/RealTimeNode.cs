@@ -9,4 +9,8 @@ public class RealTimeNode : GraphViewScriptBase
     {       
         Debug.Log("RealTimeNodeÇ≈Ç∑ÅÅ" + Time.realtimeSinceStartup);
     }
+    public override void BTNext(SMManager sMManager)
+    {
+        base.BTNext(sMManager);
+    }
 }
