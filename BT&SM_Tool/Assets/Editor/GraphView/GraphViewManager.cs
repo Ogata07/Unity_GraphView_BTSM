@@ -60,6 +60,24 @@ public class GraphViewManager : GraphView
         }));
         return compatiblePorts;
     }
+    public override void BuildContextualMenu(ContextualMenuPopulateEvent evt)
+    {
+        base.BuildContextualMenu(evt);
+        if (evt.target is GraphView || evt.target is Node || evt.target is Group)
+        {
+            evt.menu.AppendAction("StateMachine", delegate
+            {
+                
+                ClickEvent();
+                //CopySelectionCallback();
+            }, (DropdownMenuAction a) => canCopySelection ? DropdownMenuAction.Status.Normal : DropdownMenuAction.Status.Disabled);
+        }
+    }
+    public void ClickEvent()
+    {
+        //TODO ステートマシンのみこれが選択されたノードからスタートされるようにしたい(時間がかかるので後回しかもしれない)
+        Debug.Log("現在作業中");
+    }
     public  void setInitial(EditorWindow editorWindow) {
         //親のサイズに合わせてサイズ変更
         this.StretchToParentSize();
@@ -80,8 +98,6 @@ public class GraphViewManager : GraphView
         {
             SearchWindow.Open(new SearchWindowContext(context.screenMousePosition), nodeSearcWindow);
         };
-        var SelectionDraggerWindow = new SelectionDraggerWindow();
-        SelectionDraggerWindow.BuildContextualMenu(new ContextualMenuPopulateEvent());
         //データからの生成
         GraphViewLoad.CreateGraphView(this);
         //TODO スタートノードの追加
