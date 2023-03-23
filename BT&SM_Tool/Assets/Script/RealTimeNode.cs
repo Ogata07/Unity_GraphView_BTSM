@@ -5,12 +5,19 @@ using ScriptFlow;
 
 public class RealTimeNode : GraphViewScriptBase
 {
-    public override void BTStart()
+    private int time = 100;
+    private SMManager m_SMManager = default;
+
+    public override void BTStart(SMManager manager)
     {       
         Debug.Log("RealTimeNode‚Å‚·" + Time.realtimeSinceStartup);
+        m_SMManager = manager;
     }
-    public override void BTNext(SMManager sMManager)
+    public override void BTUpdate()
     {
-        base.BTNext(sMManager);
+        time--;
+        //Debug.Log("Ÿ‚Ìƒm[ƒhˆÚs‚Ü‚Å" + time);
+        if (time < 0)
+            BTNext(m_SMManager);
     }
 }

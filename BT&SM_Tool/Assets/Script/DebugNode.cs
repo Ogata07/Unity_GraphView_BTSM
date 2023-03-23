@@ -5,7 +5,7 @@ using ScriptFlow;
 
 public class DebugNode : GraphViewScriptBase
 {
-    private int time = 10;
+    private int time = 100;
     private SMManager m_SMManager = default;
     public override void BTStart(SMManager manager)
     {
@@ -15,7 +15,8 @@ public class DebugNode : GraphViewScriptBase
     public override void BTUpdate()
     {
         time--;
-        if (time > 0)
+        //Debug.Log("Ÿ‚Ìƒm[ƒhˆÚs‚Ü‚Å"+ time);
+        if (time < 0)
             BTNext(m_SMManager);
     }
 }

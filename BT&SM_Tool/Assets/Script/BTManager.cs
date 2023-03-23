@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using ScriptFlow;
 using System;
-using UnityEditorInternal;
+//using UnityEditorInternal;
 /// <summary>
 /// ビヘイビアツリーのヴィジュアルスクリプティングを動作させるスクリプト
 /// </summary>
