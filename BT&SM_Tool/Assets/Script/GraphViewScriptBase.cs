@@ -12,13 +12,24 @@ namespace ScriptFlow
             Decison
         }
         public State state = State.Normal;
+        /// <summary>
+        /// Start相当です
+        /// </summary>
         public virtual void BTStart()
         {
 
         }
+        /// <summary>
+        /// ステートマシン用のStartです
+        /// </summary>
+        /// <param name="sMManager">ステートマシン用の実行スクリプト</param>
         public virtual void BTStart(SMManager sMManager)
         {
         }
+        /// <summary>
+        /// ビヘイビアツリー用のStartです
+        /// </summary>
+        /// <param name="bTManager">ビヘイビアツリー用の実行スクリプト</param>
         public virtual void BTStart(BTManager bTManager)
         {
         }
@@ -31,10 +42,12 @@ namespace ScriptFlow
 
         }
         /// <summary>
-        /// 次のノードへ移行
+        /// 次のノードに移行します
         /// </summary>
+        /// <param name="sMManager">ステートマシン用の実行スクリプト</param>
         public virtual void BTNext(SMManager sMManager)
         {
+            //TODO　現状だと1つのノードしか移行しないので作業が必要
             sMManager.Next();
         }
     }

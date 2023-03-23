@@ -15,7 +15,6 @@ public class DebugNode : GraphViewScriptBase
     public override void BTUpdate()
     {
         time--;
-        //Debug.Log("Ÿ‚Ìƒm[ƒhˆÚs‚Ü‚Å"+ time);
         if (time < 0)
             BTNext(m_SMManager);
     }
