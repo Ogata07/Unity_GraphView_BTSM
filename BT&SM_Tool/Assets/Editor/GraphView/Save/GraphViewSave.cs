@@ -42,8 +42,10 @@ public static class GraphViewSave
         */
         //(ステートマシン限定)
         //スタートノードに番号を振る(0番)
+        //var StartNode = NodeList.Find(x => x.title == "StartNode") as StartNode;
+
         //繋がっているノードの数を数える
-        
+        //var NextNodeCount = StartNode.OutputPort.connections.Count();
         //複数に対応しているノード番号付与を作る
         //例2つの接続ノード
         //2つにノード番号付与を行う
@@ -55,10 +57,14 @@ public static class GraphViewSave
         //スタートノードから順番を探索して管理番号を付与する
 
         //スタートノードを取得
+
+
         var StartNode = NodeList.Find(x=>x.title == "StartNode") as StartNode;
         //つながっているノードを取得(0番)
         var NextNode = StartNode.OutputPort.connections.FirstOrDefault().input.node;
-        
+
+        Debug.Log(StartNode.OutputPort.connections.Count()); 
+
         //ノードが繋がっているか？
         if (NextNode != null) {
             AddNumbar(NextNode,Number);
@@ -77,6 +83,7 @@ public static class GraphViewSave
             }
             //TODO 現在は分岐ノードを作っていないので分岐には未対応
         }
+        
     }
     //管理番号を付与する
     private static void AddNumbar(Node node,int Numbar) {
