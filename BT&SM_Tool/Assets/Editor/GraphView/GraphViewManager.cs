@@ -41,6 +41,24 @@ public class GraphViewManager : GraphView
         m_GraphAsset = graphAsset;
         Debug.Log("セーブ先は"+graphAsset.name+"に更新しました");
     }
+    /// <summary>
+    /// GraohView上での動きに反応する
+    /// </summary>
+    /// <param name="callback"></param>
+    /// <returns></returns>
+    private GraphViewChange OnCallbackGraphView(GraphViewChange callback)
+    {
+        if (callback.edgesToCreate != null)
+        {
+            foreach (UnityEditor.Experimental.GraphView.Edge e in callback.edgesToCreate)
+            {
+                Debug.Log("Edgeが作製されました");
+            }
+
+        }
+        return callback;
+
+    }
     //GraphView上のルール
     public override List<Port> GetCompatiblePorts(Port startAnchor, NodeAdapter nodeAdapter) {
         var compatiblePorts = new List<Port>();
@@ -98,6 +116,8 @@ public class GraphViewManager : GraphView
         {
             SearchWindow.Open(new SearchWindowContext(context.screenMousePosition), nodeSearcWindow);
         };
+        //GraphView上の変化監視コールバック
+        graphViewChanged = OnCallbackGraphView;
         //データからの生成
         GraphViewLoad.CreateGraphView(this);
         //TODO スタートノードの追加
