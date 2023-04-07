@@ -42,13 +42,20 @@ public static class GraphViewSave
         */
         //(ステートマシン限定)
         //スタートノードに番号を振る(0番)
-        //var StartNode = NodeList.Find(x => x.title == "StartNode") as StartNode;
+        var StartNode = NodeList.Find(x => x.title == "StartNode") as StartNode;
 
         //繋がっているノードの数を数える
-        //var NextNodeCount = StartNode.OutputPort.connections.Count();
+        var NextNodeCount = StartNode.OutputPort.connections.Count();
+        var NexrNodeList = StartNode.OutputPort.connections.ToList();
+        Debug.Log("aa"+NexrNodeList.Count);
         //複数に対応しているノード番号付与を作る
         //例2つの接続ノード
-        //2つにノード番号付与を行う
+        
+        for (int actionCount = 0; actionCount < NextNodeCount; actionCount++) {
+            //2つにノード番号付与を行う
+            AddNumbar(NexrNodeList[actionCount].input.node,Number);
+            Debug.Log("aaa");
+        }
         //各ノードに繋がっているノードを探す
         //前に戻って見つかったノードに番号付与を行う
         //繰り返し行う(番号付与したノードの数を数えてそれで判定してもいいかも)
@@ -59,30 +66,30 @@ public static class GraphViewSave
         //スタートノードを取得
 
 
-        var StartNode = NodeList.Find(x=>x.title == "StartNode") as StartNode;
+        //var StartNode = NodeList.Find(x=>x.title == "StartNode") as StartNode;
         //つながっているノードを取得(0番)
         var NextNode = StartNode.OutputPort.connections.FirstOrDefault().input.node;
 
         Debug.Log(StartNode.OutputPort.connections.Count()); 
 
+        /*
         //ノードが繋がっているか？
         if (NextNode != null) {
             AddNumbar(NextNode,Number);
             Debug.Log("現在の管理番号は" + Number + "です");
-            Number++;
             //次に繋がっている確認する
             NextNode=ChackNode(NextNode);
             while(NextNode!=null)
             {
                 AddNumbar(NextNode, Number);
                 Debug.Log("現在の管理番号は" + Number + "です");
-                Number++;
 
                 //次に繋がっている確認する
                 NextNode = ChackNode(NextNode);
             }
             //TODO 現在は分岐ノードを作っていないので分岐には未対応
         }
+        */
         
     }
     //管理番号を付与する
@@ -92,6 +99,7 @@ public static class GraphViewSave
         if (node is ScriptNode){
             ScriptNode castScriptNode = node as ScriptNode;
             castScriptNode.NodeID = Numbar;
+            Numbar++;
         }
         else
             Debug.LogError("番号を振るのに対応していません");

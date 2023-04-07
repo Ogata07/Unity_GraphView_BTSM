@@ -13,21 +13,19 @@ MonoBehaviour:
   m_Name: SM_Test01
   m_EditorClassIdentifier: 
   nodes:
-  - position: {x: 114, y: 136}
+  - position: {x: 121, y: 154}
     scriptID: 
     Object: {fileID: 11500000, guid: 6c39fee95d671f14b806964dd5497915, type: 3}
     controlNumber: 0
-  - position: {x: 315, y: 195}
+  - position: {x: 322, y: 127}
     scriptID: 
     Object: {fileID: 11500000, guid: 3981a4d0abc5a044d8f34387ebe7ca1e, type: 3}
-    controlNumber: 1
-  - position: {x: 507, y: 195}
+    controlNumber: 0
+  - position: {x: 301, y: 224}
     scriptID: 
     Object: {fileID: 11500000, guid: 6c39fee95d671f14b806964dd5497915, type: 3}
-    controlNumber: 2
+    controlNumber: 1
   edges:
   - inputNodeId: 1
     outputNodeId: 0
-  - inputNodeId: 2
-    outputNodeId: 1
   GetObject: []
