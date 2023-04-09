@@ -13,6 +13,7 @@ using UnityEngine;
 /// </summary>
 public static class GraphViewSave
 {
+    private static int Number = 0;
     public static void SaveNodeElement(GraphAsset m_GraphAsset, GraphView m_GraphView) 
     {
         Debug.Log("セーブの開始");
@@ -20,6 +21,7 @@ public static class GraphViewSave
         Debug.Log("ノードの数は"+m_GraphView.nodes.ToList().Count+"個");
         //エッジ
         Debug.Log("エッジの数は" + m_GraphView.edges.ToList().Count + "個");
+        Number = 0;
         ControlNumberAdd(m_GraphView);
         SaveNode(m_GraphAsset,m_GraphView);
         SaveEdgs(m_GraphAsset,m_GraphView);
@@ -27,7 +29,7 @@ public static class GraphViewSave
     }
     //各ノードに管理番号を付与
     private static void ControlNumberAdd(GraphView m_GraphView) {
-        int Number = 0;
+        //int Number = 0;
         var NodeList = m_GraphView.nodes.ToList();
         //順番がおかしくなるので変更
         /*
@@ -43,19 +45,28 @@ public static class GraphViewSave
         //(ステートマシン限定)
         //スタートノードに番号を振る(0番)
         var StartNode = NodeList.Find(x => x.title == "StartNode") as StartNode;
-
+        //つながっているノードを取得(0番)
+        var NextNode = StartNode.OutputPort.connections.FirstOrDefault().input.node;
+        AddNumbar(NextNode);
+        var CastNextNode = NextNode as ScriptNode;
+        ChacksNode(CastNextNode);
+        /*
         //繋がっているノードの数を数える
-        var NextNodeCount = StartNode.OutputPort.connections.Count();
-        var NexrNodeList = StartNode.OutputPort.connections.ToList();
+        var NextNodeCount = CastNextNode.OutputPort.connections.Count();
+        var NexrNodeList = CastNextNode.OutputPort.connections.ToList();
+        //var NextNodeCount = StartNode.OutputPort.connections.Count();
+        //var NexrNodeList = StartNode.OutputPort.connections.ToList();
+
         Debug.Log("aa"+NexrNodeList.Count);
         //複数に対応しているノード番号付与を作る
         //例2つの接続ノード
         
         for (int actionCount = 0; actionCount < NextNodeCount; actionCount++) {
-            //2つにノード番号付与を行う
+            //つながっているノードに番号を付与する
             AddNumbar(NexrNodeList[actionCount].input.node,Number);
-            Debug.Log("aaa");
+            Number++;
         }
+        */
         //各ノードに繋がっているノードを探す
         //前に戻って見つかったノードに番号付与を行う
         //繰り返し行う(番号付与したノードの数を数えてそれで判定してもいいかも)
@@ -64,13 +75,9 @@ public static class GraphViewSave
         //スタートノードから順番を探索して管理番号を付与する
 
         //スタートノードを取得
-
-
         //var StartNode = NodeList.Find(x=>x.title == "StartNode") as StartNode;
         //つながっているノードを取得(0番)
-        var NextNode = StartNode.OutputPort.connections.FirstOrDefault().input.node;
-
-        Debug.Log(StartNode.OutputPort.connections.Count()); 
+        //var NextNode = StartNode.OutputPort.connections.FirstOrDefault().input.node;
 
         /*
         //ノードが繋がっているか？
@@ -93,25 +100,59 @@ public static class GraphViewSave
         
     }
     //管理番号を付与する
-    private static void AddNumbar(Node node,int Numbar) {
+    private static void AddNumbar(Node node) {
         //管理番号を付与する
         //スクリプトノードしか番号を振れない
         if (node is ScriptNode){
             ScriptNode castScriptNode = node as ScriptNode;
-            castScriptNode.NodeID = Numbar;
-            Numbar++;
+
+            if (castScriptNode.NodeID== 0) {
+                Debug.Log("ssss"+castScriptNode.NodeID);
+                castScriptNode.NodeID = Number;
+                Number++;
+
+            }
         }
         else
             Debug.LogError("番号を振るのに対応していません");
     }
     //次のノードを検索する
     private static Node ChackNode(Node node) {
+        //すでに番号が付与されているノードに降らないようにしないといけない
         //繋がっているノードを取得
         if (node is ScriptNode) {
             ScriptNode castScriptNode = node as ScriptNode;
             if (castScriptNode.OutputPort.connections.FirstOrDefault() != null) {
                 Node inputNode = castScriptNode.OutputPort.connections.FirstOrDefault().input.node;
                 return inputNode;
+            }
+        }
+        return null;
+    }
+    /// <summary>
+    /// 管理番号が振られていないノードがなくなるまで繰り返す
+    /// </summary>
+    /// <param name="node"></param>
+    /// <returns></returns>
+    private static Node ChacksNode(Node node) {
+        //ループしているノードを作ろうとするとすたっくしてしまう
+        Debug.Log("実行カウント"+ Number);
+        var castScriptNode = node as ScriptNode;
+        //繋がっているノードの数を数える
+        var NextNodeCount = castScriptNode.OutputPort.connections.Count();
+        var NexrNodeList = castScriptNode.OutputPort.connections.ToList();
+        if (Number == 4) {
+            Debug.LogError("ru-pukaihi");
+            return null;
+        }
+        //複数に対応しているノード番号付与を作る
+        if (NextNodeCount != 0)
+        {
+            for (int actionCount = 0; actionCount < NextNodeCount; actionCount++)
+            {
+                //つながっているノードに番号を付与する
+                AddNumbar(NexrNodeList[actionCount].input.node);
+                ChacksNode(NexrNodeList[actionCount].input.node);
             }
         }
         return null;
