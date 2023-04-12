@@ -42,7 +42,7 @@ public static class GraphViewSave
             Number++;
         }
         */
-        //(ステートマシン限定)
+        //(ステートマシン限定)(順番に振るのは延期するかも)
         //スタートノードに番号を振る(0番)
         var StartNode = NodeList.Find(x => x.title == "StartNode") as StartNode;
         //つながっているノードを取得(0番)
@@ -129,6 +129,7 @@ public static class GraphViewSave
         }
         return null;
     }
+
     /// <summary>
     /// 管理番号が振られていないノードがなくなるまで繰り返す
     /// </summary>
@@ -136,7 +137,6 @@ public static class GraphViewSave
     /// <returns></returns>
     private static Node ChacksNode(Node node) {
         //ループしているノードを作ろうとするとすたっくしてしまう
-        Debug.Log("実行カウント"+ Number);
         var castScriptNode = node as ScriptNode;
         //繋がっているノードの数を数える
         var NextNodeCount = castScriptNode.OutputPort.connections.Count();
@@ -156,6 +156,12 @@ public static class GraphViewSave
             }
         }
         return null;
+    }
+    /// <summary>
+    /// スタートノードを祖沿いたすべてのノードに管理番号を付与する
+    /// </summary>
+    private static void ListAddNumbar() { 
+    
     }
     //ノードの保存
     private static void SaveNode(GraphAsset m_GraphAsset,GraphView m_GraphView) {
