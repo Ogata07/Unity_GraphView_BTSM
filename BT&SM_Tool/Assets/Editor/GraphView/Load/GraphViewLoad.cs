@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Windows.Forms;
 using UnityEditor.Experimental.GraphView;
+using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
 using UnityEngine.UIElements;
@@ -45,6 +47,15 @@ public static class GraphViewLoad
         Port outputPort = node[edgeData.outputNodeId].outputContainer.contentContainer.Q<Port>();
         //EdgeçÏêª
         var edge = ConnectPorts(inputPort,outputPort);
+        //ÉâÉxÉãí«â¡
+        UnityEngine.UIElements.Label edgeLabel = new UnityEngine.UIElements.Label();
+        edgeLabel.text = "0";
+        edgeLabel.style.fontSize= 64;
+        edgeLabel.style.marginTop = -32;
+        edge.edgeControl.Add(edgeLabel);
+        //Label
+        //edge.Add(btn1);
+
         //GraphViewÇ…í«â¡
         graphViewManager.AddElement(edge);
     }

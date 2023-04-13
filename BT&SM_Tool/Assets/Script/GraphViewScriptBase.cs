@@ -50,5 +50,8 @@ namespace ScriptFlow
             //TODO　現状だと1つのノードしか移行しないので作業が必要
             sMManager.Next();
         }
+        public virtual void BTNext(SMManager sMManager, int count) {
+            sMManager.Next();
+        }
     }
 }

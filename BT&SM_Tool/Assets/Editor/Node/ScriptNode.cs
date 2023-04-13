@@ -42,10 +42,10 @@ public class ScriptNode : Node
     }
     private void PortAdd() {
         var inputPort = Port.Create<Edge>(Orientation.Horizontal, Direction.Input,
-        Port.Capacity.Single, typeof(Port));
+        Port.Capacity.Multi, typeof(Port));
         inputContainer.Add(inputPort);
         OutputPort = Port.Create<Edge>(Orientation.Horizontal, Direction.Output,
-            Port.Capacity.Single, typeof(Port));
+            Port.Capacity.Multi, typeof(Port));
         outputContainer.Add(OutputPort);
     }
     private void TitleChange() {
