@@ -42,7 +42,16 @@ public static class GraphViewSave
             Number++;
         }
         */
+        //(ステートマシン限定)(特定のノードを排除してそれ以外を順番に管理番号を付与する)
+        //スタートノードに番号を振る(0番)
+        var StartNode = NodeList.Find(x => x.title == "StartNode") as StartNode;
+        NodeList.Remove(StartNode);
+        foreach(Node node in NodeList)
+        {
+            AddNumbar(node);
+        }
         //(ステートマシン限定)(順番に振るのは延期するかも)
+        /*
         //スタートノードに番号を振る(0番)
         var StartNode = NodeList.Find(x => x.title == "StartNode") as StartNode;
         //つながっているノードを取得(0番)

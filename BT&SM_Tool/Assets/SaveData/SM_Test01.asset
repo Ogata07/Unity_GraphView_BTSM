@@ -17,11 +17,11 @@ MonoBehaviour:
     scriptID: 
     Object: {fileID: 11500000, guid: 6c39fee95d671f14b806964dd5497915, type: 3}
     controlNumber: 0
-  - position: {x: 396, y: 114}
+  - position: {x: 408, y: 99}
     scriptID: 
     Object: {fileID: 11500000, guid: 3981a4d0abc5a044d8f34387ebe7ca1e, type: 3}
     controlNumber: 1
-  - position: {x: 604, y: 214}
+  - position: {x: 589, y: 252}
     scriptID: 
     Object: {fileID: 11500000, guid: 3981a4d0abc5a044d8f34387ebe7ca1e, type: 3}
     controlNumber: 2
@@ -38,4 +38,6 @@ MonoBehaviour:
     outputNodeId: 1
   - inputNodeId: 2
     outputNodeId: 3
+  - inputNodeId: 1
+    outputNodeId: 2
   GetObject: []

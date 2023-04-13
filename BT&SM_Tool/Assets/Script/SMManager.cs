@@ -56,6 +56,10 @@ public class SMManager : MonoBehaviour
         //次が無ければnullを返す(次がないのにNextを呼んでる方が悪い)
         //次がある場合は次のGraphViewScriptBaseを渡す
     }
+    public void Next(int count) {
+        Debug.Log("次のノードに移行します");
+
+    }
     /// <summary>
     /// 現在のノードから繋がっているノードの管理番号を取得する
     /// </summary>
