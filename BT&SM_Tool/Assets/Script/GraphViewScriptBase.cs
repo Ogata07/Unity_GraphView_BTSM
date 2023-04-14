@@ -42,16 +42,19 @@ namespace ScriptFlow
 
         }
         /// <summary>
-        /// 次のノードに移行します
+        /// 次のノードに移行します(単体用)
         /// </summary>
         /// <param name="sMManager">ステートマシン用の実行スクリプト</param>
         public virtual void BTNext(SMManager sMManager)
         {
-            //TODO　現状だと1つのノードしか移行しないので作業が必要
             sMManager.Next();
         }
+        /// <summary>
+        /// 次のノードに移行します(複数用)
+        /// </summary>
+        /// <param name="sMManager">ステートマシン用の実行スクリプト</param>
         public virtual void BTNext(SMManager sMManager, int count) {
-            sMManager.Next();
+            sMManager.Next(count);
         }
     }
 }
