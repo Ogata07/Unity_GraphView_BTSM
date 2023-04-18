@@ -112,6 +112,7 @@ public static class GraphViewSave
     private static void AddNumbar(Node node) {
         //管理番号を付与する
         //スクリプトノードしか番号を振れない
+        //TODO セーブした後に追加するとうまく挙動しない
         if (node is ScriptNode){
             ScriptNode castScriptNode = node as ScriptNode;
 

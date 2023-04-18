@@ -12,6 +12,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95ff673f3edc65d40bd9ac6eed66050b, type: 3}
   m_Name: SM_4Test
   m_EditorClassIdentifier: 
-  nodes: []
-  edges: []
+  nodes:
+  - position: {x: 269, y: 323}
+    scriptID: 
+    Object: {fileID: 11500000, guid: c34182d8250806d42bb7fdc4332306bf, type: 3}
+    controlNumber: 0
+  - position: {x: 269, y: 202}
+    scriptID: 
+    Object: {fileID: 11500000, guid: 5f73acff98009bc40aabc22f46a14ab5, type: 3}
+    controlNumber: 1
+  - position: {x: 162, y: 18}
+    scriptID: 
+    Object: {fileID: 11500000, guid: 61733edf954e0594ab3077da3c6cd171, type: 3}
+    controlNumber: 2
+  - position: {x: 351, y: 18}
+    scriptID: 
+    Object: {fileID: 11500000, guid: 57ea224fd0015a442a2ae8efda645e28, type: 3}
+    controlNumber: 3
+  edges:
+  - inputNodeId: 3
+    outputNodeId: 2
+  - inputNodeId: 0
+    outputNodeId: 1
+  - inputNodeId: 2
+    outputNodeId: 1
+  - inputNodeId: 1
+    outputNodeId: 3
+  - inputNodeId: 1
+    outputNodeId: 0
   GetObject: []

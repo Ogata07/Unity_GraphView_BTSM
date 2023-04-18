@@ -5,15 +5,23 @@ using ScriptFlow;
 
 public class scaleUpState : GraphViewScriptBase
 {
-    // Start is called before the first frame update
-    void Start()
+    private SMManager m_SMManager = default;
+    private float time = default;
+    private float settime = 10;
+    public override void BTStart(SMManager manager)
     {
-        
+        Debug.Log("scaleUpState‚Å‚·");
+        m_SMManager = manager;
+        time = settime;
     }
-
-    // Update is called once per frame
-    void Update()
+    public override void BTUpdate()
     {
-        
+        if (this.transform.localScale.x > 0)
+        {
+            this.transform.localScale += new Vector3(0.1f, 0.1f, 0.1f);
+        }
+        time -= Time.deltaTime;
+        if (time < 0)
+            BTNext(m_SMManager);
     }
 }
