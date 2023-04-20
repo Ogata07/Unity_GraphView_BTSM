@@ -56,6 +56,10 @@ public class SMManager : MonoBehaviour
         //次が無ければnullを返す(次がないのにNextを呼んでる方が悪い)
         //次がある場合は次のGraphViewScriptBaseを渡す
     }
+    /// <summary>
+    /// 次のステートに移行(複数版)
+    /// </summary>
+    /// <param name="count">エッジの管理番号を入力してください</param>
     public void Next(int count) {
         Debug.Log("次のノードに移行します");
 

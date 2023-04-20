@@ -24,6 +24,7 @@ public class NodeData{
     public UnityEngine.Object Object;
     //ノード内の管理番号
     public int controlNumber;
+    public List<EdgesData> edgesDatas= new List<EdgesData>();
 }
 [System.Serializable]
 public class EdgeData{
@@ -31,6 +32,14 @@ public class EdgeData{
     public int inputNodeId;
     //ノードのアウトプット番号
     public int outputNodeId;
+}
+public class EdgesData {
+    //エッジの管理番号
+    public int controlNumber;
+    //ノードのアウトプット番号
+    public int outputNodeId;
+    //ノードのインプット番号
+    public int inputNodeId;
 }
 [System.Serializable]
 public class Objects

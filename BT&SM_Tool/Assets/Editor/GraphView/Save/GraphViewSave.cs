@@ -168,7 +168,7 @@ public static class GraphViewSave
         return null;
     }
     /// <summary>
-    /// スタートノードを祖沿いたすべてのノードに管理番号を付与する
+    /// スタートノードをのぞいたすべてのノードに管理番号を付与する
     /// </summary>
     private static void ListAddNumbar() { 
     
@@ -192,17 +192,27 @@ public static class GraphViewSave
             m_GraphAsset.nodes[listNumber].position = node.GetPosition().position;
 
 
-            //スクリプトの保存
+            
             if (node is ScriptNode) {
                 ScriptNode castScriptNode = node as ScriptNode;
+                //スクリプトの保存
                 m_GraphAsset.nodes[listNumber].Object = castScriptNode.ObjectField.value;
-            }
-            //管理番号の保存
-            if (node is ScriptNode)
-            {
-                ScriptNode castScriptNode = node as ScriptNode;
+                //管理番号の保存
                 m_GraphAsset.nodes[listNumber].controlNumber = castScriptNode.NodeID;
+
+
+                castScriptNode.OutputPort.connections.ToList();
+                for (int i = 0; i < castScriptNode.childCount; i++) {
+                    //場所の追加
+                    m_GraphAsset.nodes[listNumber].edgesDatas.Add(new EdgesData());
+                    //管理番号の保存
+                    m_GraphAsset.nodes[listNumber].edgesDatas[i].controlNumber = castScriptNode.OutputPort.connections.f
+                    //インプット番号の保存(アウトプット番号はこのノードの管理番号なので保存しなくてよい)
+                    m_GraphAsset.nodes[listNumber].edgesDatas[i].inputNodeId =
+                }
+
             }
+
         }
         //管理番号のソート
         m_GraphAsset.nodes.Sort((node1,node2)=>node1.controlNumber-node2.controlNumber);
