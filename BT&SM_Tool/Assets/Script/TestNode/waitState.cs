@@ -8,7 +8,7 @@ public class waitState: GraphViewScriptBase
     private SMManager m_SMManager = default;
     public override void BTStart(SMManager manager)
     {
-        Debug.Log("waitState‚Å‚·");
+        Debug.Log("waitState‚Å‚·AorS‚ÅˆÚs‚µ‚Ü‚·");
         m_SMManager = manager;
     }
     public override void BTUpdate()

@@ -201,16 +201,18 @@ public static class GraphViewSave
                 m_GraphAsset.nodes[listNumber].controlNumber = castScriptNode.NodeID;
 
 
-                castScriptNode.OutputPort.connections.ToList();
-                for (int i = 0; i < castScriptNode.childCount; i++) {
-                    //場所の追加
-                    m_GraphAsset.nodes[listNumber].edgesDatas.Add(new EdgesData());
-                    //管理番号の保存
-                    m_GraphAsset.nodes[listNumber].edgesDatas[i].controlNumber = castScriptNode.OutputPort.connections.f
-                    //インプット番号の保存(アウトプット番号はこのノードの管理番号なので保存しなくてよい)
-                    m_GraphAsset.nodes[listNumber].edgesDatas[i].inputNodeId =
+                var edgeslist=castScriptNode.OutputPort.connections.ToList();
+                if (edgeslist.Count >= 0) { 
+                    for (int listCount= 0; listCount < edgeslist.Count; listCount++) {
+                        //場所の追加
+                        m_GraphAsset.nodes[listNumber].edgesDatas.Add(new EdgesData());
+                        ScriptNode castInputNode= edgeslist[listCount].input.node as ScriptNode;
+                        //管理番号の保存
+                        m_GraphAsset.nodes[listNumber].edgesDatas[listCount].controlNumber = listCount;
+                        //インプット番号の保存(アウトプット番号はこのノードの管理番号なので保存しなくてよい)
+                        m_GraphAsset.nodes[listNumber].edgesDatas[listCount].inputNodeId = castInputNode.NodeID;
+                    }
                 }
-
             }
 
         }

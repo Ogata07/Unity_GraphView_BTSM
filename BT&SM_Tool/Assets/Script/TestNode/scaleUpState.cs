@@ -16,9 +16,9 @@ public class scaleUpState : GraphViewScriptBase
     }
     public override void BTUpdate()
     {
-        if (this.transform.localScale.x > 0)
+        if (m_SMManager.transform.localScale.x > 1)
         {
-            this.transform.localScale += new Vector3(0.1f, 0.1f, 0.1f);
+            m_SMManager.transform.localScale += new Vector3(0.1f, 0.1f, 0.1f);
         }
         time -= Time.deltaTime;
         if (time < 0)

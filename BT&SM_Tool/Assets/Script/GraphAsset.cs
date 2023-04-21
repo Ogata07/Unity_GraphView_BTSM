@@ -33,11 +33,10 @@ public class EdgeData{
     //ノードのアウトプット番号
     public int outputNodeId;
 }
+[System.Serializable]
 public class EdgesData {
     //エッジの管理番号
     public int controlNumber;
-    //ノードのアウトプット番号
-    public int outputNodeId;
     //ノードのインプット番号
     public int inputNodeId;
 }
