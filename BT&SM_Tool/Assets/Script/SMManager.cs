@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Networking.Types;
 /// <summary>
 /// ステートマシンのヴィジュアルスクリプティングを動作させるスクリプト
 /// </summary>
@@ -50,15 +51,14 @@ public class SMManager : MonoBehaviour
     {
         Debug.Log("次のノードに移行します");
         ScriptChange();
-        //エッジを確認して次がある確認
-        //ノードデータに繋がっているノードデータも渡してもよかったかも
-        //graphAsset.edges.FindAll(i=>i.outputNodeId==1);
-        //次が無ければnullを返す(次がないのにNextを呼んでる方が悪い)
-        //次がある場合は次のGraphViewScriptBaseを渡す
     }
+    /// <summary>
+    /// 次のステートに移行(複数版)
+    /// </summary>
+    /// <param name="count">エッジの管理番号を入力してください</param>
     public void Next(int count) {
         Debug.Log("次のノードに移行します");
-
+        ScriptChange(count);
     }
     /// <summary>
     /// 現在のノードから繋がっているノードの管理番号を取得する
@@ -67,10 +67,16 @@ public class SMManager : MonoBehaviour
     {
         //TODO ListをDictionaryで作り直した方がいいかも(エッジにも番号振って管理もあり)
         //エッジの中から現在の実行ノードに繋がっているエッジを探す
-        var outputEdge =graphAsset.edges.Find(i=>i.outputNodeId== activeNodeId);
+        //var outputEdge =graphAsset.edges.Find(i=>i.outputNodeId== activeNodeId);
         //探したらそれにつながっているinputNodeに繋がっているノード番号を取得する
-        var inputNodeId = outputEdge.inputNodeId;
+        //var inputNodeId = outputEdge.inputNodeId;
         //その番号のノードスクリプトを実行する
+        int inputNodeId = graphAsset.nodes[activeNodeId].edgesDatas[0].inputNodeId;
+        ScriptSet(inputNodeId);
+        
+    }
+    private void ScriptChange(int Number) {
+        int inputNodeId=graphAsset.nodes[activeNodeId].edgesDatas[Number].inputNodeId;
         ScriptSet(inputNodeId);
     }
     /// <summary>
@@ -90,5 +96,10 @@ public class SMManager : MonoBehaviour
         graphViewScriptBase = activeScript as GraphViewScriptBase;
         //Startを実行するのでtrueにする
         startFlag = true;
+    }
+    private void OnGUI()
+    {
+        GUILayout.Label($"現在実行中のノードの管理番号: {activeNodeId}");
+        GUILayout.Label($"実行中のスクリプト↓: {graphAsset.nodes[activeNodeId].Object}");
     }
 }

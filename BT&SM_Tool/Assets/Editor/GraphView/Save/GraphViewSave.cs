@@ -112,6 +112,7 @@ public static class GraphViewSave
     private static void AddNumbar(Node node) {
         //管理番号を付与する
         //スクリプトノードしか番号を振れない
+        //TODO セーブした後に追加するとうまく挙動しない
         if (node is ScriptNode){
             ScriptNode castScriptNode = node as ScriptNode;
 
@@ -167,7 +168,7 @@ public static class GraphViewSave
         return null;
     }
     /// <summary>
-    /// スタートノードを祖沿いたすべてのノードに管理番号を付与する
+    /// スタートノードをのぞいたすべてのノードに管理番号を付与する
     /// </summary>
     private static void ListAddNumbar() { 
     
@@ -191,17 +192,29 @@ public static class GraphViewSave
             m_GraphAsset.nodes[listNumber].position = node.GetPosition().position;
 
 
-            //スクリプトの保存
+            
             if (node is ScriptNode) {
                 ScriptNode castScriptNode = node as ScriptNode;
+                //スクリプトの保存
                 m_GraphAsset.nodes[listNumber].Object = castScriptNode.ObjectField.value;
-            }
-            //管理番号の保存
-            if (node is ScriptNode)
-            {
-                ScriptNode castScriptNode = node as ScriptNode;
+                //管理番号の保存
                 m_GraphAsset.nodes[listNumber].controlNumber = castScriptNode.NodeID;
+
+
+                var edgeslist=castScriptNode.OutputPort.connections.ToList();
+                if (edgeslist.Count >= 0) { 
+                    for (int listCount= 0; listCount < edgeslist.Count; listCount++) {
+                        //場所の追加
+                        m_GraphAsset.nodes[listNumber].edgesDatas.Add(new EdgesData());
+                        ScriptNode castInputNode= edgeslist[listCount].input.node as ScriptNode;
+                        //管理番号の保存
+                        m_GraphAsset.nodes[listNumber].edgesDatas[listCount].controlNumber = listCount;
+                        //インプット番号の保存(アウトプット番号はこのノードの管理番号なので保存しなくてよい)
+                        m_GraphAsset.nodes[listNumber].edgesDatas[listCount].inputNodeId = castInputNode.NodeID;
+                    }
+                }
             }
+
         }
         //管理番号のソート
         m_GraphAsset.nodes.Sort((node1,node2)=>node1.controlNumber-node2.controlNumber);
