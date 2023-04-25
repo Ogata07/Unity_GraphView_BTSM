@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Networking.Types;
 /// <summary>
 /// ステートマシンのヴィジュアルスクリプティングを動作させるスクリプト
 /// </summary>
@@ -95,5 +96,10 @@ public class SMManager : MonoBehaviour
         graphViewScriptBase = activeScript as GraphViewScriptBase;
         //Startを実行するのでtrueにする
         startFlag = true;
+    }
+    private void OnGUI()
+    {
+        GUILayout.Label($"現在実行中のノードの管理番号: {activeNodeId}");
+        GUILayout.Label($"実行中のスクリプト↓: {graphAsset.nodes[activeNodeId].Object}");
     }
 }

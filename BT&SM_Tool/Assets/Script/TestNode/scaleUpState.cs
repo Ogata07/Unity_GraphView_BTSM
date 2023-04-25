@@ -7,7 +7,7 @@ public class scaleUpState : GraphViewScriptBase
 {
     private SMManager m_SMManager = default;
     private float time = default;
-    private float settime = 10;
+    private float settime = 5;
     public override void BTStart(SMManager manager)
     {
         Debug.Log("scaleUpState‚Å‚·");
@@ -16,7 +16,7 @@ public class scaleUpState : GraphViewScriptBase
     }
     public override void BTUpdate()
     {
-        if (m_SMManager.transform.localScale.x > 1)
+        if (m_SMManager.transform.localScale.x < 1)
         {
             m_SMManager.transform.localScale += new Vector3(0.1f, 0.1f, 0.1f);
         }
