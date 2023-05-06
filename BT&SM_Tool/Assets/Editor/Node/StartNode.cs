@@ -14,7 +14,10 @@ public class StartNode : Node
         OutputPort = Port.Create<Edge>(Orientation.Horizontal, Direction.Output,
         Port.Capacity.Single, typeof(Port));
         outputContainer.Add(OutputPort);
-        mainContainer.Add(new IntElement());
-        contentContainer.Add(new IntElement());
+        //extensionContainer.Add(new IntElement());
+        //mainContainer.Add(new IntElement());
+        //contentContainer.Add(new IntElement());
+        RefreshExpandedState();
+
     }
 }

@@ -25,15 +25,21 @@ public class NodeSearchWindow : ScriptableObject,ISearchWindowProvider
     //ウィンドウの作成
     public List<SearchTreeEntry> CreateSearchTree(SearchWindowContext context)
     {
-        var entries = new List<SearchTreeEntry>
-        {
-            new SearchTreeGroupEntry(new GUIContent("Create Node")),
-            new SearchTreeGroupEntry(new GUIContent("Node")) { level = 1 }
-        };
-        foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies()) {
-            foreach (var type in assembly.GetTypes()) {
+        List<SearchTreeEntry> entries = new List<SearchTreeEntry>();
+        entries.Add(new SearchTreeGroupEntry(new GUIContent("Create Node")));
+        entries.Add(new SearchTreeGroupEntry(new GUIContent("Node")) { level = 1 });
+        foreach (System.Reflection.Assembly assembly in AppDomain.CurrentDomain.GetAssemblies()) {
+            foreach (Type type in assembly.GetTypes()) {
                 if (type.IsSubclassOf(typeof(GraphViewScriptBase))) {
                     entries.Add(new SearchTreeEntry(new GUIContent(type.Name)) { level = 2, userData = type });
+                }
+            }
+        }
+        entries.Add(new SearchTreeGroupEntry(new GUIContent("Test")) { level = 1 });
+        foreach (System.Reflection.Assembly assembly in AppDomain.CurrentDomain.GetAssemblies()) {
+            foreach (Type type in assembly.GetTypes()) {
+                if (type.IsSubclassOf(typeof(Node))) { 
+                    entries.Add(new SearchTreeEntry(new GUIContent(type.Name)){ level = 2,userData=type});
                 }
             }
         }
@@ -50,8 +56,8 @@ public class NodeSearchWindow : ScriptableObject,ISearchWindowProvider
 
             //スクリプトノードの作成と各種設定
             ScriptNode debugNode = new ScriptNode();
-            var worldMousePosition = m_EditorWindow.rootVisualElement.ChangeCoordinatesTo(m_EditorWindow.rootVisualElement.parent, context.screenMousePosition - m_EditorWindow.position.position);
-            var localMousePosition = m_GraphViewManager.contentViewContainer.WorldToLocal(worldMousePosition);
+            Vector2 worldMousePosition = m_EditorWindow.rootVisualElement.ChangeCoordinatesTo(m_EditorWindow.rootVisualElement.parent, context.screenMousePosition - m_EditorWindow.position.position);
+            Vector2 localMousePosition = m_GraphViewManager.contentViewContainer.WorldToLocal(worldMousePosition);
 
             //ノードの位置を設定
             debugNode.SetPosition(new Rect(localMousePosition, new Vector2(100, 100)));
@@ -65,6 +71,13 @@ public class NodeSearchWindow : ScriptableObject,ISearchWindowProvider
 
             //画面に追加
             m_GraphViewManager.AddElement(debugNode);
+        }
+        if(type.IsSubclassOf(typeof(Node))) {
+            if (SearchTreeEntry.userData is GraphElement) {
+                var cast = SearchTreeEntry.userData as GraphElement;
+                m_GraphViewManager.AddElement(cast);
+
+            }
         }
         Debug.Log("ノードを追加しました");
         return true;
