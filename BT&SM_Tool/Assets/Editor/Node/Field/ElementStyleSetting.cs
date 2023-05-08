@@ -21,4 +21,18 @@ public class ElementStyleSetting : VisualElement
         visual.style.backgroundColor = new StyleColor(Color.grey);
 
     }
+    public static void SetMargin(VisualElement element, float px)
+    {
+        element.style.marginLeft = px;
+        element.style.marginTop = px;
+        element.style.marginRight = px;
+        element.style.marginBottom = px;
+    }
+    public static void SetPadding(VisualElement element, float px)
+    {
+        element.style.paddingLeft = px;
+        element.style.paddingTop = px;
+        element.style.paddingRight = px;
+        element.style.paddingBottom = px;
+    }
 }

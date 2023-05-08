@@ -72,12 +72,13 @@ public class NodeSearchWindow : ScriptableObject,ISearchWindowProvider
             //âÊñ Ç…í«â¡
             m_GraphViewManager.AddElement(debugNode);
         }
-        if(type.IsSubclassOf(typeof(Node))) {
-            if (SearchTreeEntry.userData is GraphElement) {
-                var cast = SearchTreeEntry.userData as GraphElement;
-                m_GraphViewManager.AddElement(cast);
 
-            }
+        if(type.IsSubclassOf(typeof(Node))) {
+            Debug.Log(SearchTreeEntry.userData);
+
+            var cast = Type.GetType(SearchTreeEntry.userData.ToString());
+            var ElementCast= (GraphElement)Activator.CreateInstance(cast);
+            m_GraphViewManager.AddElement(ElementCast);
         }
         Debug.Log("ÉmÅ[ÉhÇí«â¡ÇµÇ‹ÇµÇΩ");
         return true;
