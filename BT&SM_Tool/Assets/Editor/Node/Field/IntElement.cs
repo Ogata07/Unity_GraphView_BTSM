@@ -25,15 +25,19 @@ public class IntElement:VisualElement
 
         ElementStyleSetting.Setting(this);
         style.flexWrap = new StyleEnum<Wrap>(Wrap.Wrap);
+        //名前
         fieldNameLabel = new UnityEngine.UIElements.Label();
         fieldNameLabel.text = "フィールド名";
         fieldNameLabel.style.width = new StyleLength(new Length(100, LengthUnit.Percent));
         //文字がはみ出た時の対応方法を指定
+        fieldNameLabel.style.whiteSpace = WhiteSpace.Normal;
         Add(fieldNameLabel);
+
         style.flexDirection = new StyleEnum<FlexDirection>(FlexDirection.Row);
-        //style.alignItems = new StyleEnum<Align>(Align.Center);
+
+        //値
         integerField = new IntegerField();
-        integerField.style.width = new StyleLength(new Length(50, LengthUnit.Pixel));
+        integerField.style.width = new StyleLength(new Length(90, LengthUnit.Percent));
         //文字がはみ出た時の対応方法を指定
         integerField.style.whiteSpace=WhiteSpace.Normal;
         integerField.style.unityTextAlign = new StyleEnum<TextAnchor>(TextAnchor.MiddleLeft);

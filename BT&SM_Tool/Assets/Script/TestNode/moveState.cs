@@ -7,7 +7,7 @@ public class moveState : GraphViewScriptBase
 {
     private SMManager m_SMManager = default;
     private float time =default;
-    private float settime = 10;
+    public float settime = 10;
     private Rigidbody rigidbody=null;
     public override void BTStart(SMManager manager)
     {

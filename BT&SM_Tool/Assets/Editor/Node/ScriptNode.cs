@@ -11,6 +11,7 @@ using UnityEngine.UIElements;
 public class ScriptNode : Node
 {
     private ObjectField m_ObjectField = default;
+    private readonly ScriptFieldCheck scriptFieldCheck= new ScriptFieldCheck();
     public Port OutputPort { get; set; }
     public ObjectField ObjectField
     {
@@ -36,8 +37,10 @@ public class ScriptNode : Node
         //TODO MonoScriptから変更
         m_ObjectField.objectType = typeof(UnityEngine.Object);
         mainContainer.Add(m_ObjectField);
+        //m_ObjectFieldの値が変更されたときに行う処理
         m_ObjectField.RegisterCallback<ChangeEvent<String>>(events =>{
             TitleChange();
+            scriptFieldCheck.Check(ObjectField.value,this);
         });
     }
     private void PortAdd() {

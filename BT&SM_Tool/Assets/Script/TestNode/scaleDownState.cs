@@ -7,7 +7,7 @@ public class scaleDownState : GraphViewScriptBase
 {
     private SMManager m_SMManager = default;
     private float time = default;
-    private float settime = 5;
+    public float settime = 5;
     public override void BTStart(SMManager manager)
     {
         Debug.Log("scaleDownState‚Å‚·");

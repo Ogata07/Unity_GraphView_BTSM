@@ -1,7 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
+using UnityEditor.UIElements;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class TestElementNode : Node
 {
@@ -15,7 +15,11 @@ public class TestElementNode : Node
         InputPort = Port.Create<Edge>(Orientation.Horizontal, Direction.Input,
             Port.Capacity.Single, typeof(Port));
         inputContainer.Add(InputPort);
-        extensionContainer.Add(new IntElement());
+        extensionContainer.Add(new DataElement<IntegerField,int>(9));
+        extensionContainer.Add(new DataElement<FloatField,float>(10.0f));
+        extensionContainer.Add(new DataElement<Vector3Field, Vector3>(new Vector3(1,2,3)));
+        extensionContainer.Add(new DataElement<TextField, string>("Hello"));
         RefreshExpandedState();
+        
     }
 }
