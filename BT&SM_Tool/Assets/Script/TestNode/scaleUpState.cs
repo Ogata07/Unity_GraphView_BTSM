@@ -8,6 +8,8 @@ public class scaleUpState : GraphViewScriptBase
     private SMManager m_SMManager = default;
     private float time = default;
     public float settime = 5;
+    private int a = 0;
+    private decimal b = 0;
     public override void BTStart(SMManager manager)
     {
         Debug.Log("scaleUpState‚Å‚·");
