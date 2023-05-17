@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -25,6 +26,11 @@ public static class GraphViewLoad
             CreateEdge(edge, graphViewManager);
         }
     }
+    /// <summary>
+    /// ノードの生成
+    /// </summary>
+    /// <param name="nodeData"></param>
+    /// <param name="graphViewManager"></param>
     private static void CreateNode(NodeData nodeData,GraphViewManager graphViewManager) {
         var node = new ScriptNode();
         //ノードの位置
@@ -35,9 +41,38 @@ public static class GraphViewLoad
             node.ObjectField.value = nodeData.Object;
         //管理番号
         node.NodeID = nodeData.controlNumber;
+        //fieldエレメント追加
+        //node.extensionContainer.Add(new DataElement<FloatField,float>(100));
+        //node.RefreshExpandedState();
+        //fieldエレメント追加
+        //追加する数を集計
+        int fieldCount=nodeData.fieldData.Count;
+        //回数分生成を回す
+        for (int fieldNumber = 0; fieldNumber < fieldCount; fieldNumber++) { 
+            //型名取得
+            string TypeName = nodeData.fieldData[fieldNumber].TypeName;
+            //値の取得
+            string Value = nodeData.fieldData[fieldNumber].ValueData;
+            switch (TypeName)
+            {
+                case "float":
+                    float value =Convert.ToSingle(Value);
+                    node.extensionContainer.Add(new DataElement<FloatField, float>(value));
+                    break;
+                default:
+                    break;
+            }
+        }
+        //extensionContainerに追加したら忘れず実行しないと隠されてしまう
+        node.RefreshExpandedState();
         //画面に追加
         graphViewManager.AddElement(node);
     } 
+    /// <summary>
+    /// エッジの生成
+    /// </summary>
+    /// <param name="edgeData"></param>
+    /// <param name="graphViewManager"></param>
     private static void CreateEdge(EdgeData edgeData,GraphViewManager graphViewManager) {
         var node = graphViewManager.nodes.ToList();
         Debug.Log("現在生成されているノードは"+node.Count+"個です");

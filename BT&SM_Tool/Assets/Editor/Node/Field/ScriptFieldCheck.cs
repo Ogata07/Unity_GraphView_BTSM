@@ -15,7 +15,7 @@ using System.Diagnostics.Contracts;
 /// </summary>
 public class ScriptFieldCheck : MonoBehaviour
 {
-    public void Check(UnityEngine.Object _object, ScriptNode scriptNode) { 
+    public void Check(UnityEngine.Object _object, ScriptNode scriptNode) {
     //パブリックフィールドを取得
     MonoScript value=_object as MonoScript;
     Type getType = value.GetClass();
@@ -33,19 +33,31 @@ public class ScriptFieldCheck : MonoBehaviour
         if (scriptNode.NodeID == 0) {
             //fieldInfos.GetValue()で値の受け渡しができるかも？
             foreach (FieldInfo f in fieldInfos) {
-                AddVisualElement(f.FieldType,scriptNode);
+
+                AddVisualElement(f,scriptNode, getType);
             }
         }
     }
-    private void AddVisualElement(Type fieldInfo,ScriptNode scriptNode)
+    /// <summary>
+    /// 新規追加時に使うFieldの追加を行う部分
+    ///</summary>
+    /// <param name="fieldInfo"></param>
+    /// <param name="scriptNode"></param>
+    /// <param name="getType"></param>
+    private void AddVisualElement(FieldInfo fieldInfo,ScriptNode scriptNode,Type getType)
     {
-        Debug.Log(fieldInfo.ToString());
-        switch (fieldInfo.ToString()) {
+        switch (fieldInfo.FieldType.ToString()) {
             case "Vector2":
                 print("WW");
                 break;
             case "System.Single"://Float型
-                scriptNode.extensionContainer.Add(new DataElement<FloatField, float>());
+                //Fieldの名前を取得
+                String FieldName=fieldInfo.Name;
+                //インスタンス生成
+                var activeScript = Activator.CreateInstance(getType);
+                Debug.Log("名前＝"+fieldInfo.ToString() + "値" + fieldInfo.GetValue(activeScript));
+                float Value = (float)fieldInfo.GetValue(activeScript);
+                scriptNode.extensionContainer.Add(new DataElement<FloatField, float>(Value));
                 scriptNode.RefreshExpandedState();
                 break;
             case "double":
