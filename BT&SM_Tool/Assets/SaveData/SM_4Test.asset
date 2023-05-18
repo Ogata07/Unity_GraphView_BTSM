@@ -13,26 +13,20 @@ MonoBehaviour:
   m_Name: SM_4Test
   m_EditorClassIdentifier: 
   nodes:
-  - position: {x: 209, y: 158}
+  - position: {x: 213, y: 159}
     scriptID: 
     Object: {fileID: 11500000, guid: 5f73acff98009bc40aabc22f46a14ab5, type: 3}
     controlNumber: 0
     fieldData:
     - TypeName: float
-      ValueData: 1.4
-    edgesDatas:
-    - controlNumber: 0
-      inputNodeId: 1
-    - controlNumber: 1
-      inputNodeId: 2
-  - position: {x: 209, y: 264}
+      ValueData: 1.2
+    edgesDatas: []
+  - position: {x: 211, y: 302}
     scriptID: 
     Object: {fileID: 11500000, guid: c34182d8250806d42bb7fdc4332306bf, type: 3}
     controlNumber: 1
     fieldData: []
-    edgesDatas:
-    - controlNumber: 0
-      inputNodeId: 0
+    edgesDatas: []
   - position: {x: 124, y: 42}
     scriptID: 
     Object: {fileID: 11500000, guid: 61733edf954e0594ab3077da3c6cd171, type: 3}
@@ -46,20 +40,10 @@ MonoBehaviour:
     Object: {fileID: 11500000, guid: 57ea224fd0015a442a2ae8efda645e28, type: 3}
     controlNumber: 3
     fieldData: []
-    edgesDatas:
-    - controlNumber: 0
-      inputNodeId: 0
+    edgesDatas: []
   edges:
-  - inputNodeId: 1
-    outputNodeId: 0
-  - inputNodeId: 0
-    outputNodeId: 1
-  - inputNodeId: 2
-    outputNodeId: 0
   - inputNodeId: 3
     outputNodeId: 2
-  - inputNodeId: 0
-    outputNodeId: 3
   GetObject:
   - Object: {fileID: 0}
     ss: 0
