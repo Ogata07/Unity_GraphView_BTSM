@@ -68,7 +68,7 @@ public class NodeSearchWindow : ScriptableObject,ISearchWindowProvider
             debugNode.ObjectField.objectType = typeof(UnityEngine.Object);
             //ObjectField‚É‘}“ü
             debugNode.ObjectField.value = AssetDatabase.LoadMainAssetAtPath(assetspath);
-
+            debugNode.AddStart();
             //‰æ–Ê‚É’Ç‰Á
             m_GraphViewManager.AddElement(debugNode);
         }

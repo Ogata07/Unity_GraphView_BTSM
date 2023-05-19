@@ -218,10 +218,12 @@ public static class GraphViewSave
                         //TODO　現在はどちらもStringでの保存ほかの方法が見つかればそれに変更
                         var fieldElement = castScriptNode.extensionContainer[i];
                         var castFieldElement = fieldElement as DataElement<FloatField,float>;
-                        //型名の保存
-                        m_GraphAsset.nodes[listNumber].fieldData[i].TypeName = "float";
+                        //型の保存
+                        m_GraphAsset.nodes[listNumber].fieldData[i].typeName = "float";
+                        //名前の保存
+                        //m_GraphAsset.nodes[listNumber].fieldData[i].typeName=
                         //値の保存
-                        m_GraphAsset.nodes[listNumber].fieldData[i].ValueData = castFieldElement.Field.value.ToString();
+                        m_GraphAsset.nodes[listNumber].fieldData[i].valueData = castFieldElement.Field.value.ToString();
                     }
                 }
 

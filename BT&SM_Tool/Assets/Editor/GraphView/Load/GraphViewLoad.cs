@@ -50,9 +50,9 @@ public static class GraphViewLoad
         //‰ñ”•ª¶¬‚ğ‰ñ‚·
         for (int fieldNumber = 0; fieldNumber < fieldCount; fieldNumber++) { 
             //Œ^–¼æ“¾
-            string TypeName = nodeData.fieldData[fieldNumber].TypeName;
+            string TypeName = nodeData.fieldData[fieldNumber].typeName;
             //’l‚Ìæ“¾
-            string Value = nodeData.fieldData[fieldNumber].ValueData;
+            string Value = nodeData.fieldData[fieldNumber].valueData;
             switch (TypeName)
             {
                 case "float":

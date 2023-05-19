@@ -49,9 +49,11 @@ public class FieldData
 {
     //Œ^–¼‚ðString‚Å•ÛŠÇ
     //TODO enum‚â•Ê‚Ì•û–@‚ðŒŸ“¢‚·‚é‚æ‚¤‚É
-    public String TypeName = default;
+    public String typeName = default;
+    //Field–¼
+    public string fieldName = default;
     //’l‚ðString‚Å•ÛŠÇ
-    public String ValueData = default;
+    public String valueData = default;
 }
 [System.Serializable]
 public class TestObjects

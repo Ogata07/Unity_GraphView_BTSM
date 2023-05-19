@@ -39,8 +39,7 @@ public class ScriptNode : Node
         mainContainer.Add(m_ObjectField);
         //m_ObjectFieldの値が変更されたときに行う処理
         m_ObjectField.RegisterCallback<ChangeEvent<String>>(events =>{
-            TitleChange();
-            scriptFieldCheck.Check(ObjectField.value,this);
+            AddStart();
         });
     }
     private void PortAdd() {
@@ -50,6 +49,14 @@ public class ScriptNode : Node
         OutputPort = Port.Create<Edge>(Orientation.Horizontal, Direction.Output,
             Port.Capacity.Multi, typeof(Port));
         outputContainer.Add(OutputPort);
+    }
+
+    /// <summary>
+    /// NodeSearchWindowから生成されたときに値が変更されたときと同じ処理をさせる
+    /// </summary>
+    public void AddStart() {
+        TitleChange();
+        scriptFieldCheck.Check(ObjectField.value, this);
     }
     private void TitleChange() {
         Debug.Log("値が変更されました");
