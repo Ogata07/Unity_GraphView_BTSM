@@ -9,6 +9,7 @@ public class DataElement<T,V>:FieldElement
     where T : BaseField<V>,new()
 {
     public T Field=default;
+    public string FieldName=default;
     public DataElement()
     {
         FloatAdd();
@@ -18,9 +19,15 @@ public class DataElement<T,V>:FieldElement
         FloatAdd();
         Field.value = Value;
     }
+    public DataElement(string Name,V Value)
+    {
+        FloatAdd();
+        Field.value = Value;
+        fieldNameLabel.text=Name;
+    }
     private void  FloatAdd()
     {
-        //floatField = new ();
+        //Œ^¶¬
         Field=new T();
         Field.style.width = new StyleLength(new Length(90, LengthUnit.Percent));
         //•¶š‚ª‚Í‚İo‚½‚Ì‘Î‰•û–@‚ğw’è

@@ -57,7 +57,7 @@ public class ScriptFieldCheck : MonoBehaviour
                 var activeScript = Activator.CreateInstance(getType);
                 Debug.Log("ñºëOÅÅ"+fieldInfo.ToString() + "íl" + fieldInfo.GetValue(activeScript));
                 float Value = (float)fieldInfo.GetValue(activeScript);
-                scriptNode.extensionContainer.Add(new DataElement<FloatField, float>(Value));
+                scriptNode.extensionContainer.Add(new DataElement<FloatField, float>(FieldName, Value));
                 scriptNode.RefreshExpandedState();
                 break;
             case "double":
