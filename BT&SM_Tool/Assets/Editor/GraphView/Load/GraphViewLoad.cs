@@ -42,8 +42,6 @@ public static class GraphViewLoad
         //管理番号
         node.NodeID = nodeData.controlNumber;
         //fieldエレメント追加
-        //node.extensionContainer.Add(new DataElement<FloatField,float>(100));
-        //node.RefreshExpandedState();
         //fieldエレメント追加
         //追加する数を集計
         int fieldCount=nodeData.fieldData.Count;
@@ -51,13 +49,15 @@ public static class GraphViewLoad
         for (int fieldNumber = 0; fieldNumber < fieldCount; fieldNumber++) { 
             //型名取得
             string TypeName = nodeData.fieldData[fieldNumber].typeName;
+            //名前の取得
+            string fieldName= nodeData.fieldData[fieldNumber].fieldName;
             //値の取得
             string Value = nodeData.fieldData[fieldNumber].valueData;
             switch (TypeName)
             {
-                case "float":
+                case "System.Single":
                     float value =Convert.ToSingle(Value);
-                    node.extensionContainer.Add(new DataElement<FloatField, float>(value));
+                    node.extensionContainer.Add(new DataElement<FloatField, float>(fieldName, value));
                     break;
                 default:
                     break;

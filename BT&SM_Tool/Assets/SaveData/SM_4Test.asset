@@ -17,9 +17,7 @@ MonoBehaviour:
     scriptID: 
     Object: {fileID: 11500000, guid: 5f73acff98009bc40aabc22f46a14ab5, type: 3}
     controlNumber: 0
-    fieldData:
-    - TypeName: float
-      ValueData: 1.4
+    fieldData: []
     edgesDatas:
     - controlNumber: 0
       inputNodeId: 2
@@ -37,7 +35,10 @@ MonoBehaviour:
     scriptID: 
     Object: {fileID: 11500000, guid: 61733edf954e0594ab3077da3c6cd171, type: 3}
     controlNumber: 2
-    fieldData: []
+    fieldData:
+    - typeName: System.Single
+      fieldName: settime
+      valueData: 5
     edgesDatas:
     - controlNumber: 0
       inputNodeId: 3
@@ -45,7 +46,10 @@ MonoBehaviour:
     scriptID: 
     Object: {fileID: 11500000, guid: 57ea224fd0015a442a2ae8efda645e28, type: 3}
     controlNumber: 3
-    fieldData: []
+    fieldData:
+    - typeName: System.Single
+      fieldName: settime
+      valueData: 11
     edgesDatas:
     - controlNumber: 0
       inputNodeId: 0

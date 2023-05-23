@@ -3,6 +3,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
+using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.Networking.Types;
 /// <summary>
@@ -40,6 +42,7 @@ public class SMManager : MonoBehaviour
             graphViewScriptBase.BTUpdate();
         else
         {
+            FieldValueSet();
             graphViewScriptBase.BTStart(this);
             startFlag = false;
         }
@@ -96,6 +99,50 @@ public class SMManager : MonoBehaviour
         graphViewScriptBase = activeScript as GraphViewScriptBase;
         //Startを実行するのでtrueにする
         startFlag = true;
+    }
+    /// <summary>
+    /// 各種実行クラスのスクリプトからFieldを読み込んで保存しているデータ上書きさせる   
+    /// </summary>
+    private void FieldValueSet() {
+        //スクリプトから各種fieldを取得する
+        //保存しているデータを取得する
+        //同じ名前を比べて保存しているデータで上書きする
+        //管理番号でFieldがあるのか調べる
+        if (graphAsset.nodes[activeNodeId].fieldData.Count>0) {
+            for(int fieldcount=0;fieldcount< graphAsset.nodes[activeNodeId].fieldData.Count; fieldcount++)
+            {
+                string fieldName = graphAsset.nodes[activeNodeId].fieldData[fieldcount].fieldName.ToString();
+                String fieldType=graphAsset.nodes[activeNodeId].fieldData[fieldcount].typeName.ToString();
+                string value= graphAsset.nodes[activeNodeId].fieldData[fieldcount].valueData.ToString();
+                graphViewScriptBase
+                    .GetType()
+                    .GetField(fieldName)
+                    .SetValue(graphViewScriptBase, StringChange(fieldType,value));
+
+            }
+        }
+    }
+    /// <summary>
+    /// String型の値を対応した型に変換しなおして返却するクラスです
+    /// </summary>
+    /// <param name="TypeName">型の名前(.Net形式で)</param>
+    /// <param name="Value">Fieldの値</param>
+    /// <returns></returns>
+    private object StringChange(string TypeName,String Value) {
+        //object型作成
+        object value;
+        //String型の値をTypeの型に変換する
+        switch (TypeName)
+        {
+            case "System.Single":
+                value = Convert.ToSingle(Value);
+                break;
+            default:
+                value = null;
+                break;
+        }
+        //返却
+        return value;
     }
     private void OnGUI()
     {

@@ -219,9 +219,9 @@ public static class GraphViewSave
                         var fieldElement = castScriptNode.extensionContainer[i];
                         var castFieldElement = fieldElement as DataElement<FloatField,float>;
                         //Œ^‚Ì•Û‘¶
-                        m_GraphAsset.nodes[listNumber].fieldData[i].typeName = "float";
+                        m_GraphAsset.nodes[listNumber].fieldData[i].typeName = "System.Single";
                         //–¼‘O‚Ì•Û‘¶
-                        //m_GraphAsset.nodes[listNumber].fieldData[i].typeName=
+                        m_GraphAsset.nodes[listNumber].fieldData[i].fieldName= castFieldElement.fieldNameLabel.text;
                         //’l‚Ì•Û‘¶
                         m_GraphAsset.nodes[listNumber].fieldData[i].valueData = castFieldElement.Field.value.ToString();
                     }

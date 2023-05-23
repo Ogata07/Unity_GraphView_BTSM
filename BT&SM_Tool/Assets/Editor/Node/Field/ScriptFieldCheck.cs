@@ -23,19 +23,20 @@ public class ScriptFieldCheck : MonoBehaviour
             //BindingFlags.NonPublic
             BindingFlags.Instance
             | BindingFlags.Public
-            //| BindingFlags.DeclaredOnly
+            | BindingFlags.DeclaredOnly
             );
 
         //Node内にすでにあるならリセットする
         NodeReset.extensionContainerReset(scriptNode);
         //各種フィールド値を元にNodeに追加する
         //新規
-        if (scriptNode.NodeID == 0) {
-            //fieldInfos.GetValue()で値の受け渡しができるかも？
-            foreach (FieldInfo f in fieldInfos) {
+        //if (scriptNode.NodeID == 0) {
+        //    //fieldInfos.GetValue()で値の受け渡しができるかも？
 
-                AddVisualElement(f,scriptNode, getType);
-            }
+        //}
+        foreach (FieldInfo f in fieldInfos)
+        {
+            AddVisualElement(f, scriptNode, getType);
         }
     }
     /// <summary>
@@ -46,25 +47,37 @@ public class ScriptFieldCheck : MonoBehaviour
     /// <param name="getType"></param>
     private void AddVisualElement(FieldInfo fieldInfo,ScriptNode scriptNode,Type getType)
     {
+        Debug.Log(fieldInfo.FieldType.ToString());
+        //Fieldの名前を取得
+        String FieldName = fieldInfo.Name;
+        //インスタンス生成
+        var activeScript = Activator.CreateInstance(getType);
         switch (fieldInfo.FieldType.ToString()) {
-            case "Vector2":
-                print("WW");
+            case "System.Int32"://int型
+                int intValue = (int)fieldInfo.GetValue(activeScript);
+                scriptNode.extensionContainer.Add(new DataElement<IntegerField, int>(FieldName, intValue));
                 break;
             case "System.Single"://Float型
-                //Fieldの名前を取得
-                String FieldName=fieldInfo.Name;
-                //インスタンス生成
-                var activeScript = Activator.CreateInstance(getType);
-                Debug.Log("名前＝"+fieldInfo.ToString() + "値" + fieldInfo.GetValue(activeScript));
-                float Value = (float)fieldInfo.GetValue(activeScript);
-                scriptNode.extensionContainer.Add(new DataElement<FloatField, float>(FieldName, Value));
-                scriptNode.RefreshExpandedState();
+                ////Fieldの名前を取得
+                //String FieldName = fieldInfo.Name;
+                ////インスタンス生成
+                //var activeScript = Activator.CreateInstance(getType);
+                float floatValue = (float)fieldInfo.GetValue(activeScript);
+                scriptNode.extensionContainer.Add(new DataElement<FloatField, float>(FieldName, floatValue));
                 break;
-            case "double":
+            case "System.Boolean"://Bool型
+                //int intValue = (int)fieldInfo.GetValue(activeScript);
+                bool boolValue = (bool)fieldInfo.GetValue(activeScript);
+                scriptNode.extensionContainer.Add(new DataElement<Toggle, bool>(FieldName, boolValue));
+                break;
+            case "UnityEngine.GameObject"://GameObject型
+                GameObject gameObjectValue = (GameObject)fieldInfo.GetValue(activeScript);
+                scriptNode.extensionContainer.Add(new ObjectElement(gameObjectValue));
                 break;
             default: 
                 break;
 
         }
+        scriptNode.RefreshExpandedState();
     }
 }
