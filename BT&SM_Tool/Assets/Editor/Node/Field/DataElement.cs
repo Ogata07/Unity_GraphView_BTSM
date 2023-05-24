@@ -1,3 +1,6 @@
+using System.Reflection;
+using System.Web.UI;
+using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 /// <summary>
@@ -33,6 +36,13 @@ public class DataElement<T,V>:FieldElement
         //文字がはみ出た時の対応方法を指定
         Field.style.whiteSpace = WhiteSpace.Normal;
         Field.style.unityTextAlign = new StyleEnum<TextAnchor>(TextAnchor.MiddleLeft);
+        NameSet();
         Add(Field);
+    }
+    /// <summary>
+    /// 外部から読み取り用に名前欄を使用
+    /// </summary>
+    private void NameSet() { 
+        this.name= Field.GetType().Name;
     }
 }

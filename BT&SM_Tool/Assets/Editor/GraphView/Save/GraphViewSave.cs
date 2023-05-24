@@ -9,6 +9,7 @@ using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEditor.UIElements;
 using UnityEngine;
+using UnityEngine.UIElements;
 /// <summary>
 ///　エディタウィンドウの内容をGraphAssetに保存する
 /// </summary>
@@ -217,13 +218,14 @@ public static class GraphViewSave
                         m_GraphAsset.nodes[listNumber].fieldData.Add(new FieldData());
                         //TODO　現在はどちらもStringでの保存ほかの方法が見つかればそれに変更
                         var fieldElement = castScriptNode.extensionContainer[i];
-                        var castFieldElement = fieldElement as DataElement<FloatField,float>;
-                        //型の保存
-                        m_GraphAsset.nodes[listNumber].fieldData[i].typeName = "System.Single";
-                        //名前の保存
-                        m_GraphAsset.nodes[listNumber].fieldData[i].fieldName= castFieldElement.fieldNameLabel.text;
-                        //値の保存
-                        m_GraphAsset.nodes[listNumber].fieldData[i].valueData = castFieldElement.Field.value.ToString();
+                        Debug.Log(fieldElement.name.ToString());                        
+                        //var castFieldElement = fieldElement as DataElement<FloatField,float>;
+                        ////型の保存
+                        //m_GraphAsset.nodes[listNumber].fieldData[i].typeName = "System.Single";
+                        ////名前の保存
+                        //m_GraphAsset.nodes[listNumber].fieldData[i].fieldName= castFieldElement.fieldNameLabel.text;
+                        ////値の保存
+                        //m_GraphAsset.nodes[listNumber].fieldData[i].valueData = castFieldElement.Field.value.ToString();
                     }
                 }
 

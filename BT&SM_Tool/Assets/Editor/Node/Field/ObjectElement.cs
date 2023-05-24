@@ -1,14 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor.UIElements;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine.UIElements;
-using JetBrains.Annotations;
-using System.Windows.Forms;
-using Codice.CM.Common.Serialization;
-using System;
-
+/// <summary>
+/// FieldのGameObjectをGraphView上で表示させるスクリプト
+/// </summary>
 public class ObjectElement : VisualElement
 {
     public UnityEngine.UIElements.Label fieldNameLabel = default;
@@ -40,6 +35,7 @@ public class ObjectElement : VisualElement
         //文字がはみ出た時の対応方法を指定
         objectField.style.whiteSpace = WhiteSpace.Normal;
         objectField.style.unityTextAlign = new StyleEnum<TextAnchor>(TextAnchor.MiddleLeft);
+        this.name = "ObjectField";
         Add(objectField);
 
 

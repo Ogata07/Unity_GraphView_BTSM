@@ -12,6 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95ff673f3edc65d40bd9ac6eed66050b, type: 3}
   m_Name: FieldTest
   m_EditorClassIdentifier: 
-  nodes: []
+  nodes:
+  - position: {x: 341, y: 132}
+    scriptID: 
+    Object: {fileID: 11500000, guid: eca09a9ea8ef97a458185e87ea834b1d, type: 3}
+    controlNumber: 0
+    fieldData:
+    - typeName: 
+      fieldName: 
+      valueData: 
+    - typeName: 
+      fieldName: 
+      valueData: 
+    - typeName: 
+      fieldName: 
+      valueData: 
+    - typeName: 
+      fieldName: 
+      valueData: 
+    edgesDatas: []
   edges: []
   GetObject: []

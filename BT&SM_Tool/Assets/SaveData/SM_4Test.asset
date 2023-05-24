@@ -38,7 +38,7 @@ MonoBehaviour:
     fieldData:
     - typeName: System.Single
       fieldName: settime
-      valueData: 5
+      valueData: 1
     edgesDatas:
     - controlNumber: 0
       inputNodeId: 3
