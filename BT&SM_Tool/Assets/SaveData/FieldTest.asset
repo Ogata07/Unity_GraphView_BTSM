@@ -13,23 +13,29 @@ MonoBehaviour:
   m_Name: FieldTest
   m_EditorClassIdentifier: 
   nodes:
-  - position: {x: 341, y: 132}
+  - position: {x: 230, y: 51}
     scriptID: 
     Object: {fileID: 11500000, guid: eca09a9ea8ef97a458185e87ea834b1d, type: 3}
     controlNumber: 0
     fieldData:
+    - typeName: System.Single
+      fieldName: floatValue
+      valueData: 1.2
+    - typeName: System.Int32
+      fieldName: intValue
+      valueData: 1
+    - typeName: System.Boolean
+      fieldName: boolValue
+      valueData: True
     - typeName: 
       fieldName: 
       valueData: 
-    - typeName: 
-      fieldName: 
-      valueData: 
-    - typeName: 
-      fieldName: 
-      valueData: 
-    - typeName: 
-      fieldName: 
-      valueData: 
+    fieldDataObject:
+    - typeName: UnityEngine.GameObject
+      fieldName: gameObject
+      valueData: {fileID: 8202896443866443917, guid: 55ee6beaa1515e0459da781b35e79dbf, type: 3}
     edgesDatas: []
   edges: []
   GetObject: []
+  gameObject: {fileID: 0}
+  monoBehaviour: {fileID: 0}

@@ -216,9 +216,69 @@ public static class GraphViewSave
                     for (int i = 0; i < fieldCount; i++) {
                         //保存場所の追加
                         m_GraphAsset.nodes[listNumber].fieldData.Add(new FieldData());
+
                         //TODO　現在はどちらもStringでの保存ほかの方法が見つかればそれに変更
                         var fieldElement = castScriptNode.extensionContainer[i];
-                        Debug.Log(fieldElement.name.ToString());                        
+                        Debug.Log(fieldElement.name.ToString());
+
+                        //fieldElementの名前を取得
+                        string fieldElementName= fieldElement.name.ToString();
+                        Debug.Log(fieldElement is DataElement<FloatField, float>);
+                        if (fieldElement is DataElement<FloatField, float>) {
+                            var castFieldElement = fieldElement as DataElement<FloatField,float>;
+                            //型の保存
+                            m_GraphAsset.nodes[listNumber].fieldData[i].typeName = "System.Single";
+                            ////名前の保存
+                            m_GraphAsset.nodes[listNumber].fieldData[i].fieldName= castFieldElement.fieldNameLabel.text;
+                            ////値の保存
+                            m_GraphAsset.nodes[listNumber].fieldData[i].valueData = castFieldElement.Field.value.ToString();
+                            continue;
+                        }
+                        if(fieldElement is DataElement<IntegerField, int>){
+                            var castFieldElement = fieldElement as DataElement<IntegerField, int>;
+                            //型の保存
+                            m_GraphAsset.nodes[listNumber].fieldData[i].typeName = "System.Int32";
+                            ////名前の保存
+                            m_GraphAsset.nodes[listNumber].fieldData[i].fieldName = castFieldElement.fieldNameLabel.text;
+                            ////値の保存
+                            m_GraphAsset.nodes[listNumber].fieldData[i].valueData = castFieldElement.Field.value.ToString();
+                            continue;
+                        }
+                        if(fieldElement is DataElement<Toggle, bool>)
+                        {
+                            var castFieldElement = fieldElement as DataElement<Toggle, bool>;
+                            //型の保存
+                            m_GraphAsset.nodes[listNumber].fieldData[i].typeName = "System.Boolean";
+                            ////名前の保存
+                            m_GraphAsset.nodes[listNumber].fieldData[i].fieldName = castFieldElement.fieldNameLabel.text;
+                            ////値の保存
+                            m_GraphAsset.nodes[listNumber].fieldData[i].valueData = castFieldElement.Field.value.ToString();
+                            continue;
+                        }
+                        if (fieldElement is ObjectElement)
+                        {
+                            m_GraphAsset.nodes[listNumber].fieldDataObject.Add(new FieldDataObject());
+                            var castFieldElement = fieldElement as ObjectElement;
+                            //型の保存
+                            m_GraphAsset.nodes[listNumber].fieldDataObject[0].typeName = "UnityEngine.GameObject";
+                            //名前の保存
+                            m_GraphAsset.nodes[listNumber].fieldDataObject[0].fieldName = castFieldElement.fieldNameLabel.text;
+                            //値の保存
+                            var valueob = castFieldElement.objectField.value;
+                            GameObject gameObject= valueob as GameObject;
+
+
+                            m_GraphAsset.nodes[listNumber].fieldDataObject[0].valueData = gameObject;
+
+                            ////型の保存
+                            //m_GraphAsset.nodes[listNumber].fieldData[i].typeName = "UnityEngine.GameObject";
+                            //////名前の保存
+                            //m_GraphAsset.nodes[listNumber].fieldData[i].fieldName = castFieldElement.fieldNameLabel.text;
+                            //////値の保存
+                            //m_GraphAsset.nodes[listNumber].fieldData[i].valueData = castFieldElement.objectField.value.ToString();
+                            continue;
+                        }
+                        Debug.LogError("未分類のFieldElementがありました");
                         //var castFieldElement = fieldElement as DataElement<FloatField,float>;
                         ////型の保存
                         //m_GraphAsset.nodes[listNumber].fieldData[i].typeName = "System.Single";

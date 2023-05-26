@@ -13,6 +13,8 @@ public class GraphAsset :ScriptableObject
     public List<NodeData> nodes = new List<NodeData>();
     public List<EdgeData> edges = new List<EdgeData>();
     public List<TestObjects> GetObject=new List<TestObjects>();
+    public GameObject gameObject = default;
+    public MonoBehaviour monoBehaviour = null;
 }
 [System.Serializable]
 public class NodeData{
@@ -28,6 +30,7 @@ public class NodeData{
     //ノード内の管理番号
     public int controlNumber;
     public List<FieldData> fieldData=new List<FieldData>();
+    public List<FieldDataObject> fieldDataObject = new List<FieldDataObject>();
     public List<EdgesData> edgesDatas= new List<EdgesData>();
 }
 [System.Serializable]
@@ -54,6 +57,16 @@ public class FieldData
     public string fieldName = default;
     //値をStringで保管
     public String valueData = default;
+}
+[System.Serializable]
+public class FieldDataObject 
+{
+    //TODO enumや別の方法を検討するように
+    public String typeName = default;
+    //Field名
+    public string fieldName = default;
+    //値をStringで保管
+    public GameObject valueData = default;
 }
 [System.Serializable]
 public class TestObjects

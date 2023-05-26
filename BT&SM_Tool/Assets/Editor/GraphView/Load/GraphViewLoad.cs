@@ -56,8 +56,20 @@ public static class GraphViewLoad
             switch (TypeName)
             {
                 case "System.Single":
-                    float value =Convert.ToSingle(Value);
-                    node.extensionContainer.Add(new DataElement<FloatField, float>(fieldName, value));
+                    float floatvalue =Convert.ToSingle(Value);
+                    node.extensionContainer.Add(new DataElement<FloatField, float>(fieldName, floatvalue));
+                    break;
+                case "System.Int32":
+                    int intvalue = Convert.ToInt32(Value);
+                    node.extensionContainer.Add(new DataElement<IntegerField, int>(fieldName, intvalue));
+                    break;
+                case "System.Boolean":
+                    //bool boolvalue = Convert.ToBoolean(Value);
+                    //node.extensionContainer.Add(new DataElement<Toggle, bool>(fieldName, boolvalue));
+                    break;
+                case "UnityEngine.GameObject":
+                    //GameObject obhectvalue = Convert.(Value);
+                    //node.extensionContainer.Add(new DataElement<FloatField, float>(fieldName, obhectvalue));
                     break;
                 default:
                     break;

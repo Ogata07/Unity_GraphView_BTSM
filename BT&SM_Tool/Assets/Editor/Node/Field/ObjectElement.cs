@@ -8,11 +8,12 @@ public class ObjectElement : VisualElement
 {
     public UnityEngine.UIElements.Label fieldNameLabel = default;
     public ObjectField objectField = default;
-
-    public ObjectElement(GameObject objectValue)
+    public string FieldName = default;
+    public ObjectElement(string Name, GameObject objectValue)
     {
         ValueAdd();
         objectField.value = objectValue;
+        fieldNameLabel.text = Name;
     }
     private void ValueAdd()
     {

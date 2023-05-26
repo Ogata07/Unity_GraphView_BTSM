@@ -72,7 +72,7 @@ public class ScriptFieldCheck : MonoBehaviour
                 break;
             case "UnityEngine.GameObject"://GameObjectå^
                 GameObject gameObjectValue = (GameObject)fieldInfo.GetValue(activeScript);
-                scriptNode.extensionContainer.Add(new ObjectElement(gameObjectValue));
+                scriptNode.extensionContainer.Add(new ObjectElement(FieldName, gameObjectValue));
                 break;
             default: 
                 break;
