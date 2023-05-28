@@ -66,7 +66,7 @@ public class FieldDataObject
     //Field–¼
     public string fieldName = default;
     //’l‚ðString‚Å•ÛŠÇ
-    public GameObject valueData = default;
+    public UnityEngine.Object valueData = default;
 }
 [System.Serializable]
 public class TestObjects

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using UnityEditor.Experimental.GraphView;
 using UnityEditor.UIElements;
@@ -15,6 +16,7 @@ public static class GraphViewLoad
     public static void LoadNodeElement(GraphAsset m_GraphAsset) {
         GraphEditorWindow.ShowWindow(m_GraphAsset);
     }
+    private static ScriptFieldCheck scriptFieldCheck = new ScriptFieldCheck();
     //データからの作成
     public static void CreateGraphView(GraphViewManager graphViewManager) {
         GraphAsset loadGraphAsset = graphViewManager.m_GraphAsset;
@@ -46,35 +48,43 @@ public static class GraphViewLoad
         //追加する数を集計
         int fieldCount=nodeData.fieldData.Count;
         //回数分生成を回す
-        for (int fieldNumber = 0; fieldNumber < fieldCount; fieldNumber++) { 
-            //型名取得
-            string TypeName = nodeData.fieldData[fieldNumber].typeName;
-            //名前の取得
-            string fieldName= nodeData.fieldData[fieldNumber].fieldName;
-            //値の取得
-            string Value = nodeData.fieldData[fieldNumber].valueData;
-            switch (TypeName)
-            {
-                case "System.Single":
-                    float floatvalue =Convert.ToSingle(Value);
-                    node.extensionContainer.Add(new DataElement<FloatField, float>(fieldName, floatvalue));
-                    break;
-                case "System.Int32":
-                    int intvalue = Convert.ToInt32(Value);
-                    node.extensionContainer.Add(new DataElement<IntegerField, int>(fieldName, intvalue));
-                    break;
-                case "System.Boolean":
-                    //bool boolvalue = Convert.ToBoolean(Value);
-                    //node.extensionContainer.Add(new DataElement<Toggle, bool>(fieldName, boolvalue));
-                    break;
-                case "UnityEngine.GameObject":
-                    //GameObject obhectvalue = Convert.(Value);
-                    //node.extensionContainer.Add(new DataElement<FloatField, float>(fieldName, obhectvalue));
-                    break;
-                default:
-                    break;
-            }
+        //for (int fieldNumber = 0; fieldNumber < fieldCount; fieldNumber++) { 
+        //    //型名取得
+        //    string TypeName = nodeData.fieldData[fieldNumber].typeName;
+        //    //名前の取得
+        //    string fieldName= nodeData.fieldData[fieldNumber].fieldName;
+        //    //値の取得
+        //    string Value = nodeData.fieldData[fieldNumber].valueData;
+        //    switch (TypeName)
+        //    {
+        //        case "System.Single":
+        //            float floatvalue =Convert.ToSingle(Value);
+        //            node.extensionContainer.Add(new DataElement<FloatField, float>(fieldName, floatvalue));
+        //            break;
+        //        case "System.Int32":
+        //            int intvalue = Convert.ToInt32(Value);
+        //            node.extensionContainer.Add(new DataElement<IntegerField, int>(fieldName, intvalue));
+        //            break;
+        //        case "System.Boolean":
+        //            //bool boolvalue = Convert.ToBoolean(Value);
+        //            //node.extensionContainer.Add(new DataElement<Toggle, bool>(fieldName, boolvalue));
+        //            break;
+        //        case "UnityEngine.GameObject":
+        //            //GameObject obhectvalue = Convert.(Value);
+        //            //node.extensionContainer.Add(new DataElement<FloatField, float>(fieldName, obhectvalue));
+        //            break;
+        //        default:
+        //            break;
+        //    }
+        //}
+        scriptFieldCheck.Check(nodeData.Object, node);
+        var childon = node.extensionContainer[0];
+        Debug.Log(childon is DataElement<FloatField,float>);
+        if (childon is DataElement<FloatField, float>) { 
+            var castfloat= childon as DataElement<FloatField,float>;
+            Debug .Log(castfloat.FieldName);
         }
+        
         //extensionContainerに追加したら忘れず実行しないと隠されてしまう
         node.RefreshExpandedState();
         //画面に追加

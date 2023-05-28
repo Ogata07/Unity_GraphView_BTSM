@@ -27,9 +27,6 @@ MonoBehaviour:
     - typeName: System.Boolean
       fieldName: boolValue
       valueData: True
-    - typeName: 
-      fieldName: 
-      valueData: 
     fieldDataObject:
     - typeName: UnityEngine.GameObject
       fieldName: gameObject
