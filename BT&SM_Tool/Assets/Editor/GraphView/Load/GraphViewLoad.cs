@@ -3,11 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using Unity.Plastic.Newtonsoft.Json.Linq;
+using Unity.VisualScripting.YamlDotNet.Core.Tokens;
 using UnityEditor.Experimental.GraphView;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
 using UnityEngine.UIElements;
+using static Unity.VisualScripting.Metadata;
 /// <summary>
 /// GraphAssetの内容をエディタウィンドウに表示する
 /// </summary>
@@ -77,19 +80,83 @@ public static class GraphViewLoad
         //            break;
         //    }
         //}
+        //スクリプトからfieldの作成　
         scriptFieldCheck.Check(nodeData.Object, node);
-        var childon = node.extensionContainer[0];
-        Debug.Log(childon is DataElement<FloatField,float>);
-        if (childon is DataElement<FloatField, float>) { 
-            var castfloat= childon as DataElement<FloatField,float>;
-            Debug .Log(castfloat.FieldName);
-        }
+        //
+        int fieldElementCount= node.extensionContainer.childCount;
+        Debug.Log(fieldElementCount);
         
+        //GraphView上のfieldと保存先のデータを比べて異なっていたら保存先のデータを挿入
+        for (int chackCount = 0; chackCount < fieldElementCount; chackCount++) {
+            VisualElement child = node.extensionContainer[chackCount];
+            //Float型
+            if (child is DataElement<FloatField, float>)
+            {
+                ////変換
+                //var castfloat = childon as DataElement<FloatField, float>;
+                ////名前の取得
+                //string loadFieldName = castfloat.fieldNameLabel.text;
+                ////保存先のデータから同じ名前のフィールドがないか探す
+                //FieldData nodeData1 = nodeData.fieldData.Find(f => f.fieldName == loadFieldName);
+                //if (nodeData1 != null)
+                //{
+                //    float floatvalue = Convert.ToSingle(nodeData1.valueData);
+                //    castfloat.Field.value = floatvalue;
+                //}
+                chackSaveData<FloatField, float>(child, nodeData);
+            }
+            //Int型
+            if (child is DataElement<IntegerField, int>)
+            {
+                chackSaveData<IntegerField, int>(child, nodeData);
+            }
+            //Bool型
+            if (child is DataElement<Toggle, bool>)
+            {
+                chackSaveData<Toggle, bool>(child, nodeData);
+            }
+            //GameObject型
+            if (child is ObjectElement) {
+                ////変換
+                var castfloat = child as DataElement<FloatField, float>;
+                ////名前の取得
+                string loadFieldName = castfloat.fieldNameLabel.text;
+                ////保存先のデータから同じ名前のフィールドがないか探す
+                //FieldData nodeData1 = nodeData.fieldData.Find(f => f.fieldName == loadFieldName);
+            }
+        }
+
         //extensionContainerに追加したら忘れず実行しないと隠されてしまう
         node.RefreshExpandedState();
         //画面に追加
         graphViewManager.AddElement(node);
-    } 
+    }
+    static void chackSaveData<T,V>( VisualElement childon,  NodeData nodeData)
+    where T : BaseField<V>, new()
+    {
+
+        //変換
+        var castInt = childon as DataElement<T, V>;
+        //名前の取得
+        string loadFieldName = castInt.fieldNameLabel.text;
+        //保存先のデータから同じ名前のフィールドがないか探す
+        FieldData nodeData1 = nodeData.fieldData.Find(f => f.fieldName == loadFieldName);
+        if (nodeData1 != null)
+        {
+            //dynamic
+            if (typeof(V) == typeof(float)) 
+                castInt.Field.value = (V)(object)Convert.ToSingle(nodeData1.valueData);
+            if (typeof(V) == typeof(int))
+                castInt.Field.value = (V)(object)Convert.ToInt32(nodeData1.valueData);
+            if (typeof(V) == typeof(bool))
+                castInt.Field.value = (V)(object)Convert.ToBoolean(nodeData1.valueData);
+            //if(typeof(V) == typeof(GameObject))
+        }
+    }
+    static TResult ConvertViaDynamic<T, TResult>(T number)
+    {
+        return (TResult)(dynamic)number;
+    }
     /// <summary>
     /// エッジの生成
     /// </summary>

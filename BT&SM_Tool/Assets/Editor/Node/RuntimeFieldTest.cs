@@ -9,7 +9,7 @@ public class RuntimeFieldTest : GraphViewScriptBase
 {
     public float floatValue = 1.2f;
     public int intValue = 1;
-    public bool boolValue = true;
+    public bool boolValue = false;
     public Vector3 vector3 = new Vector3();
     public GameObject gameObject = default;
 
