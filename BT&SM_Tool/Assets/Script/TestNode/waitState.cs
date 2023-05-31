@@ -13,7 +13,6 @@ public class waitState: GraphViewScriptBase
     }
     public override void BTUpdate()
     {
-        Debug.Log("aaa");
         if (Input.GetKeyDown(KeyCode.A)) {
             Debug.Log("ˆÚs‚µ‚Ü‚·");
             //ˆÚ“®‚É

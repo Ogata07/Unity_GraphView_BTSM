@@ -1,5 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
+using Unity.VisualScripting;
 using UnityEngine;
 /// <summary>
 /// セーブするScriptableObjectの設定
@@ -9,7 +12,9 @@ public class GraphAsset :ScriptableObject
 {
     public List<NodeData> nodes = new List<NodeData>();
     public List<EdgeData> edges = new List<EdgeData>();
-    public List<Objects> GetObject=new List<Objects>();
+    public List<TestObjects> GetObject=new List<TestObjects>();
+    public GameObject gameObject = default;
+    public MonoBehaviour monoBehaviour = null;
 }
 [System.Serializable]
 public class NodeData{
@@ -24,6 +29,8 @@ public class NodeData{
     public UnityEngine.Object Object;
     //ノード内の管理番号
     public int controlNumber;
+    public List<FieldData> fieldData=new List<FieldData>();
+    public List<FieldDataObject> fieldDataObject = new List<FieldDataObject>();
     public List<EdgesData> edgesDatas= new List<EdgesData>();
 }
 [System.Serializable]
@@ -41,7 +48,41 @@ public class EdgesData {
     public int inputNodeId;
 }
 [System.Serializable]
-public class Objects
+public class FieldData
+{
+    //型名をStringで保管
+    //TODO enumや別の方法を検討するように
+    public String typeName = default;
+    //Field名
+    public string fieldName = default;
+    //値をStringで保管
+    public String valueData = default;
+}
+[System.Serializable]
+public class FieldDataObject 
+{
+    //TODO enumや別の方法を検討するように
+    public String typeName = default;
+    //Field名
+    public string fieldName = default;
+    //値をStringで保管
+    public UnityEngine.Object valueData = default;
+}
+[System.Serializable]
+public class TestObjects
 {
     public UnityEngine.Object Object;
+    [SerializeField]
+    public Type Type;
+    [SerializeField]
+    public FieldInfo Field;
+    public CreateType ss = CreateType.Int;
+    public string Name;
+}
+public enum CreateType 
+{
+    Float,
+    Int,
+    Vector2,
+    Vector3
 }
