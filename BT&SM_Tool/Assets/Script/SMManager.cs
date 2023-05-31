@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using ScriptFlow;
 using System;
 using System.Collections;
@@ -25,11 +26,13 @@ public class SMManager : MonoBehaviour
         
         var startNode = graphAsset.nodes[activeNodeId].Object;
         var scriptName = startNode.name;
+        Debug.Log(scriptName);
         var activeScript = Activator.CreateInstance(Type.GetType(scriptName));
 
         graphViewScriptBase = activeScript as GraphViewScriptBase;
         //ScriptSet(activeNodeId);
         //if (graphViewScriptBase!=null)
+        FieldValueSet();
         graphViewScriptBase.BTStart(this);
         startFlag = false;
     }
@@ -42,7 +45,7 @@ public class SMManager : MonoBehaviour
             graphViewScriptBase.BTUpdate();
         else
         {
-            FieldValueSet();
+            
             graphViewScriptBase.BTStart(this);
             startFlag = false;
         }
@@ -109,16 +112,34 @@ public class SMManager : MonoBehaviour
         //同じ名前を比べて保存しているデータで上書きする
         //管理番号でFieldがあるのか調べる
         if (graphAsset.nodes[activeNodeId].fieldData.Count>0) {
-            for(int fieldcount=0;fieldcount< graphAsset.nodes[activeNodeId].fieldData.Count; fieldcount++)
+            
+            for (int fieldListCount=0; fieldListCount < graphAsset.nodes[activeNodeId].fieldData.Count; fieldListCount++)
             {
-                string fieldName = graphAsset.nodes[activeNodeId].fieldData[fieldcount].fieldName.ToString();
-                String fieldType=graphAsset.nodes[activeNodeId].fieldData[fieldcount].typeName.ToString();
-                string value= graphAsset.nodes[activeNodeId].fieldData[fieldcount].valueData.ToString();
+                //field名取得
+                string fieldName = graphAsset.nodes[activeNodeId].fieldData[fieldListCount].fieldName.ToString();
+                //fieldの型名取得
+                String fieldType=graphAsset.nodes[activeNodeId].fieldData[fieldListCount].typeName.ToString();
+                //field値の取得
+                string value = graphAsset.nodes[activeNodeId].fieldData[fieldListCount].valueData.ToString();
                 graphViewScriptBase
                     .GetType()
                     .GetField(fieldName)
                     .SetValue(graphViewScriptBase, StringChange(fieldType,value));
 
+            }
+        }
+        if (graphAsset.nodes[activeNodeId].fieldDataObject.Count > 0) {
+            for (int fieldObjectListCount = 0; fieldObjectListCount < graphAsset.nodes[activeNodeId].fieldDataObject.Count; fieldObjectListCount++) {
+                //field名取得
+                string fieldName = graphAsset.nodes[activeNodeId].fieldDataObject[fieldObjectListCount].fieldName.ToString();
+                //fieldの型名取得
+                String fieldType = graphAsset.nodes[activeNodeId].fieldDataObject[fieldObjectListCount].typeName.ToString();
+                //field値の取得
+                object value = graphAsset.nodes[activeNodeId].fieldDataObject[fieldObjectListCount].valueData;
+                graphViewScriptBase
+                    .GetType()
+                    .GetField(fieldName)
+                    .SetValue(graphViewScriptBase, value);
             }
         }
     }
@@ -129,6 +150,7 @@ public class SMManager : MonoBehaviour
     /// <param name="Value">Fieldの値</param>
     /// <returns></returns>
     private object StringChange(string TypeName,String Value) {
+
         //object型作成
         object value;
         //String型の値をTypeの型に変換する
@@ -136,6 +158,12 @@ public class SMManager : MonoBehaviour
         {
             case "System.Single":
                 value = Convert.ToSingle(Value);
+                break;
+            case "System.Int32":
+                value = Convert.ToInt32(Value);
+                break;
+            case "System.Boolean":
+                value = Convert.ToBoolean(Value);
                 break;
             default:
                 value = null;

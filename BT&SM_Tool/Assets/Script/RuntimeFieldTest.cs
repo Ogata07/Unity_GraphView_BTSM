@@ -26,6 +26,10 @@ public class RuntimeFieldTest : GraphViewScriptBase
     }
     public override void BTUpdate()
     {
-
+        Debug.Log("1:" + floatValue);
+        Debug.Log("2:" + intValue);
+        Debug.Log("3:" + boolValue);
+        Debug.Log("4:" + vector3);
+        Debug.Log("5:" + gameObject);
     }
 }

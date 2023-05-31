@@ -118,11 +118,16 @@ public static class GraphViewLoad
             //GameObject型
             if (child is ObjectElement) {
                 ////変換
-                var castfloat = child as DataElement<FloatField, float>;
+                var castObject = child as ObjectElement;
                 ////名前の取得
-                string loadFieldName = castfloat.fieldNameLabel.text;
+                string loadFieldName = castObject.fieldNameLabel.text;
                 ////保存先のデータから同じ名前のフィールドがないか探す
-                //FieldData nodeData1 = nodeData.fieldData.Find(f => f.fieldName == loadFieldName);
+                FieldDataObject nodeData1 = nodeData.fieldDataObject.Find(f => f.fieldName == loadFieldName);
+                if (nodeData1 != null && nodeData1.valueData != null)
+                {
+                    GameObject objectValue = (GameObject)nodeData1.valueData;
+                    castObject.objectField.value = objectValue;
+                }
             }
         }
 
