@@ -81,18 +81,27 @@ public class GraphViewManager : GraphView
     public override void BuildContextualMenu(ContextualMenuPopulateEvent evt)
     {
         base.BuildContextualMenu(evt);
-        if (evt.target is GraphView || evt.target is Node || evt.target is Group)
-        {
-            evt.menu.AppendAction("StateMachine", delegate
-            {
+        //if (evt.target is GraphView || evt.target is Node || evt.target is Group)
+        //{
+        //    evt.menu.AppendAction("StateMachine", delegate
+        //    {
                 
-                ClickEvent();
-                //CopySelectionCallback();
-            }, (DropdownMenuAction a) => canCopySelection ? DropdownMenuAction.Status.Normal : DropdownMenuAction.Status.Disabled);
+        //        ClickEvent();
+        //        //CopySelectionCallback();
+        //    }, (DropdownMenuAction a) => canCopySelection ? DropdownMenuAction.Status.Normal : DropdownMenuAction.Status.Disabled);
+        //}
+        if (evt.target is Node) {
+            Node SelectNode = (Node)evt.target;
+            evt.menu.AppendAction(
+                "StateNew" ,
+                paste=>{ ClickEvent(SelectNode); },
+                (paste => (this.canCopySelection ? DropdownMenuAction.Status.Normal : DropdownMenuAction.Status.Disabled)),
+                (object)null);
         }
     }
-    public void ClickEvent()
+    public void ClickEvent(Node handler)
     {
+        Debug.Log(handler);
         //TODO ステートマシンのみこれが選択されたノードからスタートされるようにしたい(時間がかかるので後回しかもしれない)
         Debug.Log("現在作業中");
     }

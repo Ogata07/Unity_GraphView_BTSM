@@ -20,16 +20,16 @@ MonoBehaviour:
     fieldData:
     - typeName: System.Single
       fieldName: floatValue
-      valueData: 1.2
+      valueData: 1.3
     - typeName: System.Int32
       fieldName: intValue
-      valueData: 1
+      valueData: 10
     - typeName: System.Boolean
       fieldName: boolValue
       valueData: True
     fieldDataObject:
     - typeName: UnityEngine.GameObject
-      fieldName: gameObject
+      fieldName: gameObject2
       valueData: {fileID: 8202896443866443917, guid: 55ee6beaa1515e0459da781b35e79dbf, type: 3}
     edgesDatas: []
   edges: []
