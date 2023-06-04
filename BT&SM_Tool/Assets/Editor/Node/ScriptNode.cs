@@ -63,4 +63,10 @@ public class ScriptNode : Node
         if(m_ObjectField.value!=null)
             title = m_ObjectField.value.name;
     }
+    /// <summary>
+    /// スタートノードのみ色を変更してわかりやすくする
+    /// </summary>
+    public void startNodeColorChange() { 
+        titleContainer.style.backgroundColor = new Color(255, 165, 0);
+    }
 }

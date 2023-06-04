@@ -12,7 +12,8 @@ using System.Runtime.Remoting.Contexts;
 public class GraphViewManager : GraphView
 {
     public GraphAsset m_GraphAsset;
-
+    //SM用
+    private Node sm_StartNode = default;
     public GraphViewManager() : base()
     {
         //TODO 初期作成ができなくなる
@@ -102,8 +103,14 @@ public class GraphViewManager : GraphView
     public void ClickEvent(Node handler)
     {
         Debug.Log(handler);
+        if (handler is ScriptNode) {
+            ScriptNode castScriptNode = (ScriptNode)handler;
+            castScriptNode.startNodeColorChange();
+            Debug.Log("現在作業中");
+            Debug.Log(handler);
+        }
         //TODO ステートマシンのみこれが選択されたノードからスタートされるようにしたい(時間がかかるので後回しかもしれない)
-        Debug.Log("現在作業中");
+
     }
     public  void setInitial(EditorWindow editorWindow) {
         //親のサイズに合わせてサイズ変更
