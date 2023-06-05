@@ -1,5 +1,6 @@
 using System;
 using System.Reflection.Emit;
+using System.Web;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEditor.UIElements;
@@ -13,6 +14,7 @@ public class ScriptNode : Node
     private ObjectField m_ObjectField = default;
     private readonly ScriptFieldCheck scriptFieldCheck= new ScriptFieldCheck();
     public Port OutputPort { get; set; }
+    private string defaultColorCode= "#3F3F3F";
     public ObjectField ObjectField
     {
         get
@@ -66,7 +68,11 @@ public class ScriptNode : Node
     /// <summary>
     /// スタートノードのみ色を変更してわかりやすくする
     /// </summary>
-    public void startNodeColorChange() { 
-        titleContainer.style.backgroundColor = new Color(255, 165, 0);
+    public void startNodeColorChange() {
+        //TODO 設定として別のところにまとめておく
+        //3F3F3F
+
+        Color setColor=ColorConversion.GetColor(defaultColorCode);
+        titleContainer.style.backgroundColor = setColor; //new Color(255, 165, 0);
     }
 }

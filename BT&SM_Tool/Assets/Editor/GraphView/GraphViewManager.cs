@@ -104,10 +104,12 @@ public class GraphViewManager : GraphView
     {
         Debug.Log(handler);
         if (handler is ScriptNode) {
+            //更新
+            sm_StartNode = handler;
+            //変換
             ScriptNode castScriptNode = (ScriptNode)handler;
+            //色を変えるメソッドの呼び出し
             castScriptNode.startNodeColorChange();
-            Debug.Log("現在作業中");
-            Debug.Log(handler);
         }
         //TODO ステートマシンのみこれが選択されたノードからスタートされるようにしたい(時間がかかるので後回しかもしれない)
 

@@ -29,8 +29,27 @@ MonoBehaviour:
       valueData: True
     fieldDataObject:
     - typeName: UnityEngine.GameObject
-      fieldName: gameObject2
-      valueData: {fileID: 8202896443866443917, guid: 55ee6beaa1515e0459da781b35e79dbf, type: 3}
+      fieldName: gameObject
+      valueData: {fileID: 0}
+    edgesDatas: []
+  - position: {x: 480, y: 51}
+    scriptID: 
+    Object: {fileID: 11500000, guid: eca09a9ea8ef97a458185e87ea834b1d, type: 3}
+    controlNumber: 1
+    fieldData:
+    - typeName: System.Single
+      fieldName: floatValue
+      valueData: 1.2
+    - typeName: System.Int32
+      fieldName: intValue
+      valueData: 1
+    - typeName: System.Boolean
+      fieldName: boolValue
+      valueData: False
+    fieldDataObject:
+    - typeName: UnityEngine.GameObject
+      fieldName: gameObject
+      valueData: {fileID: 0}
     edgesDatas: []
   edges: []
   GetObject: []
