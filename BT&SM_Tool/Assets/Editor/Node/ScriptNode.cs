@@ -14,7 +14,6 @@ public class ScriptNode : Node
     private ObjectField m_ObjectField = default;
     private readonly ScriptFieldCheck scriptFieldCheck= new ScriptFieldCheck();
     public Port OutputPort { get; set; }
-    private string defaultColorCode= "#3F3F3F";
     public ObjectField ObjectField
     {
         get
@@ -28,7 +27,7 @@ public class ScriptNode : Node
             m_ObjectField.value = value.value;
         }
     }
-    public int NodeID { get; set; } = 0;
+    public int NodeID { get; set; } = default;
 
     public ScriptNode():base(){
         title = "ScriptNode";
@@ -68,11 +67,9 @@ public class ScriptNode : Node
     /// <summary>
     /// スタートノードのみ色を変更してわかりやすくする
     /// </summary>
-    public void startNodeColorChange() {
+    public void startNodeColorChange(String ColorCode) {
         //TODO 設定として別のところにまとめておく
-        //3F3F3F
-
-        Color setColor=ColorConversion.GetColor(defaultColorCode);
+        Color setColor=ColorConversion.GetColor(ColorCode);
         titleContainer.style.backgroundColor = setColor; //new Color(255, 165, 0);
     }
 }

@@ -13,7 +13,10 @@ public class GraphViewManager : GraphView
 {
     public GraphAsset m_GraphAsset;
     //SM用
-    private Node sm_StartNode = default;
+    public Node sm_StartNode { get; set; } = default;
+    //Nodeの色関係
+    public string defaultColorCode { get;} = "#3F3F3F";
+    public string startColorCode { get;} = "#FFA500";
     public GraphViewManager() : base()
     {
         //TODO 初期作成ができなくなる
@@ -94,7 +97,7 @@ public class GraphViewManager : GraphView
         if (evt.target is Node) {
             Node SelectNode = (Node)evt.target;
             evt.menu.AppendAction(
-                "StateNew" ,
+                "SelectStartNode" ,
                 paste=>{ ClickEvent(SelectNode); },
                 (paste => (this.canCopySelection ? DropdownMenuAction.Status.Normal : DropdownMenuAction.Status.Disabled)),
                 (object)null);
@@ -104,15 +107,22 @@ public class GraphViewManager : GraphView
     {
         Debug.Log(handler);
         if (handler is ScriptNode) {
+            if (sm_StartNode != default) {
+                sm_StartNode.name = default;
+                NodeTitleColorChange(sm_StartNode, defaultColorCode);
+            }
             //更新
             sm_StartNode = handler;
-            //変換
-            ScriptNode castScriptNode = (ScriptNode)handler;
-            //色を変えるメソッドの呼び出し
-            castScriptNode.startNodeColorChange();
+            handler.name = "Start";
+            NodeTitleColorChange(handler, startColorCode);
         }
         //TODO ステートマシンのみこれが選択されたノードからスタートされるようにしたい(時間がかかるので後回しかもしれない)
 
+    }
+    //Nodeのタイトル部分の色を変更するメソッド
+    public void NodeTitleColorChange(Node tagetNode,string changeColorCode) {
+        ScriptNode castNode = (ScriptNode)tagetNode;
+        castNode.startNodeColorChange(changeColorCode);
     }
     public  void setInitial(EditorWindow editorWindow) {
         //親のサイズに合わせてサイズ変更
