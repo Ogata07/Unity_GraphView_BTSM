@@ -13,10 +13,33 @@ MonoBehaviour:
   m_Name: FieldTest
   m_EditorClassIdentifier: 
   nodes:
-  - position: {x: 230, y: 51}
+  - position: {x: 68, y: 64}
     scriptID: 
     Object: {fileID: 11500000, guid: eca09a9ea8ef97a458185e87ea834b1d, type: 3}
     controlNumber: 0
+    fieldData:
+    - typeName: System.Single
+      fieldName: floatValue
+      valueData: 1.3
+    - typeName: System.Int32
+      fieldName: intValue
+      valueData: 10
+    - typeName: System.Boolean
+      fieldName: boolValue
+      valueData: True
+    fieldDataObject:
+    - typeName: UnityEngine.GameObject
+      fieldName: gameObject
+      valueData: {fileID: 0}
+    edgesDatas:
+    - controlNumber: 0
+      inputNodeId: 3
+    - controlNumber: 1
+      inputNodeId: 2
+  - position: {x: 480, y: 51}
+    scriptID: 
+    Object: {fileID: 11500000, guid: eca09a9ea8ef97a458185e87ea834b1d, type: 3}
+    controlNumber: 1
     fieldData:
     - typeName: System.Single
       fieldName: floatValue
@@ -26,13 +49,31 @@ MonoBehaviour:
       valueData: 1
     - typeName: System.Boolean
       fieldName: boolValue
-      valueData: True
+      valueData: False
     fieldDataObject:
     - typeName: UnityEngine.GameObject
       fieldName: gameObject
-      valueData: {fileID: 8202896443866443917, guid: 55ee6beaa1515e0459da781b35e79dbf, type: 3}
+      valueData: {fileID: 0}
     edgesDatas: []
-  edges: []
+  - position: {x: 363, y: 0}
+    scriptID: 
+    Object: {fileID: 11500000, guid: 5f73acff98009bc40aabc22f46a14ab5, type: 3}
+    controlNumber: 2
+    fieldData: []
+    fieldDataObject: []
+    edgesDatas: []
+  - position: {x: 342, y: 201}
+    scriptID: 
+    Object: {fileID: 11500000, guid: 5f73acff98009bc40aabc22f46a14ab5, type: 3}
+    controlNumber: 3
+    fieldData: []
+    fieldDataObject: []
+    edgesDatas: []
+  edges:
+  - inputNodeId: 3
+    outputNodeId: 0
+  - inputNodeId: 2
+    outputNodeId: 0
   GetObject: []
   gameObject: {fileID: 0}
   monoBehaviour: {fileID: 0}

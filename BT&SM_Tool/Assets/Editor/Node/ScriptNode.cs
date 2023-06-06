@@ -1,5 +1,6 @@
 using System;
 using System.Reflection.Emit;
+using System.Web;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEditor.UIElements;
@@ -26,7 +27,7 @@ public class ScriptNode : Node
             m_ObjectField.value = value.value;
         }
     }
-    public int NodeID { get; set; } = 0;
+    public int NodeID { get; set; } = default;
 
     public ScriptNode():base(){
         title = "ScriptNode";
@@ -62,5 +63,13 @@ public class ScriptNode : Node
         Debug.Log("値が変更されました");
         if(m_ObjectField.value!=null)
             title = m_ObjectField.value.name;
+    }
+    /// <summary>
+    /// スタートノードのみ色を変更してわかりやすくする
+    /// </summary>
+    public void startNodeColorChange(String ColorCode) {
+        //TODO 設定として別のところにまとめておく
+        Color setColor=ColorConversion.GetColor(ColorCode);
+        titleContainer.style.backgroundColor = setColor; //new Color(255, 165, 0);
     }
 }

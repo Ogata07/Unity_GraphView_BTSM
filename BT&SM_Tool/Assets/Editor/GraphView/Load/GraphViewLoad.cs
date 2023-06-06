@@ -46,6 +46,12 @@ public static class GraphViewLoad
             node.ObjectField.value = nodeData.Object;
         //管理番号
         node.NodeID = nodeData.controlNumber;
+        //スタートノードのみ
+        if (node.NodeID == 0) {
+            graphViewManager.sm_StartNode = node;
+            node.name = "Start";
+            graphViewManager.NodeTitleColorChange(node, graphViewManager.startColorCode);
+        }
         //fieldエレメント追加
         //fieldエレメント追加
         //追加する数を集計

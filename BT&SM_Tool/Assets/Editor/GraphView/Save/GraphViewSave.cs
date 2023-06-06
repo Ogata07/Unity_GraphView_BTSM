@@ -47,9 +47,19 @@ public static class GraphViewSave
         */
         //(ステートマシン限定)(特定のノードを排除してそれ以外を順番に管理番号を付与する)
         //スタートノードに番号を振る(0番)
-        var StartNode = NodeList.Find(x => x.title == "StartNode") as StartNode;
-        NodeList.Remove(StartNode);
-        foreach(Node node in NodeList)
+        var deleteStartNode = NodeList.Find(x => x.title == "StartNode") as StartNode;
+        NodeList.Remove(deleteStartNode);
+        var startNode = NodeList.Find(x => x.name == "Start") as ScriptNode;
+
+        //
+        if (startNode is ScriptNode)
+        {
+            ScriptNode castScriptNode = startNode as ScriptNode;
+            castScriptNode.NodeID = Number;
+            Number++;
+        }
+        NodeList.Remove(startNode);
+        foreach (Node node in NodeList)
         {
             AddNumbar(node);
         }
@@ -118,13 +128,8 @@ public static class GraphViewSave
         //TODO セーブした後に追加するとうまく挙動しない
         if (node is ScriptNode){
             ScriptNode castScriptNode = node as ScriptNode;
-
-            if (castScriptNode.NodeID== 0) {
-                Debug.Log("ssss"+castScriptNode.NodeID);
                 castScriptNode.NodeID = Number;
                 Number++;
-
-            }
         }
         else
             Debug.LogError("番号を振るのに対応していません");
