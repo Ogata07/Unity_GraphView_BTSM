@@ -1,6 +1,6 @@
 using UnityEditor.Experimental.GraphView;
 /// <summary>
-/// セーブやロードの基礎を作るテスト用
+/// 繧ｻ繝ｼ繝悶ｄ繝ｭ繝ｼ繝峨�ｮ蝓ｺ遉弱ｒ菴懊ｋ繝�繧ｹ繝育畑
 /// </summary>
 public class TestNode : Node
 {

@@ -20,7 +20,7 @@ MonoBehaviour:
     fieldData:
     - typeName: System.Single
       fieldName: floatValue
-      valueData: 1.3
+      valueData: 1.5
     - typeName: System.Int32
       fieldName: intValue
       valueData: 10

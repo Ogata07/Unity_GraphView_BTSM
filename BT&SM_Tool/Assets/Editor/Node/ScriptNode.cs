@@ -7,7 +7,7 @@ using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 /// <summary>
-/// ƒXƒNƒŠƒvƒgQÆƒm[ƒh
+/// ã‚¹ã‚¯ãƒªãƒ—ãƒˆå‚ç…§ãƒãƒ¼ãƒ‰
 /// </summary>
 public class ScriptNode : Node
 {
@@ -31,14 +31,14 @@ public class ScriptNode : Node
 
     public ScriptNode():base(){
         title = "ScriptNode";
-        //Ú‘±Port’Ç‰Á
+        //æ¥ç¶šPortè¿½åŠ 
         PortAdd();
-        //ObjectField‚Ì’Ç‰Á
+        //ObjectFieldã®è¿½åŠ 
         m_ObjectField = new ObjectField();
-        //TODO MonoScript‚©‚ç•ÏX
+        //TODO MonoScriptã‹ã‚‰å¤‰æ›´
         m_ObjectField.objectType = typeof(UnityEngine.Object);
         mainContainer.Add(m_ObjectField);
-        //m_ObjectField‚Ì’l‚ª•ÏX‚³‚ê‚½‚Æ‚«‚És‚¤ˆ—
+        //m_ObjectFieldã®å€¤ãŒå¤‰æ›´ã•ã‚ŒãŸã¨ãã«è¡Œã†å‡¦ç†
         m_ObjectField.RegisterCallback<ChangeEvent<String>>(events =>{
             AddStart();
         });
@@ -53,22 +53,22 @@ public class ScriptNode : Node
     }
 
     /// <summary>
-    /// NodeSearchWindow‚©‚ç¶¬‚³‚ê‚½‚Æ‚«‚É’l‚ª•ÏX‚³‚ê‚½‚Æ‚«‚Æ“¯‚¶ˆ—‚ğ‚³‚¹‚é
+    /// NodeSearchWindowã‹ã‚‰ç”Ÿæˆã•ã‚ŒãŸã¨ãã«å€¤ãŒå¤‰æ›´ã•ã‚ŒãŸã¨ãã¨åŒã˜å‡¦ç†ã‚’ã•ã›ã‚‹
     /// </summary>
     public void AddStart() {
         TitleChange();
         scriptFieldCheck.Check(ObjectField.value, this);
     }
     private void TitleChange() {
-        Debug.Log("’l‚ª•ÏX‚³‚ê‚Ü‚µ‚½");
+        Debug.Log("å€¤ãŒå¤‰æ›´ã•ã‚Œã¾ã—ãŸ");
         if(m_ObjectField.value!=null)
             title = m_ObjectField.value.name;
     }
     /// <summary>
-    /// ƒXƒ^[ƒgƒm[ƒh‚Ì‚İF‚ğ•ÏX‚µ‚Ä‚í‚©‚è‚â‚·‚­‚·‚é
+    /// ã‚¹ã‚¿ãƒ¼ãƒˆãƒãƒ¼ãƒ‰ã®ã¿è‰²ã‚’å¤‰æ›´ã—ã¦ã‚ã‹ã‚Šã‚„ã™ãã™ã‚‹
     /// </summary>
     public void startNodeColorChange(String ColorCode) {
-        //TODO İ’è‚Æ‚µ‚Ä•Ê‚Ì‚Æ‚±‚ë‚É‚Ü‚Æ‚ß‚Ä‚¨‚­
+        //TODO è¨­å®šã¨ã—ã¦åˆ¥ã®ã¨ã“ã‚ã«ã¾ã¨ã‚ã¦ãŠã
         Color setColor=ColorConversion.GetColor(ColorCode);
         titleContainer.style.backgroundColor = setColor; //new Color(255, 165, 0);
     }

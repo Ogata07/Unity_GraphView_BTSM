@@ -1,188 +1,135 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Forms;
-using Unity.Plastic.Newtonsoft.Json.Linq;
-using Unity.VisualScripting.YamlDotNet.Core.Tokens;
 using UnityEditor.Experimental.GraphView;
 using UnityEditor.UIElements;
 using UnityEngine;
-using UnityEngine.Assertions.Must;
 using UnityEngine.UIElements;
-using static Unity.VisualScripting.Metadata;
 /// <summary>
-/// GraphAsset‚Ì“à—e‚ğƒGƒfƒBƒ^ƒEƒBƒ“ƒhƒE‚É•\¦‚·‚é
+/// GraphAssetã®å†…å®¹ã‚’ã‚¨ãƒ‡ã‚£ã‚¿ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã«è¡¨ç¤ºã™ã‚‹
 /// </summary>
 public static class GraphViewLoad 
 {
-    public static void LoadNodeElement(GraphAsset m_GraphAsset) {
-        GraphEditorWindow.ShowWindow(m_GraphAsset);
+    private static CreateNode  createNode=new CreateNode();
+    public static void LoadNodeElement(GraphAsset graphAsset) {
+        GraphEditorWindow.ShowWindow(graphAsset);
     }
     private static ScriptFieldCheck scriptFieldCheck = new ScriptFieldCheck();
-    //ƒf[ƒ^‚©‚ç‚Ìì¬
+    //ãƒ‡ãƒ¼ã‚¿ã‹ã‚‰ã®ä½œæˆ
     public static void CreateGraphView(GraphViewManager graphViewManager) {
         GraphAsset loadGraphAsset = graphViewManager.m_GraphAsset;
 
         foreach (var node in loadGraphAsset.nodes) {
-            CreateNode(node,graphViewManager);
+            //CreateNode2(node,graphViewManager);
+            createNode.Create(node, graphViewManager);
         }
         foreach (var edge in loadGraphAsset.edges) {
             CreateEdge(edge, graphViewManager);
         }
     }
     /// <summary>
-    /// ƒm[ƒh‚Ì¶¬
+    /// ãƒãƒ¼ãƒ‰ã®ç”Ÿæˆ
     /// </summary>
     /// <param name="nodeData"></param>
     /// <param name="graphViewManager"></param>
-    private static void CreateNode(NodeData nodeData,GraphViewManager graphViewManager) {
-        var node = new ScriptNode();
-        //ƒm[ƒh‚ÌˆÊ’u
-        node.SetPosition(new Rect(nodeData.position, new UnityEngine.Vector2(100,100)));
-        //–¼‘Oi—\’èj
-        //ƒXƒNƒŠƒvƒg
-        if (nodeData.Object != null)
-            node.ObjectField.value = nodeData.Object;
-        //ŠÇ—”Ô†
-        node.NodeID = nodeData.controlNumber;
-        //ƒXƒ^[ƒgƒm[ƒh‚Ì‚İ
-        if (node.NodeID == 0) {
-            graphViewManager.sm_StartNode = node;
-            node.name = "Start";
-            graphViewManager.NodeTitleColorChange(node, graphViewManager.startColorCode);
-        }
-        //fieldƒGƒŒƒƒ“ƒg’Ç‰Á
-        //fieldƒGƒŒƒƒ“ƒg’Ç‰Á
-        //’Ç‰Á‚·‚é”‚ğWŒv
-        int fieldCount=nodeData.fieldData.Count;
-        //‰ñ”•ª¶¬‚ğ‰ñ‚·
-        //for (int fieldNumber = 0; fieldNumber < fieldCount; fieldNumber++) { 
-        //    //Œ^–¼æ“¾
-        //    string TypeName = nodeData.fieldData[fieldNumber].typeName;
-        //    //–¼‘O‚Ìæ“¾
-        //    string fieldName= nodeData.fieldData[fieldNumber].fieldName;
-        //    //’l‚Ìæ“¾
-        //    string Value = nodeData.fieldData[fieldNumber].valueData;
-        //    switch (TypeName)
-        //    {
-        //        case "System.Single":
-        //            float floatvalue =Convert.ToSingle(Value);
-        //            node.extensionContainer.Add(new DataElement<FloatField, float>(fieldName, floatvalue));
-        //            break;
-        //        case "System.Int32":
-        //            int intvalue = Convert.ToInt32(Value);
-        //            node.extensionContainer.Add(new DataElement<IntegerField, int>(fieldName, intvalue));
-        //            break;
-        //        case "System.Boolean":
-        //            //bool boolvalue = Convert.ToBoolean(Value);
-        //            //node.extensionContainer.Add(new DataElement<Toggle, bool>(fieldName, boolvalue));
-        //            break;
-        //        case "UnityEngine.GameObject":
-        //            //GameObject obhectvalue = Convert.(Value);
-        //            //node.extensionContainer.Add(new DataElement<FloatField, float>(fieldName, obhectvalue));
-        //            break;
-        //        default:
-        //            break;
-        //    }
-        //}
-        //ƒXƒNƒŠƒvƒg‚©‚çfield‚Ìì¬@
-        scriptFieldCheck.Check(nodeData.Object, node);
-        //
-        int fieldElementCount= node.extensionContainer.childCount;
-        Debug.Log(fieldElementCount);
+    //private static void CreateNode2(NodeData nodeData,GraphViewManager graphViewManager) {
+    //    var node = new ScriptNode();
+    //    //ãƒãƒ¼ãƒ‰ã®ä½ç½®
+    //    node.SetPosition(new Rect(nodeData.position, new UnityEngine.Vector2(100,100)));
+    //    //åå‰ï¼ˆäºˆå®šï¼‰
+    //    //ã‚¹ã‚¯ãƒªãƒ—ãƒˆ
+    //    if (nodeData.Object != null)
+    //        node.ObjectField.value = nodeData.Object;
+    //    //ç®¡ç†ç•ªå·
+    //    node.NodeID = nodeData.controlNumber;
+    //    //ã‚¹ã‚¿ãƒ¼ãƒˆãƒãƒ¼ãƒ‰ã®ã¿
+    //    if (node.NodeID == 0) {
+    //        graphViewManager.sm_StartNode = node;
+    //        node.name = "Start";
+    //        graphViewManager.NodeTitleColorChange(node, graphViewManager.startColorCode);
+    //    }
+    //    //fieldã‚¨ãƒ¬ãƒ¡ãƒ³ãƒˆè¿½åŠ 
+    //    //fieldã‚¨ãƒ¬ãƒ¡ãƒ³ãƒˆè¿½åŠ 
+    //    //è¿½åŠ ã™ã‚‹æ•°ã‚’é›†è¨ˆ
+    //    int fieldCount=nodeData.fieldData.Count;
+    //    //ã‚¹ã‚¯ãƒªãƒ—ãƒˆã‹ã‚‰fieldã®ä½œæˆã€€
+    //    scriptFieldCheck.Check(nodeData.Object, node);
+    //    //
+    //    int fieldElementCount= node.extensionContainer.childCount;
+    //    Debug.Log(fieldElementCount);
         
-        //GraphViewã‚Ìfield‚Æ•Û‘¶æ‚Ìƒf[ƒ^‚ğ”ä‚×‚ÄˆÙ‚È‚Á‚Ä‚¢‚½‚ç•Û‘¶æ‚Ìƒf[ƒ^‚ğ‘}“ü
-        for (int chackCount = 0; chackCount < fieldElementCount; chackCount++) {
-            VisualElement child = node.extensionContainer[chackCount];
-            //FloatŒ^
-            if (child is DataElement<FloatField, float>)
-            {
-                ////•ÏŠ·
-                //var castfloat = childon as DataElement<FloatField, float>;
-                ////–¼‘O‚Ìæ“¾
-                //string loadFieldName = castfloat.fieldNameLabel.text;
-                ////•Û‘¶æ‚Ìƒf[ƒ^‚©‚ç“¯‚¶–¼‘O‚ÌƒtƒB[ƒ‹ƒh‚ª‚È‚¢‚©’T‚·
-                //FieldData nodeData1 = nodeData.fieldData.Find(f => f.fieldName == loadFieldName);
-                //if (nodeData1 != null)
-                //{
-                //    float floatvalue = Convert.ToSingle(nodeData1.valueData);
-                //    castfloat.Field.value = floatvalue;
-                //}
-                chackSaveData<FloatField, float>(child, nodeData);
-            }
-            //IntŒ^
-            if (child is DataElement<IntegerField, int>)
-            {
-                chackSaveData<IntegerField, int>(child, nodeData);
-            }
-            //BoolŒ^
-            if (child is DataElement<Toggle, bool>)
-            {
-                chackSaveData<Toggle, bool>(child, nodeData);
-            }
-            //GameObjectŒ^
-            if (child is ObjectElement) {
-                ////•ÏŠ·
-                var castObject = child as ObjectElement;
-                ////–¼‘O‚Ìæ“¾
-                string loadFieldName = castObject.fieldNameLabel.text;
-                ////•Û‘¶æ‚Ìƒf[ƒ^‚©‚ç“¯‚¶–¼‘O‚ÌƒtƒB[ƒ‹ƒh‚ª‚È‚¢‚©’T‚·
-                FieldDataObject nodeData1 = nodeData.fieldDataObject.Find(f => f.fieldName == loadFieldName);
-                if (nodeData1 != null && nodeData1.valueData != null)
-                {
-                    GameObject objectValue = (GameObject)nodeData1.valueData;
-                    castObject.objectField.value = objectValue;
-                }
-            }
-        }
+    //    //GraphViewä¸Šã®fieldã¨ä¿å­˜å…ˆã®ãƒ‡ãƒ¼ã‚¿ã‚’æ¯”ã¹ã¦ç•°ãªã£ã¦ã„ãŸã‚‰ä¿å­˜å…ˆã®ãƒ‡ãƒ¼ã‚¿ã‚’æŒ¿å…¥
+    //    for (int chackCount = 0; chackCount < fieldElementCount; chackCount++) {
+    //        VisualElement child = node.extensionContainer[chackCount];
+    //        //Floatå‹
+    //        if (child is DataElement<FloatField, float>)
+    //        {
+    //            ChackSaveData<FloatField, float>(child, nodeData);
+    //        }
+    //        //Intå‹
+    //        if (child is DataElement<IntegerField, int>)
+    //        {
+    //            ChackSaveData<IntegerField, int>(child, nodeData);
+    //        }
+    //        //Boolå‹
+    //        if (child is DataElement<Toggle, bool>)
+    //        {
+    //            ChackSaveData<Toggle, bool>(child, nodeData);
+    //        }
+    //        //GameObjectå‹
+    //        if (child is ObjectElement) {
+    //            ////å¤‰æ›
+    //            var castObject = child as ObjectElement;
+    //            ////åå‰ã®å–å¾—
+    //            string loadFieldName = castObject.fieldNameLabel.text;
+    //            ////ä¿å­˜å…ˆã®ãƒ‡ãƒ¼ã‚¿ã‹ã‚‰åŒã˜åå‰ã®ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ãŒãªã„ã‹æ¢ã™
+    //            FieldDataObject nodeData1 = nodeData.fieldDataObject.Find(f => f.fieldName == loadFieldName);
+    //            if (nodeData1 != null && nodeData1.valueData != null)
+    //            {
+    //                GameObject objectValue = (GameObject)nodeData1.valueData;
+    //                castObject.objectField.value = objectValue;
+    //            }
+    //        }
+    //    }
 
-        //extensionContainer‚É’Ç‰Á‚µ‚½‚ç–Y‚ê‚¸Às‚µ‚È‚¢‚Æ‰B‚³‚ê‚Ä‚µ‚Ü‚¤
-        node.RefreshExpandedState();
-        //‰æ–Ê‚É’Ç‰Á
-        graphViewManager.AddElement(node);
-    }
-    static void chackSaveData<T,V>( VisualElement childon,  NodeData nodeData)
-    where T : BaseField<V>, new()
-    {
-
-        //•ÏŠ·
-        var castInt = childon as DataElement<T, V>;
-        //–¼‘O‚Ìæ“¾
-        string loadFieldName = castInt.fieldNameLabel.text;
-        //•Û‘¶æ‚Ìƒf[ƒ^‚©‚ç“¯‚¶–¼‘O‚ÌƒtƒB[ƒ‹ƒh‚ª‚È‚¢‚©’T‚·
-        FieldData nodeData1 = nodeData.fieldData.Find(f => f.fieldName == loadFieldName);
-        if (nodeData1 != null)
-        {
-            //dynamic
-            if (typeof(V) == typeof(float)) 
-                castInt.Field.value = (V)(object)Convert.ToSingle(nodeData1.valueData);
-            if (typeof(V) == typeof(int))
-                castInt.Field.value = (V)(object)Convert.ToInt32(nodeData1.valueData);
-            if (typeof(V) == typeof(bool))
-                castInt.Field.value = (V)(object)Convert.ToBoolean(nodeData1.valueData);
-            //if(typeof(V) == typeof(GameObject))
-        }
-    }
-    static TResult ConvertViaDynamic<T, TResult>(T number)
-    {
-        return (TResult)(dynamic)number;
-    }
+    //    //extensionContainerã«è¿½åŠ ã—ãŸã‚‰å¿˜ã‚Œãšå®Ÿè¡Œã—ãªã„ã¨éš ã•ã‚Œã¦ã—ã¾ã†
+    //    node.RefreshExpandedState();
+    //    //ç”»é¢ã«è¿½åŠ 
+    //    graphViewManager.AddElement(node);
+    //}
+    //static void ChackSaveData<T,V>( VisualElement childon,  NodeData nodeData)
+    //where T : BaseField<V>, new()
+    //{
+    //    //å¤‰æ›
+    //    var castInt = childon as DataElement<T, V>;
+    //    //åå‰ã®å–å¾—
+    //    string loadFieldName = castInt.fieldNameLabel.text;
+    //    //ä¿å­˜å…ˆã®ãƒ‡ãƒ¼ã‚¿ã‹ã‚‰åŒã˜åå‰ã®ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ãŒãªã„ã‹æ¢ã™
+    //    FieldData nodeData1 = nodeData.fieldData.Find(f => f.fieldName == loadFieldName);
+    //    if (nodeData1 != null)
+    //    {
+    //        //dynamic
+    //        if (typeof(V) == typeof(float)) 
+    //            castInt.Field.value = (V)(object)Convert.ToSingle(nodeData1.valueData);
+    //        if (typeof(V) == typeof(int))
+    //            castInt.Field.value = (V)(object)Convert.ToInt32(nodeData1.valueData);
+    //        if (typeof(V) == typeof(bool))
+    //            castInt.Field.value = (V)(object)Convert.ToBoolean(nodeData1.valueData);
+    //    }
+    //}
     /// <summary>
-    /// ƒGƒbƒW‚Ì¶¬
+    /// ã‚¨ãƒƒã‚¸ã®ç”Ÿæˆ
     /// </summary>
     /// <param name="edgeData"></param>
     /// <param name="graphViewManager"></param>
     private static void CreateEdge(EdgeData edgeData,GraphViewManager graphViewManager) {
         var node = graphViewManager.nodes.ToList();
-        Debug.Log("Œ»İ¶¬‚³‚ê‚Ä‚¢‚éƒm[ƒh‚Í"+node.Count+"ŒÂ‚Å‚·");
-        //TODO@‚»‚à‚»‚àPort‚ğæ‚Á‚½•û‚ª‘‚¢‚©‚àH
-        //Portì»
+        Debug.Log("ç¾åœ¨ç”Ÿæˆã•ã‚Œã¦ã„ã‚‹ãƒãƒ¼ãƒ‰ã¯"+node.Count+"å€‹ã§ã™");
+        //TODOã€€ãã‚‚ãã‚‚Portã‚’å–ã£ãŸæ–¹ãŒæ—©ã„ã‹ã‚‚ï¼Ÿ
+        //Portä½œè£½
         Port inputPort = node[edgeData.inputNodeId].inputContainer.contentContainer.Q<Port>();
         Port outputPort = node[edgeData.outputNodeId].outputContainer.contentContainer.Q<Port>();
-        //Edgeì»
+        //Edgeä½œè£½
         var edge = ConnectPorts(inputPort,outputPort);
-        //ƒ‰ƒxƒ‹’Ç‰Á
+        //ãƒ©ãƒ™ãƒ«è¿½åŠ 
         UnityEngine.UIElements.Label edgeLabel = new UnityEngine.UIElements.Label();
         edgeLabel.text = "0";
         edgeLabel.style.fontSize= 64;
@@ -191,17 +138,17 @@ public static class GraphViewLoad
         //Label
         //edge.Add(btn1);
 
-        //GraphView‚É’Ç‰Á
+        //GraphViewã«è¿½åŠ 
         graphViewManager.AddElement(edge);
     }
     private static Edge ConnectPorts(Port inputport, Port outputport) {
-        //ƒGƒbƒW‚Ìì¬
+        //ã‚¨ãƒƒã‚¸ã®ä½œæˆ
         var tempEdge = new Edge
         {
             output = outputport,
             input=inputport
         };
-        //ƒm[ƒh‚ÉÚ‘±
+        //ãƒãƒ¼ãƒ‰ã«æ¥ç¶š
         tempEdge.input.Connect(tempEdge);
         tempEdge.output.Connect(tempEdge);
         return tempEdge;
