@@ -5,11 +5,11 @@ using ScriptFlow;
 using System;
 //using UnityEditorInternal;
 /// <summary>
-/// �r�w�C�r�A�c���[�̃��B�W���A���X�N���v�e�B���O�𓮍삳����X�N���v�g
+/// ビヘイビアツリーのヴィジュアルスクリプティングを動作させるスクリプト
 /// </summary>
 public class BTManager : MonoBehaviour
 {
-    [SerializeField, Header("���s����f�[�^")]
+    [SerializeField, Header("実行するデータ")]
     private GraphAsset graphAsset;
     private GraphViewScriptBase graphViewScriptBase;
     // Start is called before the first frame update
@@ -22,7 +22,7 @@ public class BTManager : MonoBehaviour
         var activeScript = Activator.CreateInstance(Type.GetType(scriptName));
         graphViewScriptBase = activeScript as GraphViewScriptBase;
         graphViewScriptBase.BTStart();
-        //TODO ���򂪂ł��Ă��Ȃ��̂Ō����_�ł͂����܂�
+        //TODO 分岐ができていないので現時点ではここまで
     }
 
     // Update is called once per frame
