@@ -11,314 +11,250 @@ using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 /// <summary>
-///@ƒGƒfƒBƒ^ƒEƒBƒ“ƒhƒE‚Ì“à—e‚ğGraphAsset‚É•Û‘¶‚·‚é
+///ã€€ã‚¨ãƒ‡ã‚£ã‚¿ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®å†…å®¹ã‚’GraphAssetã«ä¿å­˜ã™ã‚‹
 /// </summary>
 public static class GraphViewSave
 {
-    //TODO –¼‘O‹óŠÔ‚Å‚à‚¢‚¢H
-    private static int Number = 0;
-    public static void SaveNodeElement(GraphAsset m_GraphAsset, GraphView m_GraphView) 
+    //TODO åå‰ç©ºé–“ã§ã‚‚ã„ã„ï¼Ÿ
+    private static int number = 0;
+    private static ControlNumberAdd controlNumberAdd = new ControlNumberAdd();
+    private static SaveNode saveNode = new SaveNode();
+    public static void SaveNodeElement(GraphAsset graphAsset, GraphView graphView) 
     {
-        Debug.Log("ƒZ[ƒu‚ÌŠJn");
-        //ƒm[ƒh
-        Debug.Log("ƒm[ƒh‚Ì”‚Í"+m_GraphView.nodes.ToList().Count+"ŒÂ");
-        //ƒGƒbƒW
-        Debug.Log("ƒGƒbƒW‚Ì”‚Í" + m_GraphView.edges.ToList().Count + "ŒÂ");
-        Number = 0;
-        ControlNumberAdd(m_GraphView);
-        SaveNode(m_GraphAsset,m_GraphView);
-        SaveEdgs(m_GraphAsset,m_GraphView);
+        Debug.Log("ã‚»ãƒ¼ãƒ–ã®é–‹å§‹");
+        //ãƒãƒ¼ãƒ‰
+        Debug.Log("ãƒãƒ¼ãƒ‰ã®æ•°ã¯"+graphView.nodes.ToList().Count+"å€‹");
+        //ã‚¨ãƒƒã‚¸
+        Debug.Log("ã‚¨ãƒƒã‚¸ã®æ•°ã¯" + graphView.edges.ToList().Count + "å€‹");
+        number = 0;
+
+        controlNumberAdd.ControlNumber(graphView);
+        //ControlNumberAdd(graphView);
+        saveNode.Save(graphAsset,graphView);
+        SaveEdgs(graphAsset,graphView);
 
     }
-    //Šeƒm[ƒh‚ÉŠÇ—”Ô†‚ğ•t—^
-    private static void ControlNumberAdd(GraphView m_GraphView) {
-        //int Number = 0;
-        var NodeList = m_GraphView.nodes.ToList();
-        //‡”Ô‚ª‚¨‚©‚µ‚­‚È‚é‚Ì‚Å•ÏX
-        /*
-        foreach (var node in NodeList) {
-            if (node is ScriptNode) {
-                ScriptNode castScriptNode = node as ScriptNode;
-                castScriptNode.NodeID = Number;
-                
-            }
-            Number++;
-        }
-        */
-        //(ƒXƒe[ƒgƒ}ƒVƒ“ŒÀ’è)(“Á’è‚Ìƒm[ƒh‚ğ”rœ‚µ‚Ä‚»‚êˆÈŠO‚ğ‡”Ô‚ÉŠÇ—”Ô†‚ğ•t—^‚·‚é)
-        //ƒXƒ^[ƒgƒm[ƒh‚É”Ô†‚ğU‚é(0”Ô)
-        var deleteStartNode = NodeList.Find(x => x.title == "StartNode") as StartNode;
-        NodeList.Remove(deleteStartNode);
-        var startNode = NodeList.Find(x => x.name == "Start") as ScriptNode;
+    //å„ãƒãƒ¼ãƒ‰ã«ç®¡ç†ç•ªå·ã‚’ä»˜ä¸
+    //private static void ControlNumberAdd(GraphView graphView) {
+    //    //int Number = 0;
+    //    var nodeList = graphView.nodes.ToList();
+    //    //(ã‚¹ãƒ†ãƒ¼ãƒˆãƒã‚·ãƒ³é™å®š)(ç‰¹å®šã®ãƒãƒ¼ãƒ‰ã‚’æ’é™¤ã—ã¦ãã‚Œä»¥å¤–ã‚’é †ç•ªã«ç®¡ç†ç•ªå·ã‚’ä»˜ä¸ã™ã‚‹)
+    //    //ã‚¹ã‚¿ãƒ¼ãƒˆãƒãƒ¼ãƒ‰ã«ç•ªå·ã‚’æŒ¯ã‚‹(0ç•ª)
+    //    var deleteStartNode = nodeList.Find(x => x.title == "StartNode") as StartNode;
+    //    nodeList.Remove(deleteStartNode);
+    //    var startNode = nodeList.Find(x => x.name == "Start") as ScriptNode;
 
-        //
-        if (startNode is ScriptNode)
-        {
-            ScriptNode castScriptNode = startNode as ScriptNode;
-            castScriptNode.NodeID = Number;
-            Number++;
-        }
-        NodeList.Remove(startNode);
-        foreach (Node node in NodeList)
-        {
-            AddNumbar(node);
-        }
-        //(ƒXƒe[ƒgƒ}ƒVƒ“ŒÀ’è)(‡”Ô‚ÉU‚é‚Ì‚Í‰„Šú‚·‚é‚©‚à)
-        /*
-        //ƒXƒ^[ƒgƒm[ƒh‚É”Ô†‚ğU‚é(0”Ô)
-        var StartNode = NodeList.Find(x => x.title == "StartNode") as StartNode;
-        //‚Â‚È‚ª‚Á‚Ä‚¢‚éƒm[ƒh‚ğæ“¾(0”Ô)
-        var NextNode = StartNode.OutputPort.connections.FirstOrDefault().input.node;
-        AddNumbar(NextNode);
-        var CastNextNode = NextNode as ScriptNode;
-        ChacksNode(CastNextNode);
-        /*
-        //Œq‚ª‚Á‚Ä‚¢‚éƒm[ƒh‚Ì”‚ğ”‚¦‚é
-        var NextNodeCount = CastNextNode.OutputPort.connections.Count();
-        var NexrNodeList = CastNextNode.OutputPort.connections.ToList();
-        //var NextNodeCount = StartNode.OutputPort.connections.Count();
-        //var NexrNodeList = StartNode.OutputPort.connections.ToList();
-
-        Debug.Log("aa"+NexrNodeList.Count);
-        //•¡”‚É‘Î‰‚µ‚Ä‚¢‚éƒm[ƒh”Ô†•t—^‚ğì‚é
-        //—á2‚Â‚ÌÚ‘±ƒm[ƒh
-        
-        for (int actionCount = 0; actionCount < NextNodeCount; actionCount++) {
-            //‚Â‚È‚ª‚Á‚Ä‚¢‚éƒm[ƒh‚É”Ô†‚ğ•t—^‚·‚é
-            AddNumbar(NexrNodeList[actionCount].input.node,Number);
-            Number++;
-        }
-        */
-        //Šeƒm[ƒh‚ÉŒq‚ª‚Á‚Ä‚¢‚éƒm[ƒh‚ğ’T‚·
-        //‘O‚É–ß‚Á‚ÄŒ©‚Â‚©‚Á‚½ƒm[ƒh‚É”Ô†•t—^‚ğs‚¤
-        //ŒJ‚è•Ô‚µs‚¤(”Ô†•t—^‚µ‚½ƒm[ƒh‚Ì”‚ğ”‚¦‚Ä‚»‚ê‚Å”»’è‚µ‚Ä‚à‚¢‚¢‚©‚à)
-
-        //(ƒrƒwƒCƒrƒAƒcƒŠ[ŒÀ’è)
-        //ƒXƒ^[ƒgƒm[ƒh‚©‚ç‡”Ô‚ğ’Tõ‚µ‚ÄŠÇ—”Ô†‚ğ•t—^‚·‚é
-
-        //ƒXƒ^[ƒgƒm[ƒh‚ğæ“¾
-        //var StartNode = NodeList.Find(x=>x.title == "StartNode") as StartNode;
-        //‚Â‚È‚ª‚Á‚Ä‚¢‚éƒm[ƒh‚ğæ“¾(0”Ô)
-        //var NextNode = StartNode.OutputPort.connections.FirstOrDefault().input.node;
-
-        /*
-        //ƒm[ƒh‚ªŒq‚ª‚Á‚Ä‚¢‚é‚©H
-        if (NextNode != null) {
-            AddNumbar(NextNode,Number);
-            Debug.Log("Œ»İ‚ÌŠÇ—”Ô†‚Í" + Number + "‚Å‚·");
-            //Ÿ‚ÉŒq‚ª‚Á‚Ä‚¢‚éŠm”F‚·‚é
-            NextNode=ChackNode(NextNode);
-            while(NextNode!=null)
-            {
-                AddNumbar(NextNode, Number);
-                Debug.Log("Œ»İ‚ÌŠÇ—”Ô†‚Í" + Number + "‚Å‚·");
-
-                //Ÿ‚ÉŒq‚ª‚Á‚Ä‚¢‚éŠm”F‚·‚é
-                NextNode = ChackNode(NextNode);
-            }
-            //TODO Œ»İ‚Í•ªŠòƒm[ƒh‚ğì‚Á‚Ä‚¢‚È‚¢‚Ì‚Å•ªŠò‚É‚Í–¢‘Î‰
-        }
-        */
-        
-    }
-    //ŠÇ—”Ô†‚ğ•t—^‚·‚é
-    private static void AddNumbar(Node node) {
-        //ŠÇ—”Ô†‚ğ•t—^‚·‚é
-        //ƒXƒNƒŠƒvƒgƒm[ƒh‚µ‚©”Ô†‚ğU‚ê‚È‚¢
-        //TODO ƒZ[ƒu‚µ‚½Œã‚É’Ç‰Á‚·‚é‚Æ‚¤‚Ü‚­‹““®‚µ‚È‚¢
-        if (node is ScriptNode){
-            ScriptNode castScriptNode = node as ScriptNode;
-                castScriptNode.NodeID = Number;
-                Number++;
-        }
-        else
-            Debug.LogError("”Ô†‚ğU‚é‚Ì‚É‘Î‰‚µ‚Ä‚¢‚Ü‚¹‚ñ");
-    }
-    //Ÿ‚Ìƒm[ƒh‚ğŒŸõ‚·‚é
-    private static Node ChackNode(Node node) {
-        //‚·‚Å‚É”Ô†‚ª•t—^‚³‚ê‚Ä‚¢‚éƒm[ƒh‚É~‚ç‚È‚¢‚æ‚¤‚É‚µ‚È‚¢‚Æ‚¢‚¯‚È‚¢
-        //Œq‚ª‚Á‚Ä‚¢‚éƒm[ƒh‚ğæ“¾
-        if (node is ScriptNode) {
-            ScriptNode castScriptNode = node as ScriptNode;
-            if (castScriptNode.OutputPort.connections.FirstOrDefault() != null) {
-                Node inputNode = castScriptNode.OutputPort.connections.FirstOrDefault().input.node;
-                return inputNode;
-            }
-        }
-        return null;
-    }
+    //    //
+    //    if (startNode is ScriptNode)
+    //    {
+    //        ScriptNode castScriptNode = startNode as ScriptNode;
+    //        castScriptNode.NodeID = number;
+    //        number++;
+    //    }
+    //    nodeList.Remove(startNode);
+    //    foreach (Node node in nodeList)
+    //    {
+    //        AddNumbar(node);
+    //    }
+    //}
+    //ç®¡ç†ç•ªå·ã‚’ä»˜ä¸ã™ã‚‹
+    //private static void AddNumbar(Node node) {
+    //    //ç®¡ç†ç•ªå·ã‚’ä»˜ä¸ã™ã‚‹
+    //    //ã‚¹ã‚¯ãƒªãƒ—ãƒˆãƒãƒ¼ãƒ‰ã—ã‹ç•ªå·ã‚’æŒ¯ã‚Œãªã„
+    //    //TODO ã‚»ãƒ¼ãƒ–ã—ãŸå¾Œã«è¿½åŠ ã™ã‚‹ã¨ã†ã¾ãæŒ™å‹•ã—ãªã„
+    //    if (node is ScriptNode){
+    //        ScriptNode castScriptNode = node as ScriptNode;
+    //            castScriptNode.NodeID = number;
+    //            number++;
+    //    }
+    //    else
+    //        Debug.LogError("ç•ªå·ã‚’æŒ¯ã‚‹ã®ã«å¯¾å¿œã—ã¦ã„ã¾ã›ã‚“");
+    //}
+    //æ¬¡ã®ãƒãƒ¼ãƒ‰ã‚’æ¤œç´¢ã™ã‚‹
+    //private static Node ChackNode(Node node) {
+    //    //ã™ã§ã«ç•ªå·ãŒä»˜ä¸ã•ã‚Œã¦ã„ã‚‹ãƒãƒ¼ãƒ‰ã«é™ã‚‰ãªã„ã‚ˆã†ã«ã—ãªã„ã¨ã„ã‘ãªã„
+    //    //ç¹‹ãŒã£ã¦ã„ã‚‹ãƒãƒ¼ãƒ‰ã‚’å–å¾—
+    //    if (node is ScriptNode) {
+    //        ScriptNode castScriptNode = node as ScriptNode;
+    //        if (castScriptNode.OutputPort.connections.FirstOrDefault() != null) {
+    //            Node inputNode = castScriptNode.OutputPort.connections.FirstOrDefault().input.node;
+    //            return inputNode;
+    //        }
+    //    }
+    //    return null;
+    //}
 
     /// <summary>
-    /// ŠÇ—”Ô†‚ªU‚ç‚ê‚Ä‚¢‚È‚¢ƒm[ƒh‚ª‚È‚­‚È‚é‚Ü‚ÅŒJ‚è•Ô‚·
+    /// ç®¡ç†ç•ªå·ãŒæŒ¯ã‚‰ã‚Œã¦ã„ãªã„ãƒãƒ¼ãƒ‰ãŒãªããªã‚‹ã¾ã§ç¹°ã‚Šè¿”ã™
     /// </summary>
     /// <param name="node"></param>
     /// <returns></returns>
-    private static Node ChacksNode(Node node) {
-        //ƒ‹[ƒv‚µ‚Ä‚¢‚éƒm[ƒh‚ğì‚ë‚¤‚Æ‚·‚é‚Æ‚·‚½‚Á‚­‚µ‚Ä‚µ‚Ü‚¤
-        var castScriptNode = node as ScriptNode;
-        //Œq‚ª‚Á‚Ä‚¢‚éƒm[ƒh‚Ì”‚ğ”‚¦‚é
-        var NextNodeCount = castScriptNode.OutputPort.connections.Count();
-        var NexrNodeList = castScriptNode.OutputPort.connections.ToList();
-        //•¡”‚É‘Î‰‚µ‚Ä‚¢‚éƒm[ƒh”Ô†•t—^‚ğì‚é
-        if (NextNodeCount != 0)
-        {
-            for (int actionCount = 0; actionCount < NextNodeCount; actionCount++)
-            {
-                //‚Â‚È‚ª‚Á‚Ä‚¢‚éƒm[ƒh‚É”Ô†‚ğ•t—^‚·‚é
-                AddNumbar(NexrNodeList[actionCount].input.node);
-                ChacksNode(NexrNodeList[actionCount].input.node);
-            }
-        }
-        return null;
-    }
+    //private static Node ChacksNode(Node node) {
+    //    //ãƒ«ãƒ¼ãƒ—ã—ã¦ã„ã‚‹ãƒãƒ¼ãƒ‰ã‚’ä½œã‚ã†ã¨ã™ã‚‹ã¨ã™ãŸã£ãã—ã¦ã—ã¾ã†
+    //    var castScriptNode = node as ScriptNode;
+    //    //ç¹‹ãŒã£ã¦ã„ã‚‹ãƒãƒ¼ãƒ‰ã®æ•°ã‚’æ•°ãˆã‚‹
+    //    var nextNodeCount = castScriptNode.OutputPort.connections.Count();
+    //    var nexrNodeList = castScriptNode.OutputPort.connections.ToList();
+    //    //è¤‡æ•°ã«å¯¾å¿œã—ã¦ã„ã‚‹ãƒãƒ¼ãƒ‰ç•ªå·ä»˜ä¸ã‚’ä½œã‚‹
+    //    if (nextNodeCount != 0)
+    //    {
+    //        for (int actionCount = 0; actionCount < nextNodeCount; actionCount++)
+    //        {
+    //            //ã¤ãªãŒã£ã¦ã„ã‚‹ãƒãƒ¼ãƒ‰ã«ç•ªå·ã‚’ä»˜ä¸ã™ã‚‹
+    //            AddNumbar(nexrNodeList[actionCount].input.node);
+    //            ChacksNode(nexrNodeList[actionCount].input.node);
+    //        }
+    //    }
+    //    return null;
+    //}
     /// <summary>
-    /// ƒXƒ^[ƒgƒm[ƒh‚ğ‚Ì‚¼‚¢‚½‚·‚×‚Ä‚Ìƒm[ƒh‚ÉŠÇ—”Ô†‚ğ•t—^‚·‚é
+    /// ã‚¹ã‚¿ãƒ¼ãƒˆãƒãƒ¼ãƒ‰ã‚’ã®ãã„ãŸã™ã¹ã¦ã®ãƒãƒ¼ãƒ‰ã«ç®¡ç†ç•ªå·ã‚’ä»˜ä¸ã™ã‚‹
     /// </summary>
     private static void ListAddNumbar() { 
     
     }
-    //ƒm[ƒh‚Ì•Û‘¶
-    private static void SaveNode(GraphAsset m_GraphAsset,GraphView m_GraphView) {
-        //ƒEƒBƒ“ƒhƒEã‚Ìƒm[ƒh‚ÌƒŠƒXƒg
-        var fieldNodeList = m_GraphView.nodes.ToList();
-        //œŠO‘ÎÛ‚ğ”rœ
-        fieldNodeList.RemoveAll(node => node is StartNode);
+    //ãƒãƒ¼ãƒ‰ã®ä¿å­˜
+    //private static void SaveNode(GraphAsset graphAsset,GraphView graphView) {
+    //    //ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ä¸Šã®ãƒãƒ¼ãƒ‰ã®ãƒªã‚¹ãƒˆ
+    //    var fieldNodeList = graphView.nodes.ToList();
+    //    //é™¤å¤–å¯¾è±¡ã‚’æ’é™¤
+    //    fieldNodeList.RemoveAll(node => node is StartNode);
        
-        //ƒŠƒXƒg‚Ì‰Šú‰»
-        m_GraphAsset.nodes = new List<NodeData>();
+    //    //ãƒªã‚¹ãƒˆã®åˆæœŸåŒ–
+    //    graphAsset.nodes = new List<NodeData>();
 
-        foreach (var node in fieldNodeList)
-        {
-            //êŠ‚Ì’Ç‰Á
-            m_GraphAsset.nodes.Add(new NodeData());
-            int listNumber = m_GraphAsset.nodes.ToList().Count - 1;
+    //    foreach (var node in fieldNodeList)
+    //    {
+    //        //å ´æ‰€ã®è¿½åŠ 
+    //        graphAsset.nodes.Add(new NodeData());
+    //        int listNumber = graphAsset.nodes.ToList().Count - 1;
 
-            //ˆÊ’u‚Ì•Û‘¶
-            m_GraphAsset.nodes[listNumber].position = node.GetPosition().position;
-            if (node is ScriptNode) {
-                ScriptNode castScriptNode = node as ScriptNode;
-                //ƒXƒNƒŠƒvƒg‚Ì•Û‘¶
-                m_GraphAsset.nodes[listNumber].Object = castScriptNode.ObjectField.value;
-                //ŠÇ—”Ô†‚Ì•Û‘¶
-                m_GraphAsset.nodes[listNumber].controlNumber = castScriptNode.NodeID;
+    //        //ä½ç½®ã®ä¿å­˜
+    //        graphAsset.nodes[listNumber].position = node.GetPosition().position;
+    //        if (node is ScriptNode) {
+    //            ScriptNode castScriptNode = node as ScriptNode;
+    //            //ã‚¹ã‚¯ãƒªãƒ—ãƒˆã®ä¿å­˜
+    //            graphAsset.nodes[listNumber].Object = castScriptNode.ObjectField.value;
+    //            //ç®¡ç†ç•ªå·ã®ä¿å­˜
+    //            graphAsset.nodes[listNumber].controlNumber = castScriptNode.NodeID;
 
-                //‘ÎÛƒm[ƒh‚ÌƒAƒEƒgƒvƒbƒg‚É‚Â‚È‚ª‚Á‚Ä‚¢‚é‚·‚×‚Ä‚ÌƒGƒbƒW‚ğ•Û‘¶
-                var edgeslist=castScriptNode.OutputPort.connections.ToList();
-                if (edgeslist.Count >= 0) { 
-                    for (int listCount= 0; listCount < edgeslist.Count; listCount++) {
-                        //•Û‘¶êŠ‚Ì’Ç‰Á
-                        m_GraphAsset.nodes[listNumber].edgesDatas.Add(new EdgesData());
-                        ScriptNode castInputNode= edgeslist[listCount].input.node as ScriptNode;
-                        //ŠÇ—”Ô†‚Ì•Û‘¶
-                        m_GraphAsset.nodes[listNumber].edgesDatas[listCount].controlNumber = listCount;
-                        //ƒCƒ“ƒvƒbƒg”Ô†‚Ì•Û‘¶(ƒAƒEƒgƒvƒbƒg”Ô†‚Í‚±‚Ìƒm[ƒh‚ÌŠÇ—”Ô†‚È‚Ì‚Å•Û‘¶‚µ‚È‚­‚Ä‚æ‚¢)
-                        m_GraphAsset.nodes[listNumber].edgesDatas[listCount].inputNodeId = castInputNode.NodeID;
-                    }
-                }
-                //‘ÎÛƒm[ƒh‚ÌextensionContainer‚É‚Â‚È‚ª‚Á‚Ä‚¢‚éField‚ğ•Û‘¶
-                int fieldCount = castScriptNode.extensionContainer.childCount;
-                if (fieldCount >= 0) {
-                    for (int AddCount = 0; AddCount < fieldCount; AddCount++) {
-
-
-                        //TODO@Œ»İ‚Í‚Ç‚¿‚ç‚àString‚Å‚Ì•Û‘¶‚Ù‚©‚Ì•û–@‚ªŒ©‚Â‚©‚ê‚Î‚»‚ê‚É•ÏX
-                        var fieldElement = castScriptNode.extensionContainer[AddCount];
-
-                        //fieldElement‚Ì–¼‘O‚ğæ“¾
-                        string fieldElementName= fieldElement.name.ToString();
-                        if (fieldElement is DataElement<FloatField, float>) {
-                            //•Û‘¶êŠ‚Ì’Ç‰Á
-                            m_GraphAsset.nodes[listNumber].fieldData.Add(new FieldData());
-                            var castFieldElement = fieldElement as DataElement<FloatField,float>;
-                            //Œ^‚Ì•Û‘¶
-                            m_GraphAsset.nodes[listNumber].fieldData[AddCount].typeName = "System.Single";
-                            ////–¼‘O‚Ì•Û‘¶
-                            m_GraphAsset.nodes[listNumber].fieldData[AddCount].fieldName= castFieldElement.fieldNameLabel.text;
-                            ////’l‚Ì•Û‘¶
-                            m_GraphAsset.nodes[listNumber].fieldData[AddCount].valueData = castFieldElement.Field.value.ToString();
-                            continue;
-                        }
-                        if(fieldElement is DataElement<IntegerField, int>){
-                            //•Û‘¶êŠ‚Ì’Ç‰Á
-                            m_GraphAsset.nodes[listNumber].fieldData.Add(new FieldData());
-                            var castFieldElement = fieldElement as DataElement<IntegerField, int>;
-                            //Œ^‚Ì•Û‘¶
-                            m_GraphAsset.nodes[listNumber].fieldData[AddCount].typeName = "System.Int32";
-                            ////–¼‘O‚Ì•Û‘¶
-                            m_GraphAsset.nodes[listNumber].fieldData[AddCount].fieldName = castFieldElement.fieldNameLabel.text;
-                            ////’l‚Ì•Û‘¶
-                            m_GraphAsset.nodes[listNumber].fieldData[AddCount].valueData = castFieldElement.Field.value.ToString();
-                            continue;
-                        }
-                        if(fieldElement is DataElement<Toggle, bool>)
-                        {
-                            //•Û‘¶êŠ‚Ì’Ç‰Á
-                            m_GraphAsset.nodes[listNumber].fieldData.Add(new FieldData());
-                            var castFieldElement = fieldElement as DataElement<Toggle, bool>;
-                            //Œ^‚Ì•Û‘¶
-                            m_GraphAsset.nodes[listNumber].fieldData[AddCount].typeName = "System.Boolean";
-                            ////–¼‘O‚Ì•Û‘¶
-                            m_GraphAsset.nodes[listNumber].fieldData[AddCount].fieldName = castFieldElement.fieldNameLabel.text;
-                            ////’l‚Ì•Û‘¶
-                            m_GraphAsset.nodes[listNumber].fieldData[AddCount].valueData = castFieldElement.Field.value.ToString();
-                            continue;
-                        }
-                        if (fieldElement is ObjectElement)
-                        {
-                            m_GraphAsset.nodes[listNumber].fieldDataObject.Add(new FieldDataObject());
-                            var castFieldElement = fieldElement as ObjectElement;
-                            //Œ^‚Ì•Û‘¶
-                            m_GraphAsset.nodes[listNumber].fieldDataObject[0].typeName = "UnityEngine.GameObject";
-                            //–¼‘O‚Ì•Û‘¶
-                            m_GraphAsset.nodes[listNumber].fieldDataObject[0].fieldName = castFieldElement.fieldNameLabel.text;
-                            //’l‚Ì•Û‘¶
-                            var valueob = castFieldElement.objectField.value;
-                            Object Object= valueob as Object;
-
-                            m_GraphAsset.nodes[listNumber].fieldDataObject[0].valueData = Object;
-                            continue;
-                        }
-                        Debug.LogError("–¢•ª—Ş‚ÌFieldElement‚ª‚ ‚è‚Ü‚µ‚½");
-                    }
-                }
+    //            //å¯¾è±¡ãƒãƒ¼ãƒ‰ã®ã‚¢ã‚¦ãƒˆãƒ—ãƒƒãƒˆã«ã¤ãªãŒã£ã¦ã„ã‚‹ã™ã¹ã¦ã®ã‚¨ãƒƒã‚¸ã‚’ä¿å­˜
+    //            var edgeslist=castScriptNode.OutputPort.connections.ToList();
+    //            if (edgeslist.Count >= 0) { 
+    //                for (int listCount= 0; listCount < edgeslist.Count; listCount++) {
+    //                    //ä¿å­˜å ´æ‰€ã®è¿½åŠ 
+    //                    graphAsset.nodes[listNumber].edgesDatas.Add(new EdgesData());
+    //                    ScriptNode castInputNode= edgeslist[listCount].input.node as ScriptNode;
+    //                    //ç®¡ç†ç•ªå·ã®ä¿å­˜
+    //                    graphAsset.nodes[listNumber].edgesDatas[listCount].controlNumber = listCount;
+    //                    //ã‚¤ãƒ³ãƒ—ãƒƒãƒˆç•ªå·ã®ä¿å­˜(ã‚¢ã‚¦ãƒˆãƒ—ãƒƒãƒˆç•ªå·ã¯ã“ã®ãƒãƒ¼ãƒ‰ã®ç®¡ç†ç•ªå·ãªã®ã§ä¿å­˜ã—ãªãã¦ã‚ˆã„)
+    //                    graphAsset.nodes[listNumber].edgesDatas[listCount].inputNodeId = castInputNode.NodeID;
+    //                }
+    //            }
+    //            //å¯¾è±¡ãƒãƒ¼ãƒ‰ã®extensionContainerã«ã¤ãªãŒã£ã¦ã„ã‚‹Fieldã‚’ä¿å­˜
+    //            int fieldCount = castScriptNode.extensionContainer.childCount;
+    //            if (fieldCount >= 0) {
+    //                for (int addCount = 0; addCount < fieldCount; addCount++) {
 
 
-            }
+    //                    //TODOã€€ç¾åœ¨ã¯ã©ã¡ã‚‰ã‚‚Stringã§ã®ä¿å­˜ã»ã‹ã®æ–¹æ³•ãŒè¦‹ã¤ã‹ã‚Œã°ãã‚Œã«å¤‰æ›´
+    //                    var fieldElement = castScriptNode.extensionContainer[addCount];
 
-        }
-        //ŠÇ—”Ô†‚Ìƒ\[ƒg
-        m_GraphAsset.nodes.Sort((node1,node2)=>node1.controlNumber-node2.controlNumber);
-    }
-    //ƒGƒbƒW‚Ì•Û‘¶
-    private static void SaveEdgs(GraphAsset m_GraphAsset, GraphView m_GraphView) {
-        //ƒEƒBƒ“ƒhƒEã‚ÌƒGƒbƒW‚ÌƒŠƒXƒg
-        var fieldEdgslist = m_GraphView.edges.ToList();
+    //                    //fieldElementã®åå‰ã‚’å–å¾—
+    //                    string fieldElementName= fieldElement.name.ToString();
+    //                    if (fieldElement is DataElement<FloatField, float>) {
+    //                        //ä¿å­˜å ´æ‰€ã®è¿½åŠ 
+    //                        graphAsset.nodes[listNumber].fieldData.Add(new FieldData());
+    //                        var castFieldElement = fieldElement as DataElement<FloatField,float>;
+    //                        //å‹ã®ä¿å­˜
+    //                        graphAsset.nodes[listNumber].fieldData[addCount].typeName = "System.Single";
+    //                        ////åå‰ã®ä¿å­˜
+    //                        graphAsset.nodes[listNumber].fieldData[addCount].fieldName= castFieldElement.fieldNameLabel.text;
+    //                        ////å€¤ã®ä¿å­˜
+    //                        graphAsset.nodes[listNumber].fieldData[addCount].valueData = castFieldElement.Field.value.ToString();
+    //                        continue;
+    //                    }
+    //                    if(fieldElement is DataElement<IntegerField, int>){
+    //                        //ä¿å­˜å ´æ‰€ã®è¿½åŠ 
+    //                        graphAsset.nodes[listNumber].fieldData.Add(new FieldData());
+    //                        var castFieldElement = fieldElement as DataElement<IntegerField, int>;
+    //                        //å‹ã®ä¿å­˜
+    //                        graphAsset.nodes[listNumber].fieldData[addCount].typeName = "System.Int32";
+    //                        ////åå‰ã®ä¿å­˜
+    //                        graphAsset.nodes[listNumber].fieldData[addCount].fieldName = castFieldElement.fieldNameLabel.text;
+    //                        ////å€¤ã®ä¿å­˜
+    //                        graphAsset.nodes[listNumber].fieldData[addCount].valueData = castFieldElement.Field.value.ToString();
+    //                        continue;
+    //                    }
+    //                    if(fieldElement is DataElement<Toggle, bool>)
+    //                    {
+    //                        //ä¿å­˜å ´æ‰€ã®è¿½åŠ 
+    //                        graphAsset.nodes[listNumber].fieldData.Add(new FieldData());
+    //                        var castFieldElement = fieldElement as DataElement<Toggle, bool>;
+    //                        //å‹ã®ä¿å­˜
+    //                        graphAsset.nodes[listNumber].fieldData[addCount].typeName = "System.Boolean";
+    //                        ////åå‰ã®ä¿å­˜
+    //                        graphAsset.nodes[listNumber].fieldData[addCount].fieldName = castFieldElement.fieldNameLabel.text;
+    //                        ////å€¤ã®ä¿å­˜
+    //                        graphAsset.nodes[listNumber].fieldData[addCount].valueData = castFieldElement.Field.value.ToString();
+    //                        continue;
+    //                    }
+    //                    if (fieldElement is ObjectElement)
+    //                    {
+    //                        graphAsset.nodes[listNumber].fieldDataObject.Add(new FieldDataObject());
+    //                        var castFieldElement = fieldElement as ObjectElement;
+    //                        //å‹ã®ä¿å­˜
+    //                        graphAsset.nodes[listNumber].fieldDataObject[0].typeName = "UnityEngine.GameObject";
+    //                        //åå‰ã®ä¿å­˜
+    //                        graphAsset.nodes[listNumber].fieldDataObject[0].fieldName = castFieldElement.fieldNameLabel.text;
+    //                        //å€¤ã®ä¿å­˜
+    //                        var valueob = castFieldElement.objectField.value;
+    //                        Object @object= valueob as Object;
+
+    //                        graphAsset.nodes[listNumber].fieldDataObject[0].valueData = @object;
+    //                        continue;
+    //                    }
+    //                    Debug.LogError("æœªåˆ†é¡ã®FieldElementãŒã‚ã‚Šã¾ã—ãŸ");
+    //                }
+    //            }
+
+
+    //        }
+
+    //    }
+    //    //ç®¡ç†ç•ªå·ã®ã‚½ãƒ¼ãƒˆ
+    //    graphAsset.nodes.Sort((node1,node2)=>node1.controlNumber-node2.controlNumber);
+    //}
+    //ã‚¨ãƒƒã‚¸ã®ä¿å­˜
+    private static void SaveEdgs(GraphAsset graphAsset, GraphView graphView) {
+        //ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ä¸Šã®ã‚¨ãƒƒã‚¸ã®ãƒªã‚¹ãƒˆ
+        var fieldEdgslist = graphView.edges.ToList();
         Debug.Log(fieldEdgslist.Count());
-        //ƒŠƒXƒg‚Ì‰Šú‰»
-        m_GraphAsset.edges = new List<EdgeData>();
-        //œŠO‘ÎÛ‚ğ”rœ
+        //ãƒªã‚¹ãƒˆã®åˆæœŸåŒ–
+        graphAsset.edges = new List<EdgeData>();
+        //é™¤å¤–å¯¾è±¡ã‚’æ’é™¤
         fieldEdgslist.RemoveAll(i => i.output.node is StartNode);
-        //ƒeƒXƒg—p‚ÉŠÈ‘f‚Å
+        //ãƒ†ã‚¹ãƒˆç”¨ã«ç°¡ç´ ã§
         foreach (var edge in fieldEdgslist.Select((v, i) => new { value = v, Index = i }))
         {
-            //êŠ‚Ì’Ç‰Á
-            m_GraphAsset.edges.Add(new EdgeData());
+            //å ´æ‰€ã®è¿½åŠ 
+            graphAsset.edges.Add(new EdgeData());
             if (edge.value.input.node is ScriptNode){
                 ScriptNode castScriptNode= edge.value.input.node as ScriptNode;
-                m_GraphAsset.edges[edge.Index].inputNodeId = castScriptNode.NodeID;
+                graphAsset.edges[edge.Index].inputNodeId = castScriptNode.NodeID;
             }
             else
-                Debug.LogError("input‘¤‚Å‚ÌÚ‘±æ‚ª•Û‘¶‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½BŠÇ—”Ô†‚ªU‚ç‚ê‚Ä‚¢‚È‚¢‰Â”\«‚ª‚ ‚è‚Ü‚·");
+                Debug.LogError("inputå´ã§ã®æ¥ç¶šå…ˆãŒä¿å­˜ã§ãã¾ã›ã‚“ã§ã—ãŸã€‚ç®¡ç†ç•ªå·ãŒæŒ¯ã‚‰ã‚Œã¦ã„ãªã„å¯èƒ½æ€§ãŒã‚ã‚Šã¾ã™");
             if (edge.value.output.node is ScriptNode){
                 ScriptNode castScriptNode = edge.value.output.node as ScriptNode;
-                m_GraphAsset.edges[edge.Index].outputNodeId = castScriptNode.NodeID;
+                graphAsset.edges[edge.Index].outputNodeId = castScriptNode.NodeID;
             }
             else
-                Debug.LogError("output‘¤‚Å‚ÌÚ‘±æ‚ª•Û‘¶‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½BŠÇ—”Ô†‚ªU‚ç‚ê‚Ä‚¢‚È‚¢‰Â”\«‚ª‚ ‚è‚Ü‚·");
+                Debug.LogError("outputå´ã§ã®æ¥ç¶šå…ˆãŒä¿å­˜ã§ãã¾ã›ã‚“ã§ã—ãŸã€‚ç®¡ç†ç•ªå·ãŒæŒ¯ã‚‰ã‚Œã¦ã„ãªã„å¯èƒ½æ€§ãŒã‚ã‚Šã¾ã™");
 
         }
     }
-    private static Type ListReset<Type>(Type ListData)
+    private static Type ListReset<Type>(Type listData)
     where Type:IComparer{
         return default;
     }

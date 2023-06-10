@@ -17,6 +17,7 @@ public class GraphViewManager : GraphView
     //Nodeの色関係
     public string defaultColorCode { get;} = "#3F3F3F";
     public string startColorCode { get;} = "#FFA500";
+    private readonly GraphViewLoad graphViewLoad = new GraphViewLoad();
     public GraphViewManager() : base()
     {
         //TODO 初期作成ができなくなる
@@ -147,7 +148,7 @@ public class GraphViewManager : GraphView
         //GraphView上の変化監視コールバック
         graphViewChanged = OnCallbackGraphView;
         //データからの生成
-        GraphViewLoad.CreateGraphView(this);
+        graphViewLoad.CreateGraphView(this);
         //TODO スタートノードの追加
         this.AddElement(new StartNode());
         // 背景を一番後ろに追加

@@ -23,7 +23,7 @@ MonoBehaviour:
       valueData: 1.5
     - typeName: System.Int32
       fieldName: intValue
-      valueData: 10
+      valueData: 1111
     - typeName: System.Boolean
       fieldName: boolValue
       valueData: True
@@ -33,20 +33,34 @@ MonoBehaviour:
       valueData: {fileID: 0}
     edgesDatas:
     - controlNumber: 0
-      inputNodeId: 3
-    - controlNumber: 1
       inputNodeId: 2
-  - position: {x: 480, y: 51}
+    - controlNumber: 1
+      inputNodeId: 1
+  - position: {x: 363, y: 0}
+    scriptID: 
+    Object: {fileID: 11500000, guid: 5f73acff98009bc40aabc22f46a14ab5, type: 3}
+    controlNumber: 1
+    fieldData: []
+    fieldDataObject: []
+    edgesDatas: []
+  - position: {x: 342, y: 201}
+    scriptID: 
+    Object: {fileID: 11500000, guid: 5f73acff98009bc40aabc22f46a14ab5, type: 3}
+    controlNumber: 2
+    fieldData: []
+    fieldDataObject: []
+    edgesDatas: []
+  - position: {x: 475, y: 11}
     scriptID: 
     Object: {fileID: 11500000, guid: eca09a9ea8ef97a458185e87ea834b1d, type: 3}
-    controlNumber: 1
+    controlNumber: 3
     fieldData:
     - typeName: System.Single
       fieldName: floatValue
       valueData: 1.2
     - typeName: System.Int32
       fieldName: intValue
-      valueData: 1
+      valueData: 1000
     - typeName: System.Boolean
       fieldName: boolValue
       valueData: False
@@ -55,24 +69,10 @@ MonoBehaviour:
       fieldName: gameObject
       valueData: {fileID: 0}
     edgesDatas: []
-  - position: {x: 363, y: 0}
-    scriptID: 
-    Object: {fileID: 11500000, guid: 5f73acff98009bc40aabc22f46a14ab5, type: 3}
-    controlNumber: 2
-    fieldData: []
-    fieldDataObject: []
-    edgesDatas: []
-  - position: {x: 342, y: 201}
-    scriptID: 
-    Object: {fileID: 11500000, guid: 5f73acff98009bc40aabc22f46a14ab5, type: 3}
-    controlNumber: 3
-    fieldData: []
-    fieldDataObject: []
-    edgesDatas: []
   edges:
-  - inputNodeId: 3
-    outputNodeId: 0
   - inputNodeId: 2
+    outputNodeId: 0
+  - inputNodeId: 1
     outputNodeId: 0
   GetObject: []
   gameObject: {fileID: 0}

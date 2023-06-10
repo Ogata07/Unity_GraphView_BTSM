@@ -9,18 +9,19 @@ using UnityEngine;
 public class GraphViewOpen 
 {
     /// <summary>
-    /// GraphView‚Ìscriptableobject‚ğ‘I‘ğ‚ÉƒEƒBƒ“ƒhƒE‚ğ•\¦‚·‚é
+    /// GraphViewã®scriptableobjectã‚’é¸æŠæ™‚ã«ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’è¡¨ç¤ºã™ã‚‹
     /// </summary>
     [OnOpenAsset]
     static bool OnOppenAsset(int instanceId)
     {
-        //GraphAseetg—p‚©”»’f
+        //GraphAseetä½¿ç”¨ã‹åˆ¤æ–­
         if (EditorUtility.InstanceIDToObject(instanceId) is GraphAsset)
         {
-            Debug.Log("‘ÎÛAsset‚Å‚·");
+            Debug.Log("å¯¾è±¡Assetã§ã™");
+            GraphViewLoad graphViewLoad = new GraphViewLoad();
             Object selectObject = Selection.activeObject;
             GraphAsset graphAsset = (GraphAsset)selectObject;
-            GraphViewLoad.LoadNodeElement(graphAsset);
+            graphViewLoad.LoadNodeElement(graphAsset);
             return true;
         }
         return false;
