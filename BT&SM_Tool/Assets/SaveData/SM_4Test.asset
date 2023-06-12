@@ -48,7 +48,7 @@ MonoBehaviour:
     edgesDatas:
     - controlNumber: 0
       inputNodeId: 0
-  - position: {x: 278, y: 42}
+  - position: {x: 355, y: 77}
     scriptID: 
     Object: {fileID: 11500000, guid: 57ea224fd0015a442a2ae8efda645e28, type: 3}
     controlNumber: 3
@@ -60,17 +60,7 @@ MonoBehaviour:
     edgesDatas:
     - controlNumber: 0
       inputNodeId: 0
-  edges:
-  - inputNodeId: 3
-    outputNodeId: 1
-  - inputNodeId: 1
-    outputNodeId: 0
-  - inputNodeId: 2
-    outputNodeId: 0
-  - inputNodeId: 0
-    outputNodeId: 2
-  - inputNodeId: 0
-    outputNodeId: 3
+  edges: []
   GetObject:
   - Object: {fileID: 0}
     ss: 0

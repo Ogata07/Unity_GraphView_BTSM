@@ -21,8 +21,8 @@ public  class GraphViewLoad
             //CreateNode2(node,graphViewManager);
             createNode.Create(node, graphViewManager);
         }
-        foreach (var edge in loadGraphAsset.edges) {
-            createEdge.Create(edge, graphViewManager);
+        foreach (var node in loadGraphAsset.nodes) {
+            createEdge.Create(node, graphViewManager);
         }
     }
 }

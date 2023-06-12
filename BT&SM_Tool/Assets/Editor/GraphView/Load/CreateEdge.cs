@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEditor.UIElements;
 using UnityEngine;
@@ -10,24 +11,22 @@ public class CreateEdge
 {
     private const int LabelFontSizeValue = 64;
     private const int LabelMarginTopValue = -34;
-    //edgeDataからの作成ではなくEdgesDataからの生成に切り替えを(edgeDataがいらなくなる可能性あり)
-    public void Create(EdgeData edgeData, GraphViewManager graphViewManager)
-    {
-        var node = graphViewManager.nodes.ToList();
-        //Port作製
-        Port inputPort = node[edgeData.inputNodeId].inputContainer.contentContainer.Q<Port>();
-        Port outputPort = node[edgeData.outputNodeId].outputContainer.contentContainer.Q<Port>();
-        //Edge作製
-        Edge edge = ConnectPorts(inputPort, outputPort);
-        //ラベル追加
-        //TODO 削除する予定
-        Label edgeLabel = new Label();
-        edgeLabel.text = "0";
-        edgeLabel.style.fontSize = LabelFontSizeValue;
-        edgeLabel.style.marginTop = LabelMarginTopValue;
-        edge.edgeControl.Add(edgeLabel);
-        //GraphViewに追加
-        graphViewManager.AddElement(edge);
+    public void Create(NodeData nodeData,GraphViewManager graphViewManager) {
+        int edgeCount = nodeData.edgesDatas.Count;
+        List<Node> node = graphViewManager.nodes.ToList();
+        if (edgeCount > 0) {
+            for (int createEdgeCount = 0; createEdgeCount < edgeCount; createEdgeCount++)
+            {
+                //Port作製
+                Port inputPort = node[nodeData.edgesDatas[createEdgeCount].inputNodeId].inputContainer.contentContainer.Q<Port>();
+                Port outputPort = node[nodeData.controlNumber].outputContainer.contentContainer.Q<Port>();
+                //Edge作製
+                Edge edge = ConnectPorts(inputPort, outputPort);
+                //GraphViewに追加
+                graphViewManager.AddElement(edge);
+            }
+        }
+
     }
     public Edge ConnectPorts(Port inputport, Port outputport)
     {
