@@ -13,54 +13,17 @@ MonoBehaviour:
   m_Name: FieldTest
   m_EditorClassIdentifier: 
   nodes:
-  - position: {x: 68, y: 64}
+  - position: {x: 202, y: 102}
     scriptID: 
-    Object: {fileID: 11500000, guid: eca09a9ea8ef97a458185e87ea834b1d, type: 3}
+    object: {fileID: 11500000, guid: eca09a9ea8ef97a458185e87ea834b1d, type: 3}
     controlNumber: 0
-    fieldData:
-    - typeName: System.Single
-      fieldName: floatValue
-      valueData: 1.5
-    - typeName: System.Int32
-      fieldName: intValue
-      valueData: 1111
-    - typeName: System.Boolean
-      fieldName: boolValue
-      valueData: True
-    fieldDataObject:
-    - typeName: UnityEngine.GameObject
-      fieldName: gameObject
-      valueData: {fileID: 0}
-    edgesDatas:
-    - controlNumber: 0
-      inputNodeId: 2
-    - controlNumber: 1
-      inputNodeId: 1
-  - position: {x: 363, y: 0}
-    scriptID: 
-    Object: {fileID: 11500000, guid: 5f73acff98009bc40aabc22f46a14ab5, type: 3}
-    controlNumber: 1
-    fieldData: []
-    fieldDataObject: []
-    edgesDatas: []
-  - position: {x: 342, y: 201}
-    scriptID: 
-    Object: {fileID: 11500000, guid: 5f73acff98009bc40aabc22f46a14ab5, type: 3}
-    controlNumber: 2
-    fieldData: []
-    fieldDataObject: []
-    edgesDatas: []
-  - position: {x: 475, y: 11}
-    scriptID: 
-    Object: {fileID: 11500000, guid: eca09a9ea8ef97a458185e87ea834b1d, type: 3}
-    controlNumber: 3
     fieldData:
     - typeName: System.Single
       fieldName: floatValue
       valueData: 1.2
     - typeName: System.Int32
       fieldName: intValue
-      valueData: 1000
+      valueData: 1
     - typeName: System.Boolean
       fieldName: boolValue
       valueData: False
@@ -74,6 +37,6 @@ MonoBehaviour:
     outputNodeId: 0
   - inputNodeId: 1
     outputNodeId: 0
-  GetObject: []
+  getObject: []
   gameObject: {fileID: 0}
   monoBehaviour: {fileID: 0}

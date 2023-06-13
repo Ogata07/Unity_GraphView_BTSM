@@ -24,7 +24,7 @@ public class SMManager : MonoBehaviour
     void Start()
     {
         
-        var startNode = graphAsset.nodes[activeNodeId].Object;
+        var startNode = graphAsset.nodes[activeNodeId].@object;
         var scriptName = startNode.name;
         Debug.Log(scriptName);
         var activeScript = Activator.CreateInstance(Type.GetType(scriptName));
@@ -93,7 +93,7 @@ public class SMManager : MonoBehaviour
         //移行先の管理番号をactiveNodeIdに渡す
         activeNodeId = nodeId;
         //管理番号元のスクリプトオブジェクトを取得する
-        var startNode = graphAsset.nodes[nodeId].Object;
+        var startNode = graphAsset.nodes[nodeId].@object;
         //スクリプトの名前を取得
         var scriptName = startNode.name;
         //名前からインスタンス生成をする
@@ -175,6 +175,6 @@ public class SMManager : MonoBehaviour
     private void OnGUI()
     {
         GUILayout.Label($"現在実行中のノードの管理番号: {activeNodeId}");
-        GUILayout.Label($"実行中のスクリプト↓: {graphAsset.nodes[activeNodeId].Object}");
+        GUILayout.Label($"実行中のスクリプト↓: {graphAsset.nodes[activeNodeId].@object}");
     }
 }

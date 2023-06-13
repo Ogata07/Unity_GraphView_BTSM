@@ -7,6 +7,7 @@ using UnityEngine.UIElements;
 
 public class SaveNode 
 {
+    private SaveField saveField = new SaveField();
     public  void Save(GraphAsset graphAsset, GraphView graphView)
     {
         //ウィンドウ上のノードのリスト
@@ -17,7 +18,7 @@ public class SaveNode
 
         //リストの初期化
         graphAsset.nodes = new List<NodeData>();
-
+        
         foreach (var node in fieldNodeList)
         {
             //場所の追加
@@ -30,7 +31,7 @@ public class SaveNode
             {
                 ScriptNode castScriptNode = node as ScriptNode;
                 //スクリプトの保存
-                graphAsset.nodes[listNumber].Object = castScriptNode.ObjectField.value;
+                graphAsset.nodes[listNumber].@object = castScriptNode.ObjectField.value;
                 //管理番号の保存
                 graphAsset.nodes[listNumber].controlNumber = castScriptNode.NodeID;
 
@@ -58,42 +59,10 @@ public class SaveNode
 
 
                         //TODO　現在はどちらもStringでの保存ほかの方法が見つかればそれに変更
-                        var fieldElement = castScriptNode.extensionContainer[addCount];
-
+                        VisualElement fieldElement = castScriptNode.extensionContainer[addCount];
+                        saveField.ChackField(fieldElement,graphAsset,listNumber);
                         //fieldElementの名前を取得
-                        string fieldElementName = fieldElement.name.ToString();
-                        if (fieldElement is DataElement<FloatField, float> floatElement)
-                        {
-                            AddFieldData(graphAsset, listNumber, "System.Single", floatElement.fieldNameLabel.text, floatElement.Field.value.ToString());
-                            continue;
-                        }
-                        if (fieldElement is DataElement<IntegerField, int> intElement)
-                        {
-                            AddFieldData(graphAsset,listNumber, "System.Int32", intElement.fieldNameLabel.text, intElement.Field.value.ToString());
-                            continue;
-                        }
-                        if (fieldElement is DataElement<Toggle, bool> boolElement)
-                        {
-                            AddFieldData(graphAsset, listNumber, "System.Boolean", boolElement.fieldNameLabel.text, boolElement.Field.value.ToString());
-                            continue; 
-                        }
-
-                        if (fieldElement is ObjectElement)
-                        {
-                            graphAsset.nodes[listNumber].fieldDataObject.Add(new FieldDataObject());
-                            var castFieldElement = fieldElement as ObjectElement;
-                            //型の保存
-                            graphAsset.nodes[listNumber].fieldDataObject[0].typeName = "UnityEngine.GameObject";
-                            //名前の保存
-                            graphAsset.nodes[listNumber].fieldDataObject[0].fieldName = castFieldElement.fieldNameLabel.text;
-                            //値の保存
-                            var valueob = castFieldElement.objectField.value;
-                            Object @object = valueob as Object;
-
-                            graphAsset.nodes[listNumber].fieldDataObject[0].valueData = @object;
-                            continue;
-                        }
-                        Debug.LogError("未分類のFieldElementがありました");
+                        //string fieldElementName = fieldElement.name.ToString();
                     }
                 }
 

@@ -15,7 +15,7 @@ public class BTManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        var startNode = graphAsset.nodes[0].Object;
+        var startNode = graphAsset.nodes[0].@object;
 
 
         var scriptName = startNode.name;

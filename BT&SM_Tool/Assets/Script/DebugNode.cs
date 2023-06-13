@@ -6,16 +6,16 @@ using ScriptFlow;
 public class DebugNode : GraphViewScriptBase
 {
     private int time = 100;
-    private SMManager m_SMManager = default;
+    private SMManager sMManager = default;
     public override void BTStart(SMManager manager)
     {
-        Debug.Log("DebugNodeÇ≈Ç∑");
-        m_SMManager=manager;
+        Debug.Log("DebugNode„Åß„Åô");
+        sMManager=manager;
     }
     public override void BTUpdate()
     {
         time--;
         if (time < 0)
-            BTNext(m_SMManager);
+            BTNext(sMManager);
     }
 }

@@ -11,20 +11,20 @@ using UnityEngine.UIElements;
 /// </summary>
 public class ScriptNode : Node
 {
-    private ObjectField m_ObjectField = default;
+    private ObjectField objectField = default;
     private readonly ScriptFieldCheck scriptFieldCheck= new ScriptFieldCheck();
     public Port OutputPort { get; set; }
     public ObjectField ObjectField
     {
         get
         {
-            return m_ObjectField;
+            return objectField;
         }
         set
         {
             //if (m_ObjectField.value==value.value)
             //m_ObjectField.objectType = typeof(UnityEngine.Object);
-            m_ObjectField.value = value.value;
+            objectField.value = value.value;
         }
     }
     public int NodeID { get; set; } = default;
@@ -34,12 +34,12 @@ public class ScriptNode : Node
         //接続Port追加
         PortAdd();
         //ObjectFieldの追加
-        m_ObjectField = new ObjectField();
+        objectField = new ObjectField();
         //TODO MonoScriptから変更
-        m_ObjectField.objectType = typeof(UnityEngine.Object);
-        mainContainer.Add(m_ObjectField);
+        objectField.objectType = typeof(UnityEngine.Object);
+        mainContainer.Add(objectField);
         //m_ObjectFieldの値が変更されたときに行う処理
-        m_ObjectField.RegisterCallback<ChangeEvent<String>>(events =>{
+        objectField.RegisterCallback<ChangeEvent<String>>(events =>{
             AddStart();
         });
     }
@@ -61,13 +61,13 @@ public class ScriptNode : Node
     }
     private void TitleChange() {
         Debug.Log("値が変更されました");
-        if(m_ObjectField.value!=null)
-            title = m_ObjectField.value.name;
+        if(objectField.value!=null)
+            title = objectField.value.name;
     }
     /// <summary>
     /// スタートノードのみ色を変更してわかりやすくする
     /// </summary>
-    public void startNodeColorChange(String ColorCode) {
+    public void StartNodeColorChange(String ColorCode) {
         //TODO 設定として別のところにまとめておく
         Color setColor=ColorConversion.GetColor(ColorCode);
         titleContainer.style.backgroundColor = setColor; //new Color(255, 165, 0);

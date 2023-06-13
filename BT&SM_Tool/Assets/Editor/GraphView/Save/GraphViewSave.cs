@@ -29,9 +29,9 @@ public static class GraphViewSave
         number = 0;
 
         controlNumberAdd.ControlNumber(graphView);
-        //ControlNumberAdd(graphView);
         saveNode.Save(graphAsset,graphView);
-        SaveEdgs(graphAsset,graphView);
+        //ControlNumberAdd(graphView);
+        //SaveEdgs(graphAsset,graphView);
 
     }
     //各ノードに管理番号を付与
@@ -110,9 +110,6 @@ public static class GraphViewSave
     /// <summary>
     /// スタートノードをのぞいたすべてのノードに管理番号を付与する
     /// </summary>
-    private static void ListAddNumbar() { 
-    
-    }
     //ノードの保存
     //private static void SaveNode(GraphAsset graphAsset,GraphView graphView) {
     //    //ウィンドウ上のノードのリスト
@@ -253,9 +250,5 @@ public static class GraphViewSave
                 Debug.LogError("output側での接続先が保存できませんでした。管理番号が振られていない可能性があります");
 
         }
-    }
-    private static Type ListReset<Type>(Type listData)
-    where Type:IComparer{
-        return default;
     }
 }

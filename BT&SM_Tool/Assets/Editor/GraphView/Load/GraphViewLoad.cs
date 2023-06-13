@@ -15,10 +15,9 @@ public  class GraphViewLoad
     }
     //データからの作成
     public  void CreateGraphView(GraphViewManager graphViewManager) {
-        GraphAsset loadGraphAsset = graphViewManager.m_GraphAsset;
+        GraphAsset loadGraphAsset = graphViewManager.graphAsset;
 
         foreach (var node in loadGraphAsset.nodes) {
-            //CreateNode2(node,graphViewManager);
             createNode.Create(node, graphViewManager);
         }
         foreach (var node in loadGraphAsset.nodes) {

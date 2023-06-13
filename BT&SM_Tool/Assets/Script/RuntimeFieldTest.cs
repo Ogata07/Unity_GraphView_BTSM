@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
-/// Às‚ÌFieldŠeí“®ì‚ª“®‚¢‚Ä‚¢‚é‚©ƒeƒXƒg—pƒXƒNƒŠƒvƒg
+/// å®Ÿè¡Œæ™‚ã®Fieldå„ç¨®å‹•ä½œãŒå‹•ã„ã¦ã„ã‚‹ã‹ãƒ†ã‚¹ãƒˆç”¨ã‚¹ã‚¯ãƒªãƒ—ãƒˆ
 /// </summary>
 public class RuntimeFieldTest : GraphViewScriptBase
 {
@@ -16,7 +16,7 @@ public class RuntimeFieldTest : GraphViewScriptBase
     private SMManager m_SMManager = default;
     public override void BTStart(SMManager manager)
     {
-        Debug.Log("RuntimeFieldTest‚Å‚·");
+        Debug.Log("RuntimeFieldTestã§ã™");
         m_SMManager = manager;
         Debug.Log("1:" + floatValue);
         Debug.Log("2:" + intValue);

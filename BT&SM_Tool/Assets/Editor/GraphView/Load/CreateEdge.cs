@@ -17,13 +17,23 @@ public class CreateEdge
         if (edgeCount > 0) {
             for (int createEdgeCount = 0; createEdgeCount < edgeCount; createEdgeCount++)
             {
-                //Port作製
-                Port inputPort = node[nodeData.edgesDatas[createEdgeCount].inputNodeId].inputContainer.contentContainer.Q<Port>();
-                Port outputPort = node[nodeData.controlNumber].outputContainer.contentContainer.Q<Port>();
-                //Edge作製
-                Edge edge = ConnectPorts(inputPort, outputPort);
-                //GraphViewに追加
-                graphViewManager.AddElement(edge);
+                try
+                {
+                    //Port作製
+                    Port inputPort = node[nodeData.edgesDatas[createEdgeCount].inputNodeId].inputContainer.contentContainer.Q<Port>();
+                    Port outputPort = node[nodeData.controlNumber].outputContainer.contentContainer.Q<Port>();
+                    //Edge作製
+                    Edge edge = ConnectPorts(inputPort, outputPort);
+                    //GraphViewに追加
+                    graphViewManager.AddElement(edge);
+                }
+                catch (ArgumentOutOfRangeException) {
+                    Debug.LogError("Edgeに接続されているNodeが見当たらないため,Edgeが生成されませんでした");
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogException(ex);
+                }
             }
         }
 

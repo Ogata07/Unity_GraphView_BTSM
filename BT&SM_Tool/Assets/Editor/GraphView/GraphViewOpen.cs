@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using Unity.VisualScripting.YamlDotNet.Core.Events;
 using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEngine;

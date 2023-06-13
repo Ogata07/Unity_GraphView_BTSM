@@ -1,23 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System;
 using System.Reflection;
 using UnityEngine.UIElements;
-using Codice.CM.SEIDInfo;
-using System.Web.UI;
 using UnityEditor.UIElements;
-using System.ComponentModel;
-using System.Diagnostics.Contracts;
 /// <summary>
-/// ScriptNode‚É‚Í‚ç‚ê‚½ƒXƒNƒŠƒvƒg‚ÌƒtƒB[ƒ‹ƒh‚ğŒÄ‚ñ‚ÅGraphViewã‚Å‚¢‚¶‚ê‚é—l‚É‚·‚éElement‚ğ’Ç‰Á‚·‚éƒXƒNƒŠƒvƒg
+/// ScriptNodeã«ã¯ã‚‰ã‚ŒãŸã‚¹ã‚¯ãƒªãƒ—ãƒˆã®ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã‚’å‘¼ã‚“ã§GraphViewä¸Šã§ã„ã˜ã‚Œã‚‹æ§˜ã«ã™ã‚‹Elementã‚’è¿½åŠ ã™ã‚‹ã‚¹ã‚¯ãƒªãƒ—ãƒˆ
 /// </summary>
 public class ScriptFieldCheck : MonoBehaviour
 {
-    public void Check(UnityEngine.Object _object, ScriptNode scriptNode) {
-    //ƒpƒuƒŠƒbƒNƒtƒB[ƒ‹ƒh‚ğæ“¾
-    MonoScript value=_object as MonoScript;
+    public void Check(UnityEngine.Object @object, ScriptNode scriptNode) {
+    //ãƒ‘ãƒ–ãƒªãƒƒã‚¯ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã‚’å–å¾—
+    MonoScript value=@object as MonoScript;
     Type getType = value.GetClass();
     FieldInfo[] fieldInfos = getType.GetFields(
             //BindingFlags.NonPublic
@@ -26,12 +20,12 @@ public class ScriptFieldCheck : MonoBehaviour
             | BindingFlags.DeclaredOnly
             );
 
-        //Node“à‚É‚·‚Å‚É‚ ‚é‚È‚çƒŠƒZƒbƒg‚·‚é
+        //Nodeå†…ã«ã™ã§ã«ã‚ã‚‹ãªã‚‰ãƒªã‚»ãƒƒãƒˆã™ã‚‹
         NodeReset.extensionContainerReset(scriptNode);
-        //ŠeíƒtƒB[ƒ‹ƒh’l‚ğŒ³‚ÉNode‚É’Ç‰Á‚·‚é
-        //V‹K
+        //å„ç¨®ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰å€¤ã‚’å…ƒã«Nodeã«è¿½åŠ ã™ã‚‹
+        //æ–°è¦
         //if (scriptNode.NodeID == 0) {
-        //    //fieldInfos.GetValue()‚Å’l‚Ìó‚¯“n‚µ‚ª‚Å‚«‚é‚©‚àH
+        //    //fieldInfos.GetValue()ã§å€¤ã®å—ã‘æ¸¡ã—ãŒã§ãã‚‹ã‹ã‚‚ï¼Ÿ
 
         //}
         foreach (FieldInfo f in fieldInfos)
@@ -40,7 +34,7 @@ public class ScriptFieldCheck : MonoBehaviour
         }
     }
     /// <summary>
-    /// V‹K’Ç‰Á‚Ég‚¤Field‚Ì’Ç‰Á‚ğs‚¤•”•ª
+    /// æ–°è¦è¿½åŠ æ™‚ã«ä½¿ã†Fieldã®è¿½åŠ ã‚’è¡Œã†éƒ¨åˆ†
     ///</summary>
     /// <param name="fieldInfo"></param>
     /// <param name="scriptNode"></param>
@@ -48,31 +42,31 @@ public class ScriptFieldCheck : MonoBehaviour
     private void AddVisualElement(FieldInfo fieldInfo,ScriptNode scriptNode,Type getType)
     {
         Debug.Log(fieldInfo.FieldType.ToString());
-        //Field‚Ì–¼‘O‚ğæ“¾
-        String FieldName = fieldInfo.Name;
-        //ƒCƒ“ƒXƒ^ƒ“ƒX¶¬
+        //Fieldã®åå‰ã‚’å–å¾—
+        String fieldName = fieldInfo.Name;
+        //ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ç”Ÿæˆ
         var activeScript = Activator.CreateInstance(getType);
         switch (fieldInfo.FieldType.ToString()) {
-            case "System.Int32"://intŒ^
+            case "System.Int32"://intå‹
                 int intValue = (int)fieldInfo.GetValue(activeScript);
-                scriptNode.extensionContainer.Add(new DataElement<IntegerField, int>(FieldName, intValue));
+                scriptNode.extensionContainer.Add(new DataElement<IntegerField, int>(fieldName, intValue));
                 break;
-            case "System.Single"://FloatŒ^
-                ////Field‚Ì–¼‘O‚ğæ“¾
+            case "System.Single"://Floatå‹
+                ////Fieldã®åå‰ã‚’å–å¾—
                 //String FieldName = fieldInfo.Name;
-                ////ƒCƒ“ƒXƒ^ƒ“ƒX¶¬
+                ////ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ç”Ÿæˆ
                 //var activeScript = Activator.CreateInstance(getType);
                 float floatValue = (float)fieldInfo.GetValue(activeScript);
-                scriptNode.extensionContainer.Add(new DataElement<FloatField, float>(FieldName, floatValue));
+                scriptNode.extensionContainer.Add(new DataElement<FloatField, float>(fieldName, floatValue));
                 break;
-            case "System.Boolean"://BoolŒ^
+            case "System.Boolean"://Boolå‹
                 //int intValue = (int)fieldInfo.GetValue(activeScript);
                 bool boolValue = (bool)fieldInfo.GetValue(activeScript);
-                scriptNode.extensionContainer.Add(new DataElement<Toggle, bool>(FieldName, boolValue));
+                scriptNode.extensionContainer.Add(new DataElement<Toggle, bool>(fieldName, boolValue));
                 break;
-            case "UnityEngine.GameObject"://GameObjectŒ^
+            case "UnityEngine.GameObject"://GameObjectå‹
                 GameObject gameObjectValue = (GameObject)fieldInfo.GetValue(activeScript);
-                scriptNode.extensionContainer.Add(new ObjectElement(FieldName, gameObjectValue));
+                scriptNode.extensionContainer.Add(new ObjectElement(fieldName, gameObjectValue));
                 break;
             default: 
                 break;

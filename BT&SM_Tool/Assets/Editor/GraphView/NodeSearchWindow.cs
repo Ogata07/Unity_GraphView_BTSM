@@ -10,19 +10,19 @@ using UnityEngine.UIElements;
 using ScriptFlow;
 using Codice.Client.BaseCommands;
 /// <summary>
-/// GraohViewã‚Åì¬‰Â”\‚Èƒm[ƒh‚ÌƒEƒBƒ“ƒhƒEŠÇ—
+/// GraohViewä¸Šã§ä½œæˆå¯èƒ½ãªãƒãƒ¼ãƒ‰ã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ç®¡ç†
 /// </summary>
 public class NodeSearchWindow : ScriptableObject,ISearchWindowProvider
 {
-    private GraphViewManager m_GraphViewManager = default;
-    private GraphEditorWindow m_GraphEditorWindow = default;
-    private EditorWindow m_EditorWindow = default;
+    private GraphViewManager graphViewManager = default;
+    private EditorWindow editorWindow = default;
+    private Vector2 defaultSize = new Vector2(100, 100);
     public void Initialize(GraphViewManager graphView, EditorWindow editorWindow)
     {
-        this.m_GraphViewManager = graphView;
-        this.m_EditorWindow = editorWindow;
+        this.graphViewManager = graphView;
+        this.editorWindow = editorWindow;
     }
-    //ƒEƒBƒ“ƒhƒE‚Ìì¬
+    //ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ä½œæˆ
     public List<SearchTreeEntry> CreateSearchTree(SearchWindowContext context)
     {
         List<SearchTreeEntry> entries = new List<SearchTreeEntry>();
@@ -47,40 +47,40 @@ public class NodeSearchWindow : ScriptableObject,ISearchWindowProvider
     }
 
 
-    //‘I‘ğ‚³‚ê‚½‚Ì‚Åƒm[ƒh‚Ìì¬
-    public bool OnSelectEntry(SearchTreeEntry SearchTreeEntry, SearchWindowContext context)
+    //é¸æŠã•ã‚ŒãŸã®ã§ãƒãƒ¼ãƒ‰ã®ä½œæˆ
+    public bool OnSelectEntry(SearchTreeEntry searchTreeEntry, SearchWindowContext context)
     {
-        var type = SearchTreeEntry.userData as System.Type;
-        //‘I‘ğ‚³‚ê‚½‚Ì‚ªGraphViewScriptBase‚ğŒp³‚µ‚Ä‚¢‚½ê‡
+        var type = searchTreeEntry.userData as System.Type;
+        //é¸æŠã•ã‚ŒãŸã®ãŒGraphViewScriptBaseã‚’ç¶™æ‰¿ã—ã¦ã„ãŸå ´åˆ
         if (type.IsSubclassOf(typeof(GraphViewScriptBase))) {
 
-            //ƒXƒNƒŠƒvƒgƒm[ƒh‚Ìì¬‚ÆŠeíİ’è
+            //ã‚¹ã‚¯ãƒªãƒ—ãƒˆãƒãƒ¼ãƒ‰ã®ä½œæˆã¨å„ç¨®è¨­å®š
             ScriptNode debugNode = new ScriptNode();
-            Vector2 worldMousePosition = m_EditorWindow.rootVisualElement.ChangeCoordinatesTo(m_EditorWindow.rootVisualElement.parent, context.screenMousePosition - m_EditorWindow.position.position);
-            Vector2 localMousePosition = m_GraphViewManager.contentViewContainer.WorldToLocal(worldMousePosition);
+            Vector2 worldMousePosition = editorWindow.rootVisualElement.ChangeCoordinatesTo(editorWindow.rootVisualElement.parent, context.screenMousePosition - editorWindow.position.position);
+            Vector2 localMousePosition = graphViewManager.contentViewContainer.WorldToLocal(worldMousePosition);
 
-            //ƒm[ƒh‚ÌˆÊ’u‚ğİ’è
-            debugNode.SetPosition(new Rect(localMousePosition, new Vector2(100, 100)));
-            //ƒm[ƒh‚Ì’†g‚ğİ’è
-            var assets = AssetDatabase.FindAssets(SearchTreeEntry.userData.ToString());
+            //ãƒãƒ¼ãƒ‰ã®ä½ç½®ã‚’è¨­å®š
+            debugNode.SetPosition(new Rect(localMousePosition, defaultSize));
+            //ãƒãƒ¼ãƒ‰ã®ä¸­èº«ã‚’è¨­å®š
+            var assets = AssetDatabase.FindAssets(searchTreeEntry.userData.ToString());
             var assetspath = AssetDatabase.GUIDToAssetPath(assets[0]);
-            //ObjectField‚Ìƒ^ƒCƒv‚ğİ’è
+            //ObjectFieldã®ã‚¿ã‚¤ãƒ—ã‚’è¨­å®š
             debugNode.ObjectField.objectType = typeof(UnityEngine.Object);
-            //ObjectField‚É‘}“ü
+            //ObjectFieldã«æŒ¿å…¥
             debugNode.ObjectField.value = AssetDatabase.LoadMainAssetAtPath(assetspath);
             debugNode.AddStart();
-            //‰æ–Ê‚É’Ç‰Á
-            m_GraphViewManager.AddElement(debugNode);
+            //ç”»é¢ã«è¿½åŠ 
+            graphViewManager.AddElement(debugNode);
         }
 
         if(type.IsSubclassOf(typeof(Node))) {
-            Debug.Log(SearchTreeEntry.userData);
+            Debug.Log(searchTreeEntry.userData);
 
-            var cast = Type.GetType(SearchTreeEntry.userData.ToString());
-            var ElementCast= (GraphElement)Activator.CreateInstance(cast);
-            m_GraphViewManager.AddElement(ElementCast);
+            var cast = Type.GetType(searchTreeEntry.userData.ToString());
+            var elementCast= (GraphElement)Activator.CreateInstance(cast);
+            graphViewManager.AddElement(elementCast);
         }
-        Debug.Log("ƒm[ƒh‚ğ’Ç‰Á‚µ‚Ü‚µ‚½");
+        Debug.Log("ãƒãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ã¾ã—ãŸ");
         return true;
     }
 }

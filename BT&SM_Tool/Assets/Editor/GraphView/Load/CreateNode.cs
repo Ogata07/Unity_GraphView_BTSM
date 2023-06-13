@@ -16,12 +16,13 @@ public class CreateNode
         //スタートノードのみ色を変える
         if (node.NodeID == 0)
         {
-            graphViewManager.sm_StartNode = node;
+            graphViewManager.Sm_StartNode = node;
             node.name = "Start";
-            graphViewManager.NodeTitleColorChange(node, graphViewManager.startColorCode);
+            graphViewManager.NodeTitleColorChange(node, graphViewManager.StartColorCode);
         }
         //FieldElementの追加
-        SetNodeFields(nodeData, node);
+        if (nodeData.@object != null)
+            SetNodeFields(nodeData, node);
         //extensionContainerに追加したら忘れず実行しないと隠されてしまう
         node.RefreshExpandedState();
         //画面に追加
@@ -38,8 +39,8 @@ public class CreateNode
         node.SetPosition(new Rect(nodeData.position, defaltSize));
         //名前（予定）
         //スクリプト
-        if (nodeData.Object != null)
-            node.ObjectField.value = nodeData.Object;
+        if (nodeData.@object != null)
+            node.ObjectField.value = nodeData.@object;
         //管理番号
         node.NodeID = nodeData.controlNumber;
     }
@@ -52,7 +53,8 @@ public class CreateNode
         //追加する数を集計
         int fieldCount = nodeData.fieldData.Count;
         //スクリプトからfieldの作成　
-        scriptFieldCheck.Check(nodeData.Object, node);
+
+        scriptFieldCheck.Check(nodeData.@object, node);
         //
         int fieldElementCount = node.extensionContainer.childCount;
         Debug.Log(fieldElementCount);
