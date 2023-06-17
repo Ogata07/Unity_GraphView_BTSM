@@ -1,26 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using Unity.VisualScripting.YamlDotNet.Core.Events;
 using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEngine;
-
+/// <summary>
+/// GraphAssetã‚¯ãƒ©ã‚¹ã®scriptableobjectã‚’é¸æŠæ™‚ã«ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’è¡¨ç¤ºã•ã›ã‚‹ã‚¯ãƒ©ã‚¹
+/// </summary>
 public class GraphViewOpen 
 {
-    /// <summary>
-    /// GraphView‚Ìscriptableobject‚ğ‘I‘ğ‚ÉƒEƒBƒ“ƒhƒE‚ğ•\¦‚·‚é
-    /// </summary>
     [OnOpenAsset]
     static bool OnOppenAsset(int instanceId)
     {
-        //GraphAseetg—p‚©”»’f
+        //GraphAseetä½¿ç”¨ã‹åˆ¤æ–­
         if (EditorUtility.InstanceIDToObject(instanceId) is GraphAsset)
         {
-            Debug.Log("‘ÎÛAsset‚Å‚·");
+            Debug.Log("å¯¾è±¡Assetã§ã™");
+            GraphViewLoad graphViewLoad = new GraphViewLoad();
             Object selectObject = Selection.activeObject;
             GraphAsset graphAsset = (GraphAsset)selectObject;
-            GraphViewLoad.LoadNodeElement(graphAsset);
+            graphViewLoad.LoadNodeElement(graphAsset);
             return true;
         }
         return false;

@@ -1,7 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Drawing;
 using UnityEngine;
+/// <summary>
+/// colorCodeをUnityEngine.Colorに変換するクラス
+/// </summary>
 
 public static class ColorConversion 
 {

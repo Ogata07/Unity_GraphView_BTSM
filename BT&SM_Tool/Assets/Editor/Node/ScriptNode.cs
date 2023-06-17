@@ -1,45 +1,42 @@
 using System;
-using System.Reflection.Emit;
-using System.Web;
-using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 /// <summary>
-/// �X�N���v�g�Q�ƃm�[�h
+/// スクリプトを格納してGraphViewに表示するクラス
 /// </summary>
 public class ScriptNode : Node
 {
-    private ObjectField m_ObjectField = default;
+    private ObjectField objectField = default;
     private readonly ScriptFieldCheck scriptFieldCheck= new ScriptFieldCheck();
     public Port OutputPort { get; set; }
     public ObjectField ObjectField
     {
         get
         {
-            return m_ObjectField;
+            return objectField;
         }
         set
         {
             //if (m_ObjectField.value==value.value)
             //m_ObjectField.objectType = typeof(UnityEngine.Object);
-            m_ObjectField.value = value.value;
+            objectField.value = value.value;
         }
     }
     public int NodeID { get; set; } = default;
 
     public ScriptNode():base(){
         title = "ScriptNode";
-        //�ڑ�Port�ǉ�
+        //接続Port追加
         PortAdd();
-        //ObjectField�̒ǉ�
-        m_ObjectField = new ObjectField();
-        //TODO MonoScript����ύX
-        m_ObjectField.objectType = typeof(UnityEngine.Object);
-        mainContainer.Add(m_ObjectField);
-        //m_ObjectField�̒l���ύX���ꂽ�Ƃ��ɍs������
-        m_ObjectField.RegisterCallback<ChangeEvent<String>>(events =>{
+        //ObjectFieldの追加
+        objectField = new ObjectField();
+        //TODO MonoScriptから変更
+        objectField.objectType = typeof(UnityEngine.Object);
+        mainContainer.Add(objectField);
+        //m_ObjectFieldの値が変更されたときに行う処理
+        objectField.RegisterCallback<ChangeEvent<String>>(events =>{
             AddStart();
         });
     }
@@ -53,23 +50,23 @@ public class ScriptNode : Node
     }
 
     /// <summary>
-    /// NodeSearchWindow���琶�����ꂽ�Ƃ��ɒl���ύX���ꂽ�Ƃ��Ɠ���������������
+    /// NodeSearchWindowから生成されたときに値が変更されたときと同じ処理をさせる
     /// </summary>
     public void AddStart() {
         TitleChange();
         scriptFieldCheck.Check(ObjectField.value, this);
     }
     private void TitleChange() {
-        Debug.Log("�l���ύX����܂���");
-        if(m_ObjectField.value!=null)
-            title = m_ObjectField.value.name;
+        Debug.Log("値が変更されました");
+        if(objectField.value!=null)
+            title = objectField.value.name;
     }
     /// <summary>
-    /// �X�^�[�g�m�[�h�̂ݐF��ύX���Ă킩��₷������
+    /// スタートノードのみ色を変更してわかりやすくする
     /// </summary>
-    public void startNodeColorChange(String ColorCode) {
-        //TODO �ݒ�Ƃ��ĕʂ̂Ƃ���ɂ܂Ƃ߂Ă���
-        Color setColor=ColorConversion.GetColor(ColorCode);
+    public void StartNodeColorChange(String colorCode) {
+        //TODO 設定として別のところにまとめておく
+        Color setColor=ColorConversion.GetColor(colorCode);
         titleContainer.style.backgroundColor = setColor; //new Color(255, 165, 0);
     }
 }

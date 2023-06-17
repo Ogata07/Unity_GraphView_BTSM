@@ -3,50 +3,50 @@ using UnityEngine.UIElements;
 using UnityEditor.Experimental.GraphView;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.UIElements;
 using UnityEditor;
-using System.Runtime.Remoting.Contexts;
 /// <summary>
-/// ƒZ[ƒu‚âƒ[ƒh‚É•K—v‚È‹@”\‚ÌŠÇ—Š
+/// GraphViewã§ã®æ©Ÿèƒ½è¿½åŠ ã‚¯ãƒ©ã‚¹
 /// </summary>
 public class GraphViewManager : GraphView
 {
-    public GraphAsset m_GraphAsset;
-    //SM—p
-    public Node sm_StartNode { get; set; } = default;
-    //Node‚ÌFŠÖŒW
-    public string defaultColorCode { get;} = "#3F3F3F";
-    public string startColorCode { get;} = "#FFA500";
+    public GraphAsset graphAsset;
+    //SMç”¨
+    public Node Sm_StartNode { get; set; } = default;
+    //Nodeã®è‰²é–¢ä¿‚
+    public string DefaultColorCode { get;} = "#3F3F3F";
+    public string StartColorCode { get;} = "#FFA500";
+    private readonly GraphViewLoad graphViewLoad = new GraphViewLoad();
+    private readonly GraphViewSave graphViewSave = new GraphViewSave();
     public GraphViewManager() : base()
     {
-        //TODO ‰Šúì¬‚ª‚Å‚«‚È‚­‚È‚é
+        //TODO åˆæœŸä½œæˆãŒã§ããªããªã‚‹
         //setInitial();
     }
 
     public GraphViewManager(EditorWindow editorWindow, GraphAsset graphAsset)
     {
-        m_GraphAsset= graphAsset;
-        setInitial(editorWindow); 
+        this.graphAsset= graphAsset;
+        SetInitial(editorWindow); 
     }
-    //TODO@•Û‘¶‹@”\‚Ì•ª—£‚ğs‚¤‰Â”\«‚ ‚è
+    //TODOã€€ä¿å­˜æ©Ÿèƒ½ã®åˆ†é›¢ã‚’è¡Œã†å¯èƒ½æ€§ã‚ã‚Š
     public void SaveStart() {
-        if (m_GraphAsset != null)
+        if (graphAsset != null)
         {
-            Debug.Log("<color=green>ƒZ[ƒu‚ğ‚µ‚Ü‚µ‚½</color>");
-            GraphViewSave.SaveNodeElement(m_GraphAsset, this);
-            EditorUtility.SetDirty(m_GraphAsset);
+            Debug.Log("<color=green>ã‚»ãƒ¼ãƒ–ã‚’ã—ã¾ã—ãŸ</color>");
+            graphViewSave.SaveNodeElement(graphAsset, this);
+            EditorUtility.SetDirty(graphAsset);
             AssetDatabase.SaveAssets();
         }
         else
-            Debug.LogError("ƒZ[ƒuæ‚ª‚ ‚è‚Ü‚¹‚ñ");
+            Debug.LogError("ã‚»ãƒ¼ãƒ–å…ˆãŒã‚ã‚Šã¾ã›ã‚“");
         
     }
     public void SaveLog(GraphAsset graphAsset) {
-        m_GraphAsset = graphAsset;
-        Debug.Log("ƒZ[ƒuæ‚Í"+graphAsset.name+"‚ÉXV‚µ‚Ü‚µ‚½");
+        this.graphAsset = graphAsset;
+        Debug.Log("ã‚»ãƒ¼ãƒ–å…ˆã¯"+graphAsset.name+"ã«æ›´æ–°ã—ã¾ã—ãŸ");
     }
     /// <summary>
-    /// GraohViewã‚Å‚Ì“®‚«‚É”½‰‚·‚é
+    /// GraohViewä¸Šã§ã®å‹•ãã«åå¿œã™ã‚‹
     /// </summary>
     /// <param name="callback"></param>
     /// <returns></returns>
@@ -56,26 +56,26 @@ public class GraphViewManager : GraphView
         {
             foreach (UnityEditor.Experimental.GraphView.Edge e in callback.edgesToCreate)
             {
-                Debug.Log("Edge‚ªì»‚³‚ê‚Ü‚µ‚½");
+                Debug.Log("EdgeãŒä½œè£½ã•ã‚Œã¾ã—ãŸ");
             }
 
         }
         return callback;
 
     }
-    //GraphViewã‚Ìƒ‹[ƒ‹
+    //GraphViewä¸Šã®ãƒ«ãƒ¼ãƒ«
     public override List<Port> GetCompatiblePorts(Port startAnchor, NodeAdapter nodeAdapter) {
         var compatiblePorts = new List<Port>();
-        compatiblePorts.AddRange(ports.ToList().Where(Port =>
+        compatiblePorts.AddRange(ports.ToList().Where(port =>
         {
-            //“¯‚¶ƒm[ƒh‚É‚Í‚Â‚È‚°‚È‚¢  
-            if (startAnchor.node == Port.node)
+            //åŒã˜ãƒãƒ¼ãƒ‰ã«ã¯ã¤ãªã’ãªã„  
+            if (startAnchor.node == port.node)
                 return false;
-            //Int“¯mAOut“¯m‚Å‚Í‚Â‚È‚°‚È‚¢
-            if (Port.direction == startAnchor.direction)
+            //IntåŒå£«ã€OutåŒå£«ã§ã¯ã¤ãªã’ãªã„
+            if (port.direction == startAnchor.direction)
                 return false;
-            //ƒ|[ƒg‚ÌŒ^‚ªˆê’v‚µ‚Ä‚¢‚È‚¢ê‡‚Í‚Â‚È‚°‚È‚¢
-            if (Port.portType != startAnchor.portType)
+            //ãƒãƒ¼ãƒˆã®å‹ãŒä¸€è‡´ã—ã¦ã„ãªã„å ´åˆã¯ã¤ãªã’ãªã„
+            if (port.portType != startAnchor.portType)
                 return false;
 
             return true;
@@ -85,20 +85,11 @@ public class GraphViewManager : GraphView
     public override void BuildContextualMenu(ContextualMenuPopulateEvent evt)
     {
         base.BuildContextualMenu(evt);
-        //if (evt.target is GraphView || evt.target is Node || evt.target is Group)
-        //{
-        //    evt.menu.AppendAction("StateMachine", delegate
-        //    {
-                
-        //        ClickEvent();
-        //        //CopySelectionCallback();
-        //    }, (DropdownMenuAction a) => canCopySelection ? DropdownMenuAction.Status.Normal : DropdownMenuAction.Status.Disabled);
-        //}
         if (evt.target is Node) {
-            Node SelectNode = (Node)evt.target;
+            Node selectNode = (Node)evt.target;
             evt.menu.AppendAction(
                 "SelectStartNode" ,
-                paste=>{ ClickEvent(SelectNode); },
+                paste=>{ ClickEvent(selectNode); },
                 (paste => (this.canCopySelection ? DropdownMenuAction.Status.Normal : DropdownMenuAction.Status.Disabled)),
                 (object)null);
         }
@@ -107,50 +98,48 @@ public class GraphViewManager : GraphView
     {
         Debug.Log(handler);
         if (handler is ScriptNode) {
-            if (sm_StartNode != default) {
-                sm_StartNode.name = default;
-                NodeTitleColorChange(sm_StartNode, defaultColorCode);
+            if (Sm_StartNode != default) {
+                Sm_StartNode.name = default;
+                NodeTitleColorChange(Sm_StartNode, DefaultColorCode);
             }
-            //XV
-            sm_StartNode = handler;
+            //æ›´æ–°
+            Sm_StartNode = handler;
             handler.name = "Start";
-            NodeTitleColorChange(handler, startColorCode);
+            NodeTitleColorChange(handler, StartColorCode);
         }
-        //TODO ƒXƒe[ƒgƒ}ƒVƒ“‚Ì‚İ‚±‚ê‚ª‘I‘ğ‚³‚ê‚½ƒm[ƒh‚©‚çƒXƒ^[ƒg‚³‚ê‚é‚æ‚¤‚É‚µ‚½‚¢(ŠÔ‚ª‚©‚©‚é‚Ì‚ÅŒã‰ñ‚µ‚©‚à‚µ‚ê‚È‚¢)
-
     }
-    //Node‚Ìƒ^ƒCƒgƒ‹•”•ª‚ÌF‚ğ•ÏX‚·‚éƒƒ\ƒbƒh
+    //Nodeã®ã‚¿ã‚¤ãƒˆãƒ«éƒ¨åˆ†ã®è‰²ã‚’å¤‰æ›´ã™ã‚‹ãƒ¡ã‚½ãƒƒãƒ‰
     public void NodeTitleColorChange(Node tagetNode,string changeColorCode) {
         ScriptNode castNode = (ScriptNode)tagetNode;
-        castNode.startNodeColorChange(changeColorCode);
+        castNode.StartNodeColorChange(changeColorCode);
     }
-    public  void setInitial(EditorWindow editorWindow) {
-        //e‚ÌƒTƒCƒY‚É‡‚í‚¹‚ÄƒTƒCƒY•ÏX
+    public  void SetInitial(EditorWindow editorWindow) {
+        //è¦ªã®ã‚µã‚¤ã‚ºã«åˆã‚ã›ã¦ã‚µã‚¤ã‚ºå¤‰æ›´
         this.StretchToParentSize();
-        //Šg‘åk¬
+        //æ‹¡å¤§ç¸®å°
         SetupZoom(ContentZoomer.DefaultMinScale, ContentZoomer.DefaultMaxScale);
-        //ƒhƒ‰ƒbƒO‚Å•`‰æ”ÍˆÍ‚ğˆÚ“®
+        //ãƒ‰ãƒ©ãƒƒã‚°ã§æç”»ç¯„å›²ã‚’ç§»å‹•
         this.AddManipulator(new ContentDragger());
-        //ƒhƒ‰ƒbƒO‚Å‘I‘ğ‚µ‚½—v‘f‚ğˆÚ“®
+        //ãƒ‰ãƒ©ãƒƒã‚°ã§é¸æŠã—ãŸè¦ç´ ã‚’ç§»å‹•
         this.AddManipulator(new SelectionDragger());
-        //ƒhƒ‰ƒbƒO‚Å”ÍˆÍ‘I‘ğ
+        //ãƒ‰ãƒ©ãƒƒã‚°ã§ç¯„å›²é¸æŠ
         this.AddManipulator(new RectangleSelector());
-        // ussƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚ñ‚ÅƒXƒ^ƒCƒ‹‚É’Ç‰Á
+        // ussãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿è¾¼ã‚“ã§ã‚¹ã‚¿ã‚¤ãƒ«ã«è¿½åŠ 
         this.styleSheets.Add(Resources.Load<StyleSheet>("GraphViewBackGround"));
-        //ƒm[ƒh’Ç‰Á—p‚ÌƒEƒBƒ“ƒhƒE•\¦
+        //ãƒãƒ¼ãƒ‰è¿½åŠ ç”¨ã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦è¡¨ç¤º
         var nodeSearcWindow = new NodeSearchWindow();
         nodeSearcWindow.Initialize(this, editorWindow);
         nodeCreationRequest += context =>
         {
             SearchWindow.Open(new SearchWindowContext(context.screenMousePosition), nodeSearcWindow);
         };
-        //GraphViewã‚Ì•Ï‰»ŠÄ‹ƒR[ƒ‹ƒoƒbƒN
+        //GraphViewä¸Šã®å¤‰åŒ–ç›£è¦–ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
         graphViewChanged = OnCallbackGraphView;
-        //ƒf[ƒ^‚©‚ç‚Ì¶¬
-        GraphViewLoad.CreateGraphView(this);
-        //TODO ƒXƒ^[ƒgƒm[ƒh‚Ì’Ç‰Á
+        //ãƒ‡ãƒ¼ã‚¿ã‹ã‚‰ã®ç”Ÿæˆ
+        graphViewLoad.CreateGraphView(this);
+        //TODO ã‚¹ã‚¿ãƒ¼ãƒˆãƒãƒ¼ãƒ‰ã®è¿½åŠ 
         this.AddElement(new StartNode());
-        // ”wŒi‚ğˆê”ÔŒã‚ë‚É’Ç‰Á
+        // èƒŒæ™¯ã‚’ä¸€ç•ªå¾Œã‚ã«è¿½åŠ 
         this.Insert(0, new GridBackground());
     }
 }

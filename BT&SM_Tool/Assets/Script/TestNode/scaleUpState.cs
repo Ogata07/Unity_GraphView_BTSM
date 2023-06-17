@@ -8,7 +8,7 @@ public class scaleUpState : GraphViewScriptBase
     private SMManager m_SMManager = default;
     private float time = default;
     public float settime = 5;
-    public override void BTStart(SMManager manager)
+    public override void SMStart(SMManager manager)
     {
         Debug.Log("scaleUpState‚Å‚·");
         m_SMManager = manager;
@@ -22,6 +22,6 @@ public class scaleUpState : GraphViewScriptBase
         }
         time -= Time.deltaTime;
         if (time < 0)
-            BTNext(m_SMManager);
+            SMNext(m_SMManager);
     }
 }

@@ -1,24 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEditor;
 using UnityEditor.UIElements;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 /// <summary>
-/// ƒGƒfƒBƒ^[ƒEƒBƒ“ƒhƒE‚Ì•\¦
+/// ã‚¨ãƒ‡ã‚£ã‚¿ãƒ¼ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®è¡¨ç¤º
 /// </summary>
 public class GraphEditorWindow : EditorWindow
 {
-    private GraphAsset m_GraphAsset;
-    private GraphViewManager m_GraphViewManager;
-    private ObjectField m_SaveField;
+    private GraphAsset graphAsset;
+    private GraphViewManager graphViewManager;
+    private ObjectField saveField;
     public ObjectField SaveField {
-        get { return m_SaveField; }
-        set { m_SaveField = value; }
+        get { return saveField; }
+        set { saveField = value; }
     }
-    GraphAsset m_SaveGraphAsset;
-    //ƒƒjƒ…[ƒo[‚©‚ç‘I‘ğ—p
+    GraphAsset saveGraphAsset;
+    //ãƒ¡ãƒ‹ãƒ¥ãƒ¼ãƒãƒ¼ã‹ã‚‰é¸æŠæ™‚ç”¨
     [MenuItem("Tool/GraphEditorWindow")]
     public static void ShowWindow() {
         GraphEditorWindow graphEditorWindow = CreateInstance<GraphEditorWindow>();
@@ -26,63 +24,69 @@ public class GraphEditorWindow : EditorWindow
         //graphEditorWindow.Intialize();
 
     }
-    //scriptableobject‚ğ‘I‘ğ—p
+    //scriptableobjectã‚’é¸æŠæ™‚ç”¨
     
     public static void ShowWindow(GraphAsset graphAsset) {
         GraphEditorWindow graphEditorWindow = CreateInstance<GraphEditorWindow>();
-        graphEditorWindow.m_GraphAsset= graphAsset;
+        graphEditorWindow.graphAsset= graphAsset;
         graphEditorWindow.Show();
         graphEditorWindow.Intialize(graphAsset);
-        graphEditorWindow.m_SaveField.value = graphAsset;
+        graphEditorWindow.saveField.value = graphAsset;
 
     }
     
     private void OnEnable()
     {
-        if (m_GraphAsset != null){
-            Intialize(m_GraphAsset);
+        if (graphAsset != null){
+            Intialize(graphAsset);
         }
         else {
-            //TODO ‰Šú‚É•Û‘¶æ‚ª‚È‚¢‚Ì‚É‹ó‚ÌObject‚ª“ü‚Á‚Ä‚µ‚Ü‚¤
-            //m_GraphAsset‚È‚µ‚ÌIntialize‚ğì‚é‚×‚«‚©H
-            m_GraphAsset = new GraphAsset();
-            //TODO «‚ğ’Ç‰Á‚·‚é‚Æƒf[ƒ^‚Ìƒ[ƒh‚É•s‹ï‡‚ª‹N‚«‚é
+            //TODO åˆæœŸæ™‚ã«ä¿å­˜å…ˆãŒãªã„ã®ã«ç©ºã®ObjectãŒå…¥ã£ã¦ã—ã¾ã†
+            //m_GraphAssetãªã—ã®Intializeã‚’ä½œã‚‹ã¹ãã‹ï¼Ÿ
+            graphAsset = new GraphAsset();
+            //TODO â†“ã‚’è¿½åŠ ã™ã‚‹ã¨ãƒ‡ãƒ¼ã‚¿ã®ãƒ­ãƒ¼ãƒ‰æ™‚ã«ä¸å…·åˆãŒèµ·ãã‚‹
             //Intialize(m_GraphAsset);
         }
 
     }
-
+    private void Update()
+    {
+        //TODO ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³è£½ä½œäºˆå®š
+        if (EditorApplication.isPlaying) {
+            Debug.Log("ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³è£½ä½œä¸­");
+        }
+    }
     /// <summary>
-    /// ‰Šú“®ì
+    /// åˆæœŸå‹•ä½œ
     /// </summary>
     public void Intialize(GraphAsset graphAsset)
     {//GraphAsset graphAsset
-        m_GraphAsset = graphAsset;
-        m_GraphViewManager = new GraphViewManager(this, m_GraphAsset);
+        this.graphAsset = graphAsset;
+        graphViewManager = new GraphViewManager(this, this.graphAsset);
 
 
-        m_GraphViewManager.style.flexGrow = 1;
+        graphViewManager.style.flexGrow = 1;
         VisualElement visualElement = this.rootVisualElement;
 
-        //‰æ–Êã•”‚Ìƒc[ƒ‹ƒo[
+        //ç”»é¢ä¸Šéƒ¨ã®ãƒ„ãƒ¼ãƒ«ãƒãƒ¼
         var toolbar = new Toolbar();
         visualElement.Add(toolbar);
-        var btn1 = new ToolbarButton(m_GraphViewManager.SaveStart) { text = "Save" };
+        var btn1 = new ToolbarButton(graphViewManager.SaveStart) { text = "Save" };
         toolbar.Add(btn1);
 
-        if (m_SaveField == null){
-            m_SaveField = new UnityEditor.UIElements.ObjectField("•Û‘¶æ") { };//value = m_SaveGraphAsset
-            m_SaveField.objectType = typeof(GraphAsset);
-            m_SaveField.value = m_GraphAsset;
+        if (saveField == null){
+            saveField = new UnityEditor.UIElements.ObjectField("ä¿å­˜å…ˆ") { };//value = m_SaveGraphAsset
+            saveField.objectType = typeof(GraphAsset);
+            saveField.value = this.graphAsset;
         }
-        //ƒR[ƒ‹ƒoƒbƒN
-        m_SaveField.RegisterCallback<ChangeEvent<string>>(events => {
-            m_GraphViewManager.SaveLog(m_SaveField.value as GraphAsset);
+        //ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
+        saveField.RegisterCallback<ChangeEvent<string>>(events => {
+            graphViewManager.SaveLog(saveField.value as GraphAsset);
         });
 
-        toolbar.Add(m_SaveField);
+        toolbar.Add(saveField);
 
-        visualElement.Add(m_GraphViewManager);
+        visualElement.Add(graphViewManager);
         rootVisualElement.Add(toolbar);
 
     }

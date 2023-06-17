@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEditor.Experimental.GraphView;
 using System.Windows.Forms.DataVisualization.Charting;
 /// <summary>
-/// ƒrƒwƒCƒrƒAƒcƒŠ[‚Ìê‡‚±‚Ìƒm[ƒh‚©‚çƒXƒ^[ƒg‚µ‚Ü‚·
+/// ãƒ“ãƒ˜ã‚¤ãƒ“ã‚¢ãƒ„ãƒªãƒ¼ã®å ´åˆã“ã®ãƒãƒ¼ãƒ‰ã‹ã‚‰ã‚¹ã‚¿ãƒ¼ãƒˆã—ã¾ã™
 /// </summary>
 public class StartNode : Node
 {

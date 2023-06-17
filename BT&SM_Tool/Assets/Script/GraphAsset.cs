@@ -5,29 +5,29 @@ using System.Reflection;
 using Unity.VisualScripting;
 using UnityEngine;
 /// <summary>
-/// ƒZ[ƒu‚·‚éScriptableObject‚Ìİ’è
+/// ã‚»ãƒ¼ãƒ–ã™ã‚‹ScriptableObjectã®è¨­å®š
 /// </summary>
 [CreateAssetMenu(fileName = "graph.asset", menuName = "Graph Asset")]
 public class GraphAsset :ScriptableObject
 {
     public List<NodeData> nodes = new List<NodeData>();
     public List<EdgeData> edges = new List<EdgeData>();
-    public List<TestObjects> GetObject=new List<TestObjects>();
+    public List<TestObjects> getObject=new List<TestObjects>();
     public GameObject gameObject = default;
     public MonoBehaviour monoBehaviour = null;
 }
 [System.Serializable]
 public class NodeData{
-    //TODO Edge‚İ‚½‚¢‚É‚«‚ê‚¢‚É
-    //ƒm[ƒh‚ÌˆÊ’u
+    //TODO Edgeã¿ãŸã„ã«ãã‚Œã„ã«
+    //ãƒãƒ¼ãƒ‰ã®ä½ç½®
     public Vector2 position;
-    //ƒm[ƒh“à‚ÌƒXƒNƒŠƒvƒgŠÇ—(GUID)
+    //ãƒãƒ¼ãƒ‰å†…ã®ã‚¹ã‚¯ãƒªãƒ—ãƒˆç®¡ç†(GUID)
     public string scriptID;
-    //TODO ƒXƒNƒŠƒvƒg‚Ì•Û‘¶‚ª–¢Œˆ’è
+    //TODO ã‚¹ã‚¯ãƒªãƒ—ãƒˆã®ä¿å­˜ãŒæœªæ±ºå®š
     //public System.Object scriptObject;
     //public UnityEngine.Object GetObject;
-    public UnityEngine.Object Object;
-    //ƒm[ƒh“à‚ÌŠÇ—”Ô†
+    public UnityEngine.Object @object;
+    //ãƒãƒ¼ãƒ‰å†…ã®ç®¡ç†ç•ªå·
     public int controlNumber;
     public List<FieldData> fieldData=new List<FieldData>();
     public List<FieldDataObject> fieldDataObject = new List<FieldDataObject>();
@@ -35,49 +35,49 @@ public class NodeData{
 }
 [System.Serializable]
 public class EdgeData{
-    //ƒm[ƒh‚ÌƒCƒ“ƒvƒbƒg”Ô†
+    //ãƒãƒ¼ãƒ‰ã®ã‚¤ãƒ³ãƒ—ãƒƒãƒˆç•ªå·
     public int inputNodeId;
-    //ƒm[ƒh‚ÌƒAƒEƒgƒvƒbƒg”Ô†
+    //ãƒãƒ¼ãƒ‰ã®ã‚¢ã‚¦ãƒˆãƒ—ãƒƒãƒˆç•ªå·
     public int outputNodeId;
 }
 [System.Serializable]
 public class EdgesData {
-    //ƒGƒbƒW‚ÌŠÇ—”Ô†
+    //ã‚¨ãƒƒã‚¸ã®ç®¡ç†ç•ªå·
     public int controlNumber;
-    //ƒm[ƒh‚ÌƒCƒ“ƒvƒbƒg”Ô†
+    //ãƒãƒ¼ãƒ‰ã®ã‚¤ãƒ³ãƒ—ãƒƒãƒˆç•ªå·
     public int inputNodeId;
 }
 [System.Serializable]
 public class FieldData
 {
-    //Œ^–¼‚ğString‚Å•ÛŠÇ
-    //TODO enum‚â•Ê‚Ì•û–@‚ğŒŸ“¢‚·‚é‚æ‚¤‚É
+    //å‹åã‚’Stringã§ä¿ç®¡
+    //TODO enumã‚„åˆ¥ã®æ–¹æ³•ã‚’æ¤œè¨ã™ã‚‹ã‚ˆã†ã«
     public String typeName = default;
-    //Field–¼
+    //Fieldå
     public string fieldName = default;
-    //’l‚ğString‚Å•ÛŠÇ
+    //å€¤ã‚’Stringã§ä¿ç®¡
     public String valueData = default;
 }
 [System.Serializable]
 public class FieldDataObject 
 {
-    //TODO enum‚â•Ê‚Ì•û–@‚ğŒŸ“¢‚·‚é‚æ‚¤‚É
+    //TODO enumã‚„åˆ¥ã®æ–¹æ³•ã‚’æ¤œè¨ã™ã‚‹ã‚ˆã†ã«
     public String typeName = default;
-    //Field–¼
+    //Fieldå
     public string fieldName = default;
-    //’l‚ğString‚Å•ÛŠÇ
+    //å€¤ã‚’Stringã§ä¿ç®¡
     public UnityEngine.Object valueData = default;
 }
 [System.Serializable]
 public class TestObjects
 {
-    public UnityEngine.Object Object;
+    public UnityEngine.Object @object;
     [SerializeField]
-    public Type Type;
+    public Type type;
     [SerializeField]
-    public FieldInfo Field;
+    public FieldInfo field;
     public CreateType ss = CreateType.Int;
-    public string Name;
+    public string name;
 }
 public enum CreateType 
 {

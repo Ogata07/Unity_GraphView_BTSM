@@ -15,7 +15,7 @@ MonoBehaviour:
   nodes:
   - position: {x: 213, y: 159}
     scriptID: 
-    Object: {fileID: 11500000, guid: 5f73acff98009bc40aabc22f46a14ab5, type: 3}
+    object: {fileID: 11500000, guid: 5f73acff98009bc40aabc22f46a14ab5, type: 3}
     controlNumber: 0
     fieldData: []
     fieldDataObject: []
@@ -23,23 +23,35 @@ MonoBehaviour:
     - controlNumber: 0
       inputNodeId: 1
     - controlNumber: 1
-      inputNodeId: 2
-  - position: {x: 124, y: 42}
+      inputNodeId: 3
+  - position: {x: 123, y: 23}
     scriptID: 
-    Object: {fileID: 11500000, guid: 61733edf954e0594ab3077da3c6cd171, type: 3}
+    object: {fileID: 11500000, guid: 61733edf954e0594ab3077da3c6cd171, type: 3}
     controlNumber: 1
     fieldData:
     - typeName: System.Single
       fieldName: settime
-      valueData: 1
+      valueData: 5
     fieldDataObject: []
     edgesDatas:
     - controlNumber: 0
-      inputNodeId: 3
-  - position: {x: 211, y: 302}
+      inputNodeId: 2
+  - position: {x: 321, y: 23}
     scriptID: 
-    Object: {fileID: 11500000, guid: c34182d8250806d42bb7fdc4332306bf, type: 3}
+    object: {fileID: 11500000, guid: 57ea224fd0015a442a2ae8efda645e28, type: 3}
     controlNumber: 2
+    fieldData:
+    - typeName: System.Single
+      fieldName: settime
+      valueData: 5
+    fieldDataObject: []
+    edgesDatas:
+    - controlNumber: 0
+      inputNodeId: 0
+  - position: {x: 213, y: 303}
+    scriptID: 
+    object: {fileID: 11500000, guid: c34182d8250806d42bb7fdc4332306bf, type: 3}
+    controlNumber: 3
     fieldData:
     - typeName: System.Single
       fieldName: settime
@@ -48,32 +60,7 @@ MonoBehaviour:
     edgesDatas:
     - controlNumber: 0
       inputNodeId: 0
-  - position: {x: 278, y: 42}
-    scriptID: 
-    Object: {fileID: 11500000, guid: 57ea224fd0015a442a2ae8efda645e28, type: 3}
-    controlNumber: 3
-    fieldData:
-    - typeName: System.Single
-      fieldName: settime
-      valueData: 11
-    fieldDataObject: []
-    edgesDatas:
-    - controlNumber: 0
-      inputNodeId: 0
-  edges:
-  - inputNodeId: 3
-    outputNodeId: 1
-  - inputNodeId: 1
-    outputNodeId: 0
-  - inputNodeId: 2
-    outputNodeId: 0
-  - inputNodeId: 0
-    outputNodeId: 2
-  - inputNodeId: 0
-    outputNodeId: 3
-  GetObject:
-  - Object: {fileID: 0}
-    ss: 0
-    Name: 
+  edges: []
+  getObject: []
   gameObject: {fileID: 0}
   monoBehaviour: {fileID: 0}
