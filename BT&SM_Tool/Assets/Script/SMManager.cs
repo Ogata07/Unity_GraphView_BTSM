@@ -9,17 +9,17 @@ using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.Networking.Types;
 /// <summary>
-/// ƒXƒe[ƒgƒ}ƒVƒ“‚Ìƒ”ƒBƒWƒ…ƒAƒ‹ƒXƒNƒŠƒvƒeƒBƒ“ƒO‚ğ“®ì‚³‚¹‚éƒXƒNƒŠƒvƒg
+/// ã‚¹ãƒ†ãƒ¼ãƒˆãƒã‚·ãƒ³ã®ãƒ´ã‚£ã‚¸ãƒ¥ã‚¢ãƒ«ã‚¹ã‚¯ãƒªãƒ—ãƒ†ã‚£ãƒ³ã‚°ã‚’å‹•ä½œã•ã›ã‚‹ã‚¹ã‚¯ãƒªãƒ—ãƒˆ
 /// </summary>
 public class SMManager : MonoBehaviour
 {
-    [SerializeField, Header("Às‚·‚éƒf[ƒ^")]
+    [SerializeField, Header("å®Ÿè¡Œã™ã‚‹ãƒ‡ãƒ¼ã‚¿")]
     private GraphAsset graphAsset;
-    //ŠeƒXƒNƒŠƒvƒg‚ÌŠî’êŒ³(Às‚Í‚±‚ê‚ğÀs‚³‚¹‚é)
+    //å„ã‚¹ã‚¯ãƒªãƒ—ãƒˆã®åŸºåº•å…ƒ(å®Ÿè¡Œæ™‚ã¯ã“ã‚Œã‚’å®Ÿè¡Œã•ã›ã‚‹)
     private GraphViewScriptBase graphViewScriptBase;
-    //Œ»İÀs’†‚Ìƒm[ƒh‚ÌŠÇ—”Ô†
+    //ç¾åœ¨å®Ÿè¡Œä¸­ã®ãƒãƒ¼ãƒ‰ã®ç®¡ç†ç•ªå·
     private int activeNodeId = 0;
-    //ŠeƒXƒNƒŠƒvƒg‚ÌStart‚ÌÀsŠÇ—ƒtƒ‰ƒO
+    //å„ã‚¹ã‚¯ãƒªãƒ—ãƒˆã®Startã®å®Ÿè¡Œç®¡ç†ãƒ•ãƒ©ã‚°
     private bool startFlag = false;
     void Start()
     {
@@ -33,7 +33,7 @@ public class SMManager : MonoBehaviour
         //ScriptSet(activeNodeId);
         //if (graphViewScriptBase!=null)
         FieldValueSet();
-        graphViewScriptBase.BTStart(this);
+        graphViewScriptBase.SMStart(this);
         startFlag = false;
     }
 
@@ -46,80 +46,80 @@ public class SMManager : MonoBehaviour
         else
         {
             
-            graphViewScriptBase.BTStart(this);
+            graphViewScriptBase.SMStart(this);
             startFlag = false;
         }
     }
     /// <summary>
-    /// Ÿ‚ÌƒXƒe[ƒg‚ÉˆÚs
+    /// æ¬¡ã®ã‚¹ãƒ†ãƒ¼ãƒˆã«ç§»è¡Œ
     /// </summary>
     public void Next()
     {
-        Debug.Log("Ÿ‚Ìƒm[ƒh‚ÉˆÚs‚µ‚Ü‚·");
+        Debug.Log("æ¬¡ã®ãƒãƒ¼ãƒ‰ã«ç§»è¡Œã—ã¾ã™");
         ScriptChange();
     }
     /// <summary>
-    /// Ÿ‚ÌƒXƒe[ƒg‚ÉˆÚs(•¡””Å)
+    /// æ¬¡ã®ã‚¹ãƒ†ãƒ¼ãƒˆã«ç§»è¡Œ(è¤‡æ•°ç‰ˆ)
     /// </summary>
-    /// <param name="count">ƒGƒbƒW‚ÌŠÇ—”Ô†‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢</param>
+    /// <param name="count">ã‚¨ãƒƒã‚¸ã®ç®¡ç†ç•ªå·ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„</param>
     public void Next(int count) {
-        Debug.Log("Ÿ‚Ìƒm[ƒh‚ÉˆÚs‚µ‚Ü‚·");
+        Debug.Log("æ¬¡ã®ãƒãƒ¼ãƒ‰ã«ç§»è¡Œã—ã¾ã™");
         ScriptChange(count);
     }
     /// <summary>
-    /// Œ»İ‚Ìƒm[ƒh‚©‚çŒq‚ª‚Á‚Ä‚¢‚éƒm[ƒh‚ÌŠÇ—”Ô†‚ğæ“¾‚·‚é
+    /// ç¾åœ¨ã®ãƒãƒ¼ãƒ‰ã‹ã‚‰ç¹‹ãŒã£ã¦ã„ã‚‹ãƒãƒ¼ãƒ‰ã®ç®¡ç†ç•ªå·ã‚’å–å¾—ã™ã‚‹
     /// </summary>
     private void ScriptChange()
     {
-        //TODO List‚ğDictionary‚Åì‚è’¼‚µ‚½•û‚ª‚¢‚¢‚©‚à(ƒGƒbƒW‚É‚à”Ô†U‚Á‚ÄŠÇ—‚à‚ ‚è)
-        //ƒGƒbƒW‚Ì’†‚©‚çŒ»İ‚ÌÀsƒm[ƒh‚ÉŒq‚ª‚Á‚Ä‚¢‚éƒGƒbƒW‚ğ’T‚·
+        //TODO Listã‚’Dictionaryã§ä½œã‚Šç›´ã—ãŸæ–¹ãŒã„ã„ã‹ã‚‚(ã‚¨ãƒƒã‚¸ã«ã‚‚ç•ªå·æŒ¯ã£ã¦ç®¡ç†ã‚‚ã‚ã‚Š)
+        //ã‚¨ãƒƒã‚¸ã®ä¸­ã‹ã‚‰ç¾åœ¨ã®å®Ÿè¡Œãƒãƒ¼ãƒ‰ã«ç¹‹ãŒã£ã¦ã„ã‚‹ã‚¨ãƒƒã‚¸ã‚’æ¢ã™
         //var outputEdge =graphAsset.edges.Find(i=>i.outputNodeId== activeNodeId);
-        //’T‚µ‚½‚ç‚»‚ê‚É‚Â‚È‚ª‚Á‚Ä‚¢‚éinputNode‚ÉŒq‚ª‚Á‚Ä‚¢‚éƒm[ƒh”Ô†‚ğæ“¾‚·‚é
+        //æ¢ã—ãŸã‚‰ãã‚Œã«ã¤ãªãŒã£ã¦ã„ã‚‹inputNodeã«ç¹‹ãŒã£ã¦ã„ã‚‹ãƒãƒ¼ãƒ‰ç•ªå·ã‚’å–å¾—ã™ã‚‹
         //var inputNodeId = outputEdge.inputNodeId;
-        //‚»‚Ì”Ô†‚Ìƒm[ƒhƒXƒNƒŠƒvƒg‚ğÀs‚·‚é
+        //ãã®ç•ªå·ã®ãƒãƒ¼ãƒ‰ã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚’å®Ÿè¡Œã™ã‚‹
         int inputNodeId = graphAsset.nodes[activeNodeId].edgesDatas[0].inputNodeId;
         ScriptSet(inputNodeId);
         
     }
-    private void ScriptChange(int Number) {
-        int inputNodeId=graphAsset.nodes[activeNodeId].edgesDatas[Number].inputNodeId;
+    private void ScriptChange(int number) {
+        int inputNodeId=graphAsset.nodes[activeNodeId].edgesDatas[number].inputNodeId;
         ScriptSet(inputNodeId);
     }
     /// <summary>
-    /// ŠÇ—”Ô†‚©‚çƒXƒNƒŠƒvƒg‚ğæ“¾‚·‚é
+    /// ç®¡ç†ç•ªå·ã‹ã‚‰ã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚’å–å¾—ã™ã‚‹
     /// </summary>
-    /// <param name="nodeId">ˆÚsæ‚ÌŠÇ—”Ô†</param>
+    /// <param name="nodeId">ç§»è¡Œå…ˆã®ç®¡ç†ç•ªå·</param>
     private void ScriptSet(int nodeId) {
-        //ˆÚsæ‚ÌŠÇ—”Ô†‚ğactiveNodeId‚É“n‚·
+        //ç§»è¡Œå…ˆã®ç®¡ç†ç•ªå·ã‚’activeNodeIdã«æ¸¡ã™
         activeNodeId = nodeId;
-        //ŠÇ—”Ô†Œ³‚ÌƒXƒNƒŠƒvƒgƒIƒuƒWƒFƒNƒg‚ğæ“¾‚·‚é
+        //ç®¡ç†ç•ªå·å…ƒã®ã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å–å¾—ã™ã‚‹
         var startNode = graphAsset.nodes[nodeId].@object;
-        //ƒXƒNƒŠƒvƒg‚Ì–¼‘O‚ğæ“¾
+        //ã‚¹ã‚¯ãƒªãƒ—ãƒˆã®åå‰ã‚’å–å¾—
         var scriptName = startNode.name;
-        //–¼‘O‚©‚çƒCƒ“ƒXƒ^ƒ“ƒX¶¬‚ğ‚·‚é
+        //åå‰ã‹ã‚‰ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ç”Ÿæˆã‚’ã™ã‚‹
         var activeScript = Activator.CreateInstance(Type.GetType(scriptName));
-        //ƒLƒƒƒXƒg‚µ‚Ä“n‚·
+        //ã‚­ãƒ£ã‚¹ãƒˆã—ã¦æ¸¡ã™
         graphViewScriptBase = activeScript as GraphViewScriptBase;
-        //Start‚ğÀs‚·‚é‚Ì‚Åtrue‚É‚·‚é
+        //Startã‚’å®Ÿè¡Œã™ã‚‹ã®ã§trueã«ã™ã‚‹
         startFlag = true;
     }
     /// <summary>
-    /// ŠeíÀsƒNƒ‰ƒX‚ÌƒXƒNƒŠƒvƒg‚©‚çField‚ğ“Ç‚İ‚ñ‚Å•Û‘¶‚µ‚Ä‚¢‚éƒf[ƒ^ã‘‚«‚³‚¹‚é   
+    /// å„ç¨®å®Ÿè¡Œã‚¯ãƒ©ã‚¹ã®ã‚¹ã‚¯ãƒªãƒ—ãƒˆã‹ã‚‰Fieldã‚’èª­ã¿è¾¼ã‚“ã§ä¿å­˜ã—ã¦ã„ã‚‹ãƒ‡ãƒ¼ã‚¿ä¸Šæ›¸ãã•ã›ã‚‹   
     /// </summary>
     private void FieldValueSet() {
-        //ƒXƒNƒŠƒvƒg‚©‚çŠeífield‚ğæ“¾‚·‚é
-        //•Û‘¶‚µ‚Ä‚¢‚éƒf[ƒ^‚ğæ“¾‚·‚é
-        //“¯‚¶–¼‘O‚ğ”ä‚×‚Ä•Û‘¶‚µ‚Ä‚¢‚éƒf[ƒ^‚Åã‘‚«‚·‚é
-        //ŠÇ—”Ô†‚ÅField‚ª‚ ‚é‚Ì‚©’²‚×‚é
+        //ã‚¹ã‚¯ãƒªãƒ—ãƒˆã‹ã‚‰å„ç¨®fieldã‚’å–å¾—ã™ã‚‹
+        //ä¿å­˜ã—ã¦ã„ã‚‹ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
+        //åŒã˜åå‰ã‚’æ¯”ã¹ã¦ä¿å­˜ã—ã¦ã„ã‚‹ãƒ‡ãƒ¼ã‚¿ã§ä¸Šæ›¸ãã™ã‚‹
+        //ç®¡ç†ç•ªå·ã§FieldãŒã‚ã‚‹ã®ã‹èª¿ã¹ã‚‹
         if (graphAsset.nodes[activeNodeId].fieldData.Count>0) {
             
             for (int fieldListCount=0; fieldListCount < graphAsset.nodes[activeNodeId].fieldData.Count; fieldListCount++)
             {
-                //field–¼æ“¾
+                //fieldåå–å¾—
                 string fieldName = graphAsset.nodes[activeNodeId].fieldData[fieldListCount].fieldName.ToString();
-                //field‚ÌŒ^–¼æ“¾
+                //fieldã®å‹åå–å¾—
                 String fieldType=graphAsset.nodes[activeNodeId].fieldData[fieldListCount].typeName.ToString();
-                //field’l‚Ìæ“¾
+                //fieldå€¤ã®å–å¾—
                 string value = graphAsset.nodes[activeNodeId].fieldData[fieldListCount].valueData.ToString();
                 graphViewScriptBase
                     .GetType()
@@ -130,11 +130,11 @@ public class SMManager : MonoBehaviour
         }
         if (graphAsset.nodes[activeNodeId].fieldDataObject.Count > 0) {
             for (int fieldObjectListCount = 0; fieldObjectListCount < graphAsset.nodes[activeNodeId].fieldDataObject.Count; fieldObjectListCount++) {
-                //field–¼æ“¾
+                //fieldåå–å¾—
                 string fieldName = graphAsset.nodes[activeNodeId].fieldDataObject[fieldObjectListCount].fieldName.ToString();
-                //field‚ÌŒ^–¼æ“¾
+                //fieldã®å‹åå–å¾—
                 String fieldType = graphAsset.nodes[activeNodeId].fieldDataObject[fieldObjectListCount].typeName.ToString();
-                //field’l‚Ìæ“¾
+                //fieldå€¤ã®å–å¾—
                 object value = graphAsset.nodes[activeNodeId].fieldDataObject[fieldObjectListCount].valueData;
                 graphViewScriptBase
                     .GetType()
@@ -144,37 +144,37 @@ public class SMManager : MonoBehaviour
         }
     }
     /// <summary>
-    /// StringŒ^‚Ì’l‚ğ‘Î‰‚µ‚½Œ^‚É•ÏŠ·‚µ‚È‚¨‚µ‚Ä•Ô‹p‚·‚éƒNƒ‰ƒX‚Å‚·
+    /// Stringå‹ã®å€¤ã‚’å¯¾å¿œã—ãŸå‹ã«å¤‰æ›ã—ãªãŠã—ã¦è¿”å´ã™ã‚‹ã‚¯ãƒ©ã‚¹ã§ã™
     /// </summary>
-    /// <param name="TypeName">Œ^‚Ì–¼‘O(.NetŒ`®‚Å)</param>
-    /// <param name="Value">Field‚Ì’l</param>
+    /// <param name="typeName">å‹ã®åå‰(.Netå½¢å¼ã§)</param>
+    /// <param name="value">Fieldã®å€¤</param>
     /// <returns></returns>
-    private object StringChange(string TypeName,String Value) {
+    private object StringChange(string typeName,String value) {
 
-        //objectŒ^ì¬
-        object value;
-        //StringŒ^‚Ì’l‚ğType‚ÌŒ^‚É•ÏŠ·‚·‚é
-        switch (TypeName)
+        //objectå‹ä½œæˆ
+        object changeValue;
+        //Stringå‹ã®å€¤ã‚’Typeã®å‹ã«å¤‰æ›ã™ã‚‹
+        switch (typeName)
         {
             case "System.Single":
-                value = Convert.ToSingle(Value);
+                changeValue = Convert.ToSingle(value);
                 break;
             case "System.Int32":
-                value = Convert.ToInt32(Value);
+                changeValue = Convert.ToInt32(value);
                 break;
             case "System.Boolean":
-                value = Convert.ToBoolean(Value);
+                changeValue = Convert.ToBoolean(value);
                 break;
             default:
-                value = null;
+                changeValue = null;
                 break;
         }
-        //•Ô‹p
-        return value;
+        //è¿”å´
+        return changeValue;
     }
     private void OnGUI()
     {
-        GUILayout.Label($"Œ»İÀs’†‚Ìƒm[ƒh‚ÌŠÇ—”Ô†: {activeNodeId}");
-        GUILayout.Label($"Às’†‚ÌƒXƒNƒŠƒvƒg«: {graphAsset.nodes[activeNodeId].@object}");
+        GUILayout.Label($"ç¾åœ¨å®Ÿè¡Œä¸­ã®ãƒãƒ¼ãƒ‰ã®ç®¡ç†ç•ªå·: {activeNodeId}");
+        GUILayout.Label($"å®Ÿè¡Œä¸­ã®ã‚¹ã‚¯ãƒªãƒ—ãƒˆâ†“: {graphAsset.nodes[activeNodeId].@object}");
     }
 }

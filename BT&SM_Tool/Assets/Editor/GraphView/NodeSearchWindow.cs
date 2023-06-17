@@ -1,16 +1,12 @@
-using log4net.Core;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
-using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 using ScriptFlow;
-using Codice.Client.BaseCommands;
 /// <summary>
-/// GraohView上で作成可能なノードのウィンドウ管理
+/// GraohView上で作成可能なノードのウィンドウ管理クラス
 /// </summary>
 public class NodeSearchWindow : ScriptableObject,ISearchWindowProvider
 {

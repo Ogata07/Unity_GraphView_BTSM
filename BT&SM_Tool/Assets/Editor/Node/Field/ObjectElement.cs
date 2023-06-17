@@ -2,29 +2,29 @@ using UnityEngine;
 using UnityEditor.UIElements;
 using UnityEngine.UIElements;
 /// <summary>
-/// Field‚ÌGameObject‚ğGraphViewã‚Å•\¦‚³‚¹‚éƒXƒNƒŠƒvƒg
+/// GameObjectã®FieldElementã‚’ç”Ÿæˆã™ã‚‹ã‚¯ãƒ©ã‚¹
 /// </summary>
 public class ObjectElement : VisualElement
 {
     public UnityEngine.UIElements.Label fieldNameLabel = default;
     public ObjectField objectField = default;
-    public string FieldName = default;
-    public ObjectElement(string Name, GameObject objectValue)
+    public string fieldName = default;
+    public ObjectElement(string name, GameObject objectValue)
     {
         ValueAdd();
         objectField.value = objectValue;
-        fieldNameLabel.text = Name;
+        fieldNameLabel.text = name;
     }
     private void ValueAdd()
     {
 
         ElementStyleSetting.Setting(this);
         style.flexWrap = new StyleEnum<Wrap>(Wrap.Wrap);
-        //–¼‘O
+        //åå‰
         fieldNameLabel = new UnityEngine.UIElements.Label();
-        fieldNameLabel.text = "ƒtƒB[ƒ‹ƒh–¼";
+        fieldNameLabel.text = "ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰å";
         fieldNameLabel.style.width = new StyleLength(new Length(100, LengthUnit.Percent));
-        //•¶š‚ª‚Í‚İo‚½‚Ì‘Î‰•û–@‚ğw’è
+        //æ–‡å­—ãŒã¯ã¿å‡ºãŸæ™‚ã®å¯¾å¿œæ–¹æ³•ã‚’æŒ‡å®š
         fieldNameLabel.style.whiteSpace = WhiteSpace.Normal;
         Add(fieldNameLabel);
 
@@ -33,7 +33,7 @@ public class ObjectElement : VisualElement
         objectField = new ObjectField();
         objectField.objectType = typeof(GameObject);
         objectField.style.width = new StyleLength(new Length(90, LengthUnit.Percent));
-        //•¶š‚ª‚Í‚İo‚½‚Ì‘Î‰•û–@‚ğw’è
+        //æ–‡å­—ãŒã¯ã¿å‡ºãŸæ™‚ã®å¯¾å¿œæ–¹æ³•ã‚’æŒ‡å®š
         objectField.style.whiteSpace = WhiteSpace.Normal;
         objectField.style.unityTextAlign = new StyleEnum<TextAnchor>(TextAnchor.MiddleLeft);
         this.name = "ObjectField";

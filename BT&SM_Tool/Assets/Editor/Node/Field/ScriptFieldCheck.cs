@@ -5,7 +5,7 @@ using System.Reflection;
 using UnityEngine.UIElements;
 using UnityEditor.UIElements;
 /// <summary>
-/// ScriptNodeにはられたスクリプトのフィールドを呼んでGraphView上でいじれる様にするElementを追加するスクリプト
+/// ScriptNodeに置かれたスクリプトのFieldを呼んで対応するFieldElementを生成するクラス
 /// </summary>
 public class ScriptFieldCheck : MonoBehaviour
 {
@@ -21,13 +21,7 @@ public class ScriptFieldCheck : MonoBehaviour
             );
 
         //Node内にすでにあるならリセットする
-        NodeReset.extensionContainerReset(scriptNode);
-        //各種フィールド値を元にNodeに追加する
-        //新規
-        //if (scriptNode.NodeID == 0) {
-        //    //fieldInfos.GetValue()で値の受け渡しができるかも？
-
-        //}
+        NodeReset.ExtensionContainerReset(scriptNode);
         foreach (FieldInfo f in fieldInfos)
         {
             AddVisualElement(f, scriptNode, getType);
@@ -52,10 +46,6 @@ public class ScriptFieldCheck : MonoBehaviour
                 scriptNode.extensionContainer.Add(new DataElement<IntegerField, int>(fieldName, intValue));
                 break;
             case "System.Single"://Float型
-                ////Fieldの名前を取得
-                //String FieldName = fieldInfo.Name;
-                ////インスタンス生成
-                //var activeScript = Activator.CreateInstance(getType);
                 float floatValue = (float)fieldInfo.GetValue(activeScript);
                 scriptNode.extensionContainer.Add(new DataElement<FloatField, float>(fieldName, floatValue));
                 break;

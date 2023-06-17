@@ -1,13 +1,10 @@
 using System;
-using System.Reflection.Emit;
-using System.Web;
-using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 /// <summary>
-/// スクリプト参照ノード
+/// スクリプトを格納してGraphViewに表示するクラス
 /// </summary>
 public class ScriptNode : Node
 {
@@ -67,9 +64,9 @@ public class ScriptNode : Node
     /// <summary>
     /// スタートノードのみ色を変更してわかりやすくする
     /// </summary>
-    public void StartNodeColorChange(String ColorCode) {
+    public void StartNodeColorChange(String colorCode) {
         //TODO 設定として別のところにまとめておく
-        Color setColor=ColorConversion.GetColor(ColorCode);
+        Color setColor=ColorConversion.GetColor(colorCode);
         titleContainer.style.backgroundColor = setColor; //new Color(255, 165, 0);
     }
 }

@@ -5,23 +5,25 @@ using UnityEditor.Experimental.GraphView;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
-
+/// <summary>
+/// GraphViewのFieldElementのデータを保存するクラス
+/// </summary>
 public class SaveField 
 {
     public void ChackField(VisualElement fieldElement, GraphAsset graphAsset,int listNumber) {
         if (fieldElement is DataElement<FloatField, float> floatElement)
         {
-            AddFieldData(graphAsset, listNumber, "System.Single", floatElement.fieldNameLabel.text, floatElement.Field.value.ToString());
+            AddFieldData(graphAsset, listNumber, "System.Single", floatElement.fieldNameLabel.text, floatElement.field.value.ToString());
             return;
         }
         if (fieldElement is DataElement<IntegerField, int> intElement)
         {
-            AddFieldData(graphAsset, listNumber, "System.Int32", intElement.fieldNameLabel.text, intElement.Field.value.ToString());
+            AddFieldData(graphAsset, listNumber, "System.Int32", intElement.fieldNameLabel.text, intElement.field.value.ToString());
             return;
         }
         if (fieldElement is DataElement<Toggle, bool> boolElement)
         {
-            AddFieldData(graphAsset, listNumber, "System.Boolean", boolElement.fieldNameLabel.text, boolElement.Field.value.ToString());
+            AddFieldData(graphAsset, listNumber, "System.Boolean", boolElement.fieldNameLabel.text, boolElement.field.value.ToString());
             return;
         }
 

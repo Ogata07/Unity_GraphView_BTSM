@@ -1,15 +1,14 @@
 using UnityEngine;
 /// <summary>
-/// Nodeに追加するときに依然ついていたのを外すクラス
+/// Node縺ｫ霑ｽ蜉縺吶ｋ縺ｨ縺阪↓萓晉┯縺､縺�縺ｦ縺�縺檳ieldElement繧貞､悶☆繧ｯ繝ｩ繧ｹ
 /// </summary>
 public class NodeReset : MonoBehaviour
 {
-    //extensionContainerにある要素のリセット
-    public static void extensionContainerReset(ScriptNode scriptNode) {
+    public static void ExtensionContainerReset(ScriptNode scriptNode) {
         if (scriptNode.extensionContainer.childCount > 0)
         {
             int extensionContainerchildCount = scriptNode.extensionContainer.childCount;
-            //要素がなくなるまでRemoceAtしまくる
+            //隕∫ｴ縺後↑縺上↑繧九∪縺ｧRemoceAt縺励∪縺上ｋ
             for (int i = extensionContainerchildCount - 1; i >= 0; i--) 
                 scriptNode.extensionContainer.RemoveAt(i);
         }

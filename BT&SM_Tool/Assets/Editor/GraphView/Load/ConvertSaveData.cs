@@ -1,7 +1,9 @@
 using System;
 using UnityEngine.UIElements;
-
-public  class ConvertSaveData 
+/// <summary>
+/// フィールド をGraphView上で触れるようにするElement生成クラス
+/// </summary>
+public class ConvertSaveData 
 {
     public  void ChackSaveData<T, V>(VisualElement childon, NodeData nodeData)
     where T : BaseField<V>, new()
@@ -15,7 +17,7 @@ public  class ConvertSaveData
         if (nodeData1 != null)
         {
             V value = ConvertValue<V>(nodeData1.valueData);
-            castInt.Field.value = value;
+            castInt.field.value = value;
         }
     }
     private static T ConvertValue<T>(object value)

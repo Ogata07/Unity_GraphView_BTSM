@@ -14,7 +14,7 @@ public class RuntimeFieldTest : GraphViewScriptBase
     public GameObject gameObject = default;
 
     private SMManager m_SMManager = default;
-    public override void BTStart(SMManager manager)
+    public override void SMStart(SMManager manager)
     {
         Debug.Log("RuntimeFieldTestです");
         m_SMManager = manager;

@@ -2,7 +2,7 @@ using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 /// <summary>
-/// 生成時のNode部分を担当
+/// 保存データから生成した時のNodeの生成をするクラス
 /// </summary>
 public class CreateNode
 {

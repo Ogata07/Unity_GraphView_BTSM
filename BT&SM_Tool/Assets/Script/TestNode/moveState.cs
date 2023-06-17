@@ -9,7 +9,7 @@ public class moveState : GraphViewScriptBase
     private float time =default;
     public float settime = 10;
     private Rigidbody rigidbody=null;
-    public override void BTStart(SMManager manager)
+    public override void SMStart(SMManager manager)
     {
         Debug.Log("moveState‚Å‚·");
         m_SMManager = manager;
@@ -21,6 +21,6 @@ public class moveState : GraphViewScriptBase
         rigidbody.AddForce(Vector3.up);
         time-= Time.deltaTime;
         if(time<0)
-            BTNext(m_SMManager);
+            SMNext(m_SMManager);
     }
 }

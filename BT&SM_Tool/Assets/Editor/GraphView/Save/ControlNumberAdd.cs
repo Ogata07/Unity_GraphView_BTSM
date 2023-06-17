@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-
+/// <summary>
+/// 各Nodeに管理番号を付与するクラス
+/// </summary>
 public class ControlNumberAdd
 {
     private  int number = 0;

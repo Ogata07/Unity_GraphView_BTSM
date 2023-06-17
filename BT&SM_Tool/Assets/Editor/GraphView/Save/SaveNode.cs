@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor.Experimental.GraphView;
-using UnityEditor.UIElements;
-using UnityEngine;
 using UnityEngine.UIElements;
-
+/// <summary>
+/// GraphViewのNodeのデータを保存するクラス
+/// </summary>
 public class SaveNode 
 {
     private SaveField saveField = new SaveField();
@@ -57,29 +57,15 @@ public class SaveNode
                     for (int addCount = 0; addCount < fieldCount; addCount++)
                     {
 
-
                         //TODO　現在はどちらもStringでの保存ほかの方法が見つかればそれに変更
                         VisualElement fieldElement = castScriptNode.extensionContainer[addCount];
                         saveField.ChackField(fieldElement,graphAsset,listNumber);
-                        //fieldElementの名前を取得
-                        //string fieldElementName = fieldElement.name.ToString();
                     }
                 }
-
-
             }
 
         }
         //管理番号のソート
         graphAsset.nodes.Sort((node1, node2) => node1.controlNumber - node2.controlNumber);
-    }
-    void AddFieldData(GraphAsset graphAsset, int listNumber,string typeName, string fieldName, string value)
-    {
-        graphAsset.nodes[listNumber].fieldData.Add(new FieldData()
-        {
-            typeName = typeName,
-            fieldName = fieldName,
-            valueData = value
-        });
     }
 }

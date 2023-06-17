@@ -51,6 +51,7 @@ public class GraphEditorWindow : EditorWindow
     }
     private void Update()
     {
+        //TODO アニメーション製作予定
         if (EditorApplication.isPlaying) {
             Debug.Log("アニメーション製作中");
         }

@@ -1,23 +1,25 @@
 using UnityEngine;
 using UnityEngine.UIElements;
-
+/// <summary>
+/// ElementのStyleを整えてくれるクラス
+/// </summary>
 public class ElementStyleSetting : VisualElement
 {
     public static void Setting(VisualElement visual) {
-        //��
+        //空白
         visual.style.paddingBottom = 3;
 
-        //�g�֌W
+        //枠関係
         visual.style.borderTopWidth = 1;
         visual.style.borderTopColor = Color.black;
 
-        //�ۂ�
+        //丸み
         visual.style.borderBottomLeftRadius = 0;
         visual.style.borderBottomRightRadius = 0;
         visual.style.borderTopLeftRadius = 0;
         visual.style.borderTopRightRadius = 0;
 
-        //�w�i�F
+        //背景色
         visual.style.backgroundColor = new StyleColor(Color.grey);
 
     }

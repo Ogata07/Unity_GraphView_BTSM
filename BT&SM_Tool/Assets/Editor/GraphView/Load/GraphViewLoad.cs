@@ -4,9 +4,9 @@ using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 /// <summary>
-/// GraphAssetの内容をエディタウィンドウに表示する
+/// 保存データから生成するときのまとめクラス
 /// </summary>
-public  class GraphViewLoad 
+public class GraphViewLoad 
 {
     private  CreateNode  createNode=new CreateNode();
     private  CreateEdge createEdge=new CreateEdge();

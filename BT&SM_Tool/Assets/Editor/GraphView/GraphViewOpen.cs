@@ -1,12 +1,11 @@
 using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEngine;
-
+/// <summary>
+/// GraphAssetクラスのscriptableobjectを選択時にウィンドウを表示させるクラス
+/// </summary>
 public class GraphViewOpen 
 {
-    /// <summary>
-    /// GraphViewのscriptableobjectを選択時にウィンドウを表示する
-    /// </summary>
     [OnOpenAsset]
     static bool OnOppenAsset(int instanceId)
     {

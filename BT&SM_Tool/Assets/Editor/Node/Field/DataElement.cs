@@ -1,49 +1,45 @@
-using System;
-using System.Reflection;
-using System.Web.UI;
-using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 /// <summary>
-/// ƒtƒB[ƒ‹ƒh’l‚ğƒm[ƒhŠO‚Å‚¢‚¶‚ê‚é‚æ‚¤‚É‚·‚éƒNƒ‰ƒX
+/// Intã‚„Floatãªã©ã®FieldElementã‚’ç”Ÿæˆã™ã‚‹ã‚¯ãƒ©ã‚¹
 /// </summary>
-/// <typeparam name="T">•\¦‚³‚¹‚½‚¢Œ^‚Ì`Field</typeparam>
-/// <typeparam name="V">•\¦‚³‚¹‚½‚¢Œ^</typeparam>
+/// <typeparam name="T">è¡¨ç¤ºã•ã›ãŸã„å‹ã®ï½Field</typeparam>
+/// <typeparam name="V">è¡¨ç¤ºã•ã›ãŸã„å‹</typeparam>
 public class DataElement<T,V>:FieldElement
     where T : BaseField<V>,new()
 {
-    public T Field=default;
-    public string FieldName=default;
+    public T field=default;
+    public string fieldName=default;
     public DataElement()
     {
         FloatAdd();
     }
-    public DataElement(V Value)
+    public DataElement(V value)
     {
         FloatAdd();
-        Field.value = Value;
+        field.value = value;
     }
-    public DataElement(string Name,V Value)
+    public DataElement(string name,V value)
     {
         FloatAdd();
-        Field.value = Value;
-        fieldNameLabel.text=Name;
+        field.value = value;
+        fieldNameLabel.text=name;
     }
     private void  FloatAdd()
     {
-        //Œ^¶¬
-        Field=new T();
-        Field.style.width = new StyleLength(new Length(90, LengthUnit.Percent));
-        //•¶š‚ª‚Í‚İo‚½‚Ì‘Î‰•û–@‚ğw’è
-        Field.style.whiteSpace = WhiteSpace.Normal;
-        Field.style.unityTextAlign = new StyleEnum<TextAnchor>(TextAnchor.MiddleLeft);
+        //å‹ç”Ÿæˆ
+        field=new T();
+        field.style.width = new StyleLength(new Length(90, LengthUnit.Percent));
+        //æ–‡å­—ãŒã¯ã¿å‡ºãŸæ™‚ã®å¯¾å¿œæ–¹æ³•ã‚’æŒ‡å®š
+        field.style.whiteSpace = WhiteSpace.Normal;
+        field.style.unityTextAlign = new StyleEnum<TextAnchor>(TextAnchor.MiddleLeft);
         NameSet();
-        Add(Field);
+        Add(field);
     }
     /// <summary>
-    /// ŠO•”‚©‚ç“Ç‚İæ‚è—p‚É–¼‘O—“‚ğg—p
+    /// å¤–éƒ¨ã‹ã‚‰èª­ã¿å–ã‚Šç”¨ã«åå‰æ¬„ã‚’ä½¿ç”¨
     /// </summary>
     private void NameSet() { 
-        this.name= Field.GetType().Name;
+        this.name= field.GetType().Name;
     }
 }

@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
-using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 /// <summary>
-/// 生成時のEdge部分を担当
+/// 保存データから生成した時のEdgeの生成をするクラス
 /// </summary>
 public class CreateEdge 
 {

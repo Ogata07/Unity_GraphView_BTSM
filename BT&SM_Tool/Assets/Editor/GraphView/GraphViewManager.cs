@@ -3,11 +3,9 @@ using UnityEngine.UIElements;
 using UnityEditor.Experimental.GraphView;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.UIElements;
 using UnityEditor;
-using System.Runtime.Remoting.Contexts;
 /// <summary>
-/// セーブやロードに必要な機能の管理所
+/// GraphViewでの機能追加クラス
 /// </summary>
 public class GraphViewManager : GraphView
 {
@@ -18,6 +16,7 @@ public class GraphViewManager : GraphView
     public string DefaultColorCode { get;} = "#3F3F3F";
     public string StartColorCode { get;} = "#FFA500";
     private readonly GraphViewLoad graphViewLoad = new GraphViewLoad();
+    private readonly GraphViewSave graphViewSave = new GraphViewSave();
     public GraphViewManager() : base()
     {
         //TODO 初期作成ができなくなる
@@ -34,7 +33,7 @@ public class GraphViewManager : GraphView
         if (graphAsset != null)
         {
             Debug.Log("<color=green>セーブをしました</color>");
-            GraphViewSave.SaveNodeElement(graphAsset, this);
+            graphViewSave.SaveNodeElement(graphAsset, this);
             EditorUtility.SetDirty(graphAsset);
             AssetDatabase.SaveAssets();
         }
@@ -108,8 +107,6 @@ public class GraphViewManager : GraphView
             handler.name = "Start";
             NodeTitleColorChange(handler, StartColorCode);
         }
-        //TODO ステートマシンのみこれが選択されたノードからスタートされるようにしたい(時間がかかるので後回しかもしれない)
-
     }
     //Nodeのタイトル部分の色を変更するメソッド
     public void NodeTitleColorChange(Node tagetNode,string changeColorCode) {

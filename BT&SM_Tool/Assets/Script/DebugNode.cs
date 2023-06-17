@@ -7,7 +7,7 @@ public class DebugNode : GraphViewScriptBase
 {
     private int time = 100;
     private SMManager sMManager = default;
-    public override void BTStart(SMManager manager)
+    public override void SMStart(SMManager manager)
     {
         Debug.Log("DebugNodeです");
         sMManager=manager;
@@ -16,6 +16,6 @@ public class DebugNode : GraphViewScriptBase
     {
         time--;
         if (time < 0)
-            BTNext(sMManager);
+            SMNext(sMManager);
     }
 }

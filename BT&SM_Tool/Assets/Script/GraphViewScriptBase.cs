@@ -1,11 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 namespace ScriptFlow
 {
+    /// <summary>
+    /// ãƒ“ã‚¸ãƒ¥ã‚¢ãƒ«ã‚¹ã‚¯ãƒªãƒ—ãƒ†ã‚£ãƒ³ã‚°ç”¨ã®Updateãªã©ã‚’ç”¨æ„ã™ã‚‹ã‚¯ãƒ©ã‚¹
+    /// </summary>
     public class GraphViewScriptBase : MonoBehaviour
     {
-        public int NodeNumbar = 0;
+        public int nodeNumbar = 0;
         public enum State
         {
             Normal,
@@ -13,23 +14,23 @@ namespace ScriptFlow
         }
         public State state = State.Normal;
         /// <summary>
-        /// Start‘Š“–‚Å‚·
+        /// Startç›¸å½“ã§ã™
         /// </summary>
         public virtual void BTStart()
         {
 
         }
         /// <summary>
-        /// ƒXƒe[ƒgƒ}ƒVƒ“—p‚ÌStart‚Å‚·
+        /// ã‚¹ãƒ†ãƒ¼ãƒˆãƒã‚·ãƒ³ç”¨ã®Startã§ã™
         /// </summary>
-        /// <param name="sMManager">ƒXƒe[ƒgƒ}ƒVƒ“—p‚ÌÀsƒXƒNƒŠƒvƒg</param>
-        public virtual void BTStart(SMManager sMManager)
+        /// <param name="sMManager">ã‚¹ãƒ†ãƒ¼ãƒˆãƒã‚·ãƒ³ç”¨ã®å®Ÿè¡Œã‚¹ã‚¯ãƒªãƒ—ãƒˆ</param>
+        public virtual void SMStart(SMManager sMManager)
         {
         }
         /// <summary>
-        /// ƒrƒwƒCƒrƒAƒcƒŠ[—p‚ÌStart‚Å‚·
+        /// ãƒ“ãƒ˜ã‚¤ãƒ“ã‚¢ãƒ„ãƒªãƒ¼ç”¨ã®Startã§ã™
         /// </summary>
-        /// <param name="bTManager">ƒrƒwƒCƒrƒAƒcƒŠ[—p‚ÌÀsƒXƒNƒŠƒvƒg</param>
+        /// <param name="bTManager">ãƒ“ãƒ˜ã‚¤ãƒ“ã‚¢ãƒ„ãƒªãƒ¼ç”¨ã®å®Ÿè¡Œã‚¹ã‚¯ãƒªãƒ—ãƒˆ</param>
         public virtual void BTStart(BTManager bTManager)
         {
         }
@@ -42,18 +43,18 @@ namespace ScriptFlow
 
         }
         /// <summary>
-        /// Ÿ‚Ìƒm[ƒh‚ÉˆÚs‚µ‚Ü‚·(’P‘Ì—p)
+        /// æ¬¡ã®ãƒãƒ¼ãƒ‰ã«ç§»è¡Œã—ã¾ã™(å˜ä½“ç”¨)
         /// </summary>
-        /// <param name="sMManager">ƒXƒe[ƒgƒ}ƒVƒ“—p‚ÌÀsƒXƒNƒŠƒvƒg</param>
-        public virtual void BTNext(SMManager sMManager)
+        /// <param name="sMManager">ã‚¹ãƒ†ãƒ¼ãƒˆãƒã‚·ãƒ³ç”¨ã®å®Ÿè¡Œã‚¹ã‚¯ãƒªãƒ—ãƒˆ</param>
+        public virtual void SMNext(SMManager sMManager)
         {
             sMManager.Next();
         }
         /// <summary>
-        /// Ÿ‚Ìƒm[ƒh‚ÉˆÚs‚µ‚Ü‚·(•¡”—p)
+        /// æ¬¡ã®ãƒãƒ¼ãƒ‰ã«ç§»è¡Œã—ã¾ã™(è¤‡æ•°ç”¨)
         /// </summary>
-        /// <param name="sMManager">ƒXƒe[ƒgƒ}ƒVƒ“—p‚ÌÀsƒXƒNƒŠƒvƒg</param>
-        public virtual void BTNext(SMManager sMManager, int count) {
+        /// <param name="sMManager">ã‚¹ãƒ†ãƒ¼ãƒˆãƒã‚·ãƒ³ç”¨ã®å®Ÿè¡Œã‚¹ã‚¯ãƒªãƒ—ãƒˆ</param>
+        public virtual void SMNext(SMManager sMManager, int count) {
             sMManager.Next(count);
         }
     }
