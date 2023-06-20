@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEditor.Experimental.GraphView;
-using System.Windows.Forms.DataVisualization.Charting;
 /// <summary>
 /// ビヘイビアツリーの場合このノードからスタートします
 /// </summary>
