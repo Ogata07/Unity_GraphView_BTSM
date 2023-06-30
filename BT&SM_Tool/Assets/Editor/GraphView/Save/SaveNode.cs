@@ -63,7 +63,9 @@ public class SaveNode
                     }
                 }
             }
-
+            if (node is SelectorNode) { 
+            
+            }
         }
         //管理番号のソート
         graphAsset.nodes.Sort((node1, node2) => node1.controlNumber - node2.controlNumber);

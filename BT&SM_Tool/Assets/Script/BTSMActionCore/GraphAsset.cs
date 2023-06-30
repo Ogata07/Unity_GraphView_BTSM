@@ -10,6 +10,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "graph.asset", menuName = "Graph Asset")]
 public class GraphAsset :ScriptableObject
 {
+    public GraphViewType graphViewType = GraphViewType.StateMachine;
     public List<NodeData> nodes = new List<NodeData>();
     public List<EdgeData> edges = new List<EdgeData>();
     public List<TestObjects> getObject=new List<TestObjects>();
@@ -22,7 +23,7 @@ public class NodeData{
     //ノードの位置
     public Vector2 position;
     //ノード内のスクリプト管理(GUID)
-    public string scriptID;
+    public NodeType scriptID=NodeType.SM;
     //TODO スクリプトの保存が未決定
     //public System.Object scriptObject;
     //public UnityEngine.Object GetObject;
@@ -85,4 +86,13 @@ public enum CreateType
     Int,
     Vector2,
     Vector3
+}
+public enum GraphViewType{
+    StateMachine,
+    BehaviorTree
+}
+public enum NodeType { 
+    SM,
+    BT_Selector,
+    BT_Condition
 }

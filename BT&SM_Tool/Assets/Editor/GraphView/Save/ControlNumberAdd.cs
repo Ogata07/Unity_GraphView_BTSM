@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -17,10 +18,17 @@ public class ControlNumberAdd
         //(ステートマシン限定)(特定のノードを排除してそれ以外を順番に管理番号を付与する)
         //スタートノードに番号を振る(0番)
         var deleteStartNode = nodeList.Find(x => x.title == "StartNode") as StartNode;
+        //BT用
+        var selectorNode= deleteStartNode.OutputPort.connections.ToList();
+        if (selectorNode[0].input.node is SelectorNode caseSelectorNode) {
+            caseSelectorNode.NodeID = number;
+            number++;
+            nodeList.Remove(caseSelectorNode);
+        }
         nodeList.Remove(deleteStartNode);
+        //TODO SMとBTで分ける必要あり
+        //SM用
         var startNode = nodeList.Find(x => x.name == "Start") as ScriptNode;
-
-        //
         if (startNode is ScriptNode)
         {
             ScriptNode castScriptNode = startNode as ScriptNode;
@@ -28,6 +36,9 @@ public class ControlNumberAdd
             number++;
         }
         nodeList.Remove(startNode);
+
+
+
         foreach (Node node in nodeList)
         {
             AddNumbar(node);
