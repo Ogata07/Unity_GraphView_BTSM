@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using UnityEditor.Experimental.GraphView;
+using UnityEngine;
 using UnityEngine.UIElements;
 /// <summary>
 /// GraphViewのNodeのデータを保存するクラス
@@ -27,9 +29,11 @@ public class SaveNode
 
             //位置の保存
             graphAsset.nodes[listNumber].position = node.GetPosition().position;
-            if (node is ScriptNode)
+            if (node is ScriptNode castScriptNode)
             {
-                ScriptNode castScriptNode = node as ScriptNode;
+
+                //ID登録
+                graphAsset.nodes[listNumber].scriptID = NodeType.SM;
                 //スクリプトの保存
                 graphAsset.nodes[listNumber].@object = castScriptNode.ObjectField.value;
                 //管理番号の保存
@@ -63,8 +67,30 @@ public class SaveNode
                     }
                 }
             }
-            if (node is SelectorNode) { 
-            
+            if (node is SelectorNode castSelectorNode) {
+                //ID登録
+                graphAsset.nodes[listNumber].scriptID = NodeType.BT_Selector;
+                //管理番号の保存
+                graphAsset.nodes[listNumber].controlNumber = castSelectorNode.NodeID;
+                //スクリプトの保存
+                graphAsset.nodes[listNumber].stringValue = castSelectorNode.enumField.value.ToString();
+
+
+                ////対象ノードのアウトプットにつながっているすべてのエッジを保存
+                var edgeslist = castSelectorNode.OutputPort.connections.ToList();
+                if (edgeslist.Count >= 0)
+                {
+                    for (int listCount = 0; listCount < edgeslist.Count; listCount++)
+                    {
+                        //保存場所の追加
+                        graphAsset.nodes[listNumber].edgesDatas.Add(new EdgesData());
+                        SelectorNode castInputNode = edgeslist[listCount].input.node as SelectorNode;
+                        //管理番号の保存
+                        graphAsset.nodes[listNumber].edgesDatas[listCount].controlNumber = listCount;
+                        //インプット番号の保存(アウトプット番号はこのノードの管理番号なので保存しなくてよい)
+                        graphAsset.nodes[listNumber].edgesDatas[listCount].inputNodeId = castInputNode.NodeID;
+                    }
+                }
             }
         }
         //管理番号のソート

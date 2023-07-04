@@ -8,7 +8,7 @@ using UnityEngine.UIElements;
 /// </summary>
 public class SelectorNode : Node
 {
-    private EnumField enumField = default;
+    public EnumField enumField = default;
     public Port OutputPort { get; set; }
     public int NodeID { get; set; } = default;
 
@@ -18,7 +18,7 @@ public class SelectorNode : Node
         //Port追加
         PortAdd();
         //enumFieldの追加
-        enumField = new EnumField("挙動", SelectorTipe.Selector1);
+        enumField = new EnumField("挙動", SelectorTipe.Priority);
         Color color = ColorConversion.GetColor("#3F3F3F");
         enumField.style.backgroundColor = color;
         mainContainer.Add(enumField);
@@ -33,8 +33,8 @@ public class SelectorNode : Node
             Port.Capacity.Multi, typeof(Port));
         outputContainer.Add(OutputPort);
     }
-    private enum SelectorTipe
+    public enum SelectorTipe
     {
-        Selector1, Selector2, Selector3
+        Priority, Random, Selector1
     }
 }

@@ -18,7 +18,7 @@ public class CreateEdge
             {
                 try
                 {
-                    //Port作製
+                    //Port取得
                     Port inputPort = node[nodeData.edgesDatas[createEdgeCount].inputNodeId].inputContainer.contentContainer.Q<Port>();
                     Port outputPort = node[nodeData.controlNumber].outputContainer.contentContainer.Q<Port>();
                     //Edge作製

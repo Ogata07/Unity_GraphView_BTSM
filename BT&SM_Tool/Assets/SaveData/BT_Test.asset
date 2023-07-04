@@ -12,7 +12,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95ff673f3edc65d40bd9ac6eed66050b, type: 3}
   m_Name: BT_Test
   m_EditorClassIdentifier: 
-  nodes: []
+  graphViewType: 1
+  nodes:
+  - position: {x: 148, y: 0}
+    scriptID: 1
+    object: {fileID: 0}
+    stringValue: Random
+    controlNumber: 0
+    fieldData: []
+    fieldDataObject: []
+    edgesDatas:
+    - controlNumber: 0
+      inputNodeId: 1
+  - position: {x: 464, y: 49}
+    scriptID: 1
+    object: {fileID: 0}
+    stringValue: Priority
+    controlNumber: 1
+    fieldData: []
+    fieldDataObject: []
+    edgesDatas: []
   edges: []
   getObject: []
   gameObject: {fileID: 0}

@@ -45,15 +45,18 @@ public class ControlNumberAdd
         }
     }
     //管理番号を付与する
-    private  void AddNumbar(Node node)
+    private void AddNumbar(Node node)
     {
         //管理番号を付与する
         //スクリプトノードしか番号を振れない
         //TODO セーブした後に追加するとうまく挙動しない
-        if (node is ScriptNode)
+        if (node is ScriptNode castScriptNode)
         {
-            ScriptNode castScriptNode = node as ScriptNode;
             castScriptNode.NodeID = number;
+            number++;
+        }
+        if (node is SelectorNode castSelectorNode) { 
+            castSelectorNode.NodeID = number;
             number++;
         }
         else

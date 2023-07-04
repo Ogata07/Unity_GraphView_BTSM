@@ -22,12 +22,11 @@ public class NodeData{
     //TODO Edgeみたいにきれいに
     //ノードの位置
     public Vector2 position;
-    //ノード内のスクリプト管理(GUID)
+    //ノード内のスクリプト管理
     public NodeType scriptID=NodeType.SM;
     //TODO スクリプトの保存が未決定
-    //public System.Object scriptObject;
-    //public UnityEngine.Object GetObject;
     public UnityEngine.Object @object;
+    public String stringValue;
     //ノード内の管理番号
     public int controlNumber;
     public List<FieldData> fieldData=new List<FieldData>();
