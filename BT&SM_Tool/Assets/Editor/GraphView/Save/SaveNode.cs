@@ -1,6 +1,8 @@
+using Codice.CM.Client.Differences.Graphic;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -31,9 +33,11 @@ public class SaveNode
             graphAsset.nodes[listNumber].position = node.GetPosition().position;
             if (node is ScriptNode castScriptNode)
             {
-
-                //ID登録
-                graphAsset.nodes[listNumber].scriptID = NodeType.SM;
+                if (node is ScriptNode) {
+                    //ID登録
+                    graphAsset.nodes[listNumber].scriptID = NodeType.BT_Condition;
+                }else
+                    graphAsset.nodes[listNumber].scriptID = NodeType.SM;
                 //スクリプトの保存
                 graphAsset.nodes[listNumber].@object = castScriptNode.ObjectField.value;
                 //管理番号の保存
@@ -84,16 +88,26 @@ public class SaveNode
                     {
                         //保存場所の追加
                         graphAsset.nodes[listNumber].edgesDatas.Add(new EdgesData());
-                        SelectorNode castInputNode = edgeslist[listCount].input.node as SelectorNode;
                         //管理番号の保存
                         graphAsset.nodes[listNumber].edgesDatas[listCount].controlNumber = listCount;
-                        //インプット番号の保存(アウトプット番号はこのノードの管理番号なので保存しなくてよい)
-                        graphAsset.nodes[listNumber].edgesDatas[listCount].inputNodeId = castInputNode.NodeID;
+                        graphAsset.nodes[listNumber].edgesDatas[listCount].inputNodeId = ChackNodeID(node);
                     }
                 }
             }
         }
         //管理番号のソート
         graphAsset.nodes.Sort((node1, node2) => node1.controlNumber - node2.controlNumber);
+    }
+    private int ChackNodeID(Node node) {
+        if (node is SelectorNode castSelectorNode)
+        {
+            return castSelectorNode.NodeID;
+        }
+        if (node is ScriptNode castScriptNode)
+        {
+            return castScriptNode.NodeID;
+        }
+        UnityEngine.Debug.LogError("ChackNodeIDに未記述のNodeあり");
+        return 0;
     }
 }
