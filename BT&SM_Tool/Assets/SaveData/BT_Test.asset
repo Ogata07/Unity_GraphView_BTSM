@@ -23,12 +23,28 @@ MonoBehaviour:
     fieldDataObject: []
     edgesDatas:
     - controlNumber: 0
-      inputNodeId: 1
-  - position: {x: 464, y: 49}
+      inputNodeId: 0
+    - controlNumber: 1
+      inputNodeId: 0
+  - position: {x: 450, y: -21}
+    scriptID: 0
+    object: {fileID: 11500000, guid: ba60a44ef93efc44fb58c4e82e83dc85, type: 3}
+    stringValue: 
+    controlNumber: 1
+    fieldData:
+    - typeName: System.Single
+      fieldName: time
+      valueData: 20
+    - typeName: System.Single
+      fieldName: countValue
+      valueData: 0
+    fieldDataObject: []
+    edgesDatas: []
+  - position: {x: 399, y: 97}
     scriptID: 1
     object: {fileID: 0}
     stringValue: Priority
-    controlNumber: 1
+    controlNumber: 2
     fieldData: []
     fieldDataObject: []
     edgesDatas: []

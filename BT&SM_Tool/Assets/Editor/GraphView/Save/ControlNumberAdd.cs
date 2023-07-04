@@ -55,7 +55,7 @@ public class ControlNumberAdd
             castScriptNode.NodeID = number;
             number++;
         }
-        if (node is SelectorNode castSelectorNode) { 
+        else if (node is SelectorNode castSelectorNode) { 
             castSelectorNode.NodeID = number;
             number++;
         }
