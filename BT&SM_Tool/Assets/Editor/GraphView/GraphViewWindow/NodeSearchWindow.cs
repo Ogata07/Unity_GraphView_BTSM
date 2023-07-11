@@ -5,6 +5,7 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 using ScriptFlow;
+using System.Reflection;
 /// <summary>
 /// GraohView上で作成可能なノードのウィンドウ管理クラス
 /// </summary>
@@ -23,19 +24,60 @@ public class NodeSearchWindow : ScriptableObject,ISearchWindowProvider
     {
         List<SearchTreeEntry> entries = new List<SearchTreeEntry>();
         entries.Add(new SearchTreeGroupEntry(new GUIContent("Create Node")));
-        entries.Add(new SearchTreeGroupEntry(new GUIContent("Node")) { level = 1 });
-        foreach (System.Reflection.Assembly assembly in AppDomain.CurrentDomain.GetAssemblies()) {
-            foreach (Type type in assembly.GetTypes()) {
-                if (type.IsSubclassOf(typeof(GraphViewScriptBase))) {
-                    entries.Add(new SearchTreeEntry(new GUIContent(type.Name)) { level = 2, userData = type });
-                }
-            }
-        }
         entries.Add(new SearchTreeGroupEntry(new GUIContent("Test")) { level = 1 });
         foreach (System.Reflection.Assembly assembly in AppDomain.CurrentDomain.GetAssemblies()) {
             foreach (Type type in assembly.GetTypes()) {
                 if (type.IsSubclassOf(typeof(Node))) { 
                     entries.Add(new SearchTreeEntry(new GUIContent(type.Name)){ level = 2,userData=type});
+                }
+            }
+        }
+        entries.Add(new SearchTreeGroupEntry(new GUIContent("SM")) { level = 1 });
+        foreach (System.Reflection.Assembly assembly in AppDomain.CurrentDomain.GetAssemblies()) {
+            foreach (Type type in assembly.GetTypes()) {
+                if (type.IsSubclassOf(typeof(GraphViewScriptBase))) {
+                    FieldInfo[] fieldInfos = type.GetFields(
+                        BindingFlags.Instance |
+                        BindingFlags.Static |
+                        BindingFlags.NonPublic 
+                        );
+                    foreach (FieldInfo f in fieldInfos)
+                    {
+                        if(f.FieldType.ToString()== "SMManager")
+                            entries.Add(new SearchTreeEntry(new GUIContent(type.Name)) { level = 2, userData = type });
+                    }
+                }
+            }
+        }
+        entries.Add(new SearchTreeGroupEntry(new GUIContent("BT")) { level = 1 });
+        entries.Add(new SearchTreeGroupEntry(new GUIContent("Condition")) { level = 2 });
+        foreach (System.Reflection.Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
+        {
+            foreach (Type type in assembly.GetTypes())
+            {
+                if (type.IsSubclassOf(typeof(ConditionBase)))
+                {
+                    entries.Add(new SearchTreeEntry(new GUIContent(type.Name)) { level = 3, userData = type });
+                }
+            }
+        }
+        entries.Add(new SearchTreeGroupEntry(new GUIContent("Action")) { level = 2 });
+        foreach (System.Reflection.Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
+        {
+            foreach (Type type in assembly.GetTypes())
+            {
+                if (type.IsSubclassOf(typeof(GraphViewScriptBase))&&!type.IsSubclassOf(typeof(ConditionBase)))
+                {
+                    FieldInfo[] fieldInfos = type.GetFields(
+                        BindingFlags.Instance |
+                        BindingFlags.Static |
+                        BindingFlags.NonPublic
+                        );
+                    foreach (FieldInfo f in fieldInfos)
+                    {
+                        if (f.FieldType.ToString() == "BTManager")
+                            entries.Add(new SearchTreeEntry(new GUIContent(type.Name)) { level = 3, userData = type });
+                    }
                 }
             }
         }
