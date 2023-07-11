@@ -31,11 +31,12 @@ public class SaveNode
 
             //位置の保存
             graphAsset.nodes[listNumber].position = node.GetPosition().position;
+
             if (node is ScriptNode castScriptNode)
             {
-                if (node is ScriptNode) {
+                if (graphAsset.graphViewType == GraphViewType.BehaviorTree) {
                     //ID登録
-                    graphAsset.nodes[listNumber].scriptID = NodeType.BT_Condition;
+                    graphAsset.nodes[listNumber].scriptID = NodeType.BT_Action;
                 }else
                     graphAsset.nodes[listNumber].scriptID = NodeType.SM;
                 //スクリプトの保存
@@ -90,7 +91,7 @@ public class SaveNode
                         graphAsset.nodes[listNumber].edgesDatas.Add(new EdgesData());
                         //管理番号の保存
                         graphAsset.nodes[listNumber].edgesDatas[listCount].controlNumber = listCount;
-                        graphAsset.nodes[listNumber].edgesDatas[listCount].inputNodeId = ChackNodeID(node);
+                        graphAsset.nodes[listNumber].edgesDatas[listCount].inputNodeId = ChackNodeID(edgeslist[listCount].input.node);
                     }
                 }
             }

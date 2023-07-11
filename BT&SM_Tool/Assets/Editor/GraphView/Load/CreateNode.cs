@@ -1,4 +1,5 @@
 using System;
+using System.ServiceModel.Configuration;
 using Unity.VisualScripting;
 using UnityEditor.Graphs.AnimationBlendTree;
 using UnityEditor.UIElements;
@@ -13,7 +14,7 @@ public class CreateNode
     private ConvertSaveData convertSaveData = new ConvertSaveData();
     private  Vector2 defaltSize = new Vector2(100,100);
     public  void Create(NodeData nodeData, GraphViewManager graphViewManager) {
-        if (nodeData.scriptID == NodeType.SM) {
+        if (nodeData.scriptID == NodeType.SM||nodeData.scriptID==NodeType.BT_Condition|| nodeData.scriptID == NodeType.BT_Action) {
             ScriptNode node = new ScriptNode();
             //初期設定
             SetNodeInitial(nodeData, node);
@@ -52,7 +53,6 @@ public class CreateNode
             //画面に追加
             graphViewManager.AddElement(node);
         }
-
     }
     /// <summary>
     /// Nodeの初期設定を行う
