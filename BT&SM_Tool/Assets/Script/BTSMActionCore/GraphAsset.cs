@@ -93,5 +93,6 @@ public enum GraphViewType{
 public enum NodeType { 
     SM,
     BT_Selector,
-    BT_Condition
+    BT_Condition,
+    BT_Action
 }
