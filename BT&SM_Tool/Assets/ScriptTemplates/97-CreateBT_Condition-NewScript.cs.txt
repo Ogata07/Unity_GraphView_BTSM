@@ -1,0 +1,16 @@
+
+        using UnityEngine;
+
+        public class #SCRIPTNAME# : ConditionBase
+        {
+            private BTManager bTManager = default;
+            public override void BTStart(BTManager manager)
+            {
+                bTManager = manager;
+            }
+            public override void BTUpdate()
+            {
+
+            }
+        }
+    
