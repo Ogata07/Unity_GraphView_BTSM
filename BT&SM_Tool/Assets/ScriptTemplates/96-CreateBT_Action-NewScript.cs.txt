@@ -1,0 +1,19 @@
+
+        using System;
+        using System.Collections;
+        using System.Collections.Generic;
+        using UnityEngine;
+
+        public class #SCRIPTNAME# : GraphViewScriptBase
+        {
+            private BTManager bTManager = default;
+            public override void BTStart(BTManager manager)
+            {
+                bTManager = manager;
+            }
+            public override void BTUpdate()
+            {
+
+            }
+        }
+    
