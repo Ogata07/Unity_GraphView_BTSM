@@ -53,7 +53,7 @@ public class GraphEditorWindow : EditorWindow
     {
         //TODO アニメーション製作予定
         if (EditorApplication.isPlaying) {
-            Debug.Log("アニメーション製作中");
+            //Debug.Log("アニメーション製作中");
         }
     }
     /// <summary>

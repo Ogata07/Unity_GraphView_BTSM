@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   graphViewType: 1
   nodes:
-  - position: {x: 149, y: 0}
+  - position: {x: 149, y: 50}
     scriptID: 1
     object: {fileID: 0}
     stringValue: Random
@@ -45,7 +45,7 @@ MonoBehaviour:
       valueData: 10
     fieldDataObject: []
     edgesDatas: []
-  - position: {x: 558, y: -39}
+  - position: {x: 543, y: -50}
     scriptID: 3
     object: {fileID: 11500000, guid: ba60a44ef93efc44fb58c4e82e83dc85, type: 3}
     stringValue: 

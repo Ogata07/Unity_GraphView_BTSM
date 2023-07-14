@@ -6,11 +6,12 @@ using UnityEngine.UIElements;
 /// <summary>
 /// スクリプトを格納してGraphViewに表示するクラス
 /// </summary>
-public class ScriptNode : Node
+public class ScriptNode : BaseNode
 {
     private ObjectField objectField = default;
     private readonly ScriptFieldCheck scriptFieldCheck= new ScriptFieldCheck();
-    public Port OutputPort { get; set; }
+    //public Port OutputPort { get; set; }
+    //public int NodeID { get; set; } = default;
     public ObjectField ObjectField
     {
         get
@@ -24,7 +25,6 @@ public class ScriptNode : Node
             objectField.value = value.value;
         }
     }
-    public int NodeID { get; set; } = default;
 
     public ScriptNode():base(){
         title = "ScriptNode";
@@ -40,6 +40,7 @@ public class ScriptNode : Node
             AddStart();
         });
     }
+    /*
     private void PortAdd() {
         var inputPort = Port.Create<Edge>(Orientation.Horizontal, Direction.Input,
         Port.Capacity.Multi, typeof(Port));
@@ -48,7 +49,7 @@ public class ScriptNode : Node
             Port.Capacity.Multi, typeof(Port));
         outputContainer.Add(OutputPort);
     }
-
+    */
     /// <summary>
     /// NodeSearchWindowから生成されたときに値が変更されたときと同じ処理をさせる
     /// </summary>

@@ -6,11 +6,11 @@ using UnityEngine.UIElements;
 /// <summary>
 /// このノードにつながっているノードを下から優先的に実行する
 /// </summary>
-public class SelectorNode : Node
+public class SelectorNode : BaseNode
 {
     public EnumField enumField = default;
-    public Port OutputPort { get; set; }
-    public int NodeID { get; set; } = default;
+    //public Port OutputPort { get; set; }
+    //public int NodeID { get; set; } = default;
 
     public SelectorNode() :base() {
         //タイトル更新
@@ -24,6 +24,7 @@ public class SelectorNode : Node
         mainContainer.Add(enumField);
 
     }
+    /*
     private void PortAdd()
     {
         var inputPort = Port.Create<Edge>(Orientation.Horizontal, Direction.Input,
@@ -32,7 +33,7 @@ public class SelectorNode : Node
         OutputPort = Port.Create<Edge>(Orientation.Horizontal, Direction.Output,
             Port.Capacity.Multi, typeof(Port));
         outputContainer.Add(OutputPort);
-    }
+    }*/
     public enum SelectorTipe
     {
         Priority, Random, Selector1
