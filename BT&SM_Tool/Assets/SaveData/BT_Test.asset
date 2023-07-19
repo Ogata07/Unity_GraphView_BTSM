@@ -25,31 +25,12 @@ MonoBehaviour:
     - controlNumber: 0
       inputNodeId: 1
     - controlNumber: 1
-      inputNodeId: 3
-  - position: {x: 558, y: 135}
-    scriptID: 1
-    object: {fileID: 0}
-    stringValue: Priority
-    controlNumber: 1
-    fieldData: []
-    fieldDataObject: []
-    edgesDatas: []
-  - position: {x: 782, y: 0}
-    scriptID: 3
-    object: {fileID: 11500000, guid: c34182d8250806d42bb7fdc4332306bf, type: 3}
-    stringValue: 
-    controlNumber: 2
-    fieldData:
-    - typeName: System.Single
-      fieldName: settime
-      valueData: 10
-    fieldDataObject: []
-    edgesDatas: []
-  - position: {x: 543, y: -50}
+      inputNodeId: 2
+  - position: {x: 506, y: -53}
     scriptID: 3
     object: {fileID: 11500000, guid: ba60a44ef93efc44fb58c4e82e83dc85, type: 3}
     stringValue: 
-    controlNumber: 3
+    controlNumber: 1
     fieldData:
     - typeName: System.Single
       fieldName: time
@@ -60,7 +41,26 @@ MonoBehaviour:
     fieldDataObject: []
     edgesDatas:
     - controlNumber: 0
-      inputNodeId: 2
+      inputNodeId: 3
+  - position: {x: 506, y: 134}
+    scriptID: 1
+    object: {fileID: 0}
+    stringValue: Priority
+    controlNumber: 2
+    fieldData: []
+    fieldDataObject: []
+    edgesDatas: []
+  - position: {x: 764, y: -27}
+    scriptID: 3
+    object: {fileID: 11500000, guid: c34182d8250806d42bb7fdc4332306bf, type: 3}
+    stringValue: 
+    controlNumber: 3
+    fieldData:
+    - typeName: System.Single
+      fieldName: settime
+      valueData: 10
+    fieldDataObject: []
+    edgesDatas: []
   edges: []
   getObject: []
   gameObject: {fileID: 0}

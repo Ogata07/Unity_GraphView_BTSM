@@ -51,6 +51,7 @@ public class BTManager : MonoBehaviour
                 Debug.Log("dekru");
             }
         }
+        Search();
     }
     private void Search() {
         //現在のnode番号をリセット
@@ -67,7 +68,8 @@ public class BTManager : MonoBehaviour
         //次のノードがなければ挿入して実行する
     }
     private int Selector(string value) {
-        var returnValue = 0;
+        Debug.Log(value);
+        var returnValue = 100;
         if (value == "Priority")
             returnValue = Priority();
         if(value == "Random")
@@ -78,19 +80,27 @@ public class BTManager : MonoBehaviour
     /// Nodeの位置が上の方を返却する
     /// </summary>
     private int Priority() {
+        Debug.Log("Priorityが選択されました");
         List<int> list = new();
         //現在のnodeとつながっているのを取得する
         foreach (var i in graphAsset.nodes[activeNodeId].edgesDatas) {
             list.Add(i.inputNodeId);
         }
         list.Sort();
-        return 0;
+        return list[0];
     }
     /// <summary>
     /// ランダムにノードを決定する
     /// </summary>
     private int Random() {
-        
-        return 0;
+        List<int> list = new();
+        //現在のnodeとつながっているのを取得する
+        foreach (var i in graphAsset.nodes[activeNodeId].edgesDatas)
+        {
+            list.Add(i.inputNodeId);
+        }
+        System.Random random = new();
+        var randomvalue= random.Next(list.Count);
+        return list[randomvalue];
     }
 }

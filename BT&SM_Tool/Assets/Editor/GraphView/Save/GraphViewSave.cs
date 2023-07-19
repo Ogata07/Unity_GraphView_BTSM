@@ -17,7 +17,7 @@ public class GraphViewSave
         Debug.Log("エッジの数は" + graphView.edges.ToList().Count + "個");
         number = 0;
 
-        controlNumberAdd.ControlNumber(graphView);
+        controlNumberAdd.ControlNumber(graphAsset,graphView);
         saveNode.Save(graphAsset,graphView);
     }
 }

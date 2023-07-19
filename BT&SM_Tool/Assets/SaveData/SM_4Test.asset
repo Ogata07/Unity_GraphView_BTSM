@@ -12,10 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95ff673f3edc65d40bd9ac6eed66050b, type: 3}
   m_Name: SM_4Test
   m_EditorClassIdentifier: 
+  graphViewType: 0
   nodes:
   - position: {x: 213, y: 159}
-    scriptID: 
+    scriptID: 0
     object: {fileID: 11500000, guid: 5f73acff98009bc40aabc22f46a14ab5, type: 3}
+    stringValue: 
     controlNumber: 0
     fieldData: []
     fieldDataObject: []
@@ -25,8 +27,9 @@ MonoBehaviour:
     - controlNumber: 1
       inputNodeId: 3
   - position: {x: 123, y: 23}
-    scriptID: 
+    scriptID: 0
     object: {fileID: 11500000, guid: 61733edf954e0594ab3077da3c6cd171, type: 3}
+    stringValue: 
     controlNumber: 1
     fieldData:
     - typeName: System.Single
@@ -37,8 +40,9 @@ MonoBehaviour:
     - controlNumber: 0
       inputNodeId: 2
   - position: {x: 321, y: 23}
-    scriptID: 
+    scriptID: 0
     object: {fileID: 11500000, guid: 57ea224fd0015a442a2ae8efda645e28, type: 3}
+    stringValue: 
     controlNumber: 2
     fieldData:
     - typeName: System.Single
@@ -49,8 +53,9 @@ MonoBehaviour:
     - controlNumber: 0
       inputNodeId: 0
   - position: {x: 213, y: 303}
-    scriptID: 
+    scriptID: 0
     object: {fileID: 11500000, guid: c34182d8250806d42bb7fdc4332306bf, type: 3}
+    stringValue: 
     controlNumber: 3
     fieldData:
     - typeName: System.Single

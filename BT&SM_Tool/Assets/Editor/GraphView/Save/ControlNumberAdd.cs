@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static System.ComponentModel.Design.ObjectSelectorEditor;
 using Edge = UnityEditor.Experimental.GraphView.Edge;
 /// <summary>
 /// 各Nodeに管理番号を付与するクラス
@@ -14,7 +15,7 @@ public class ControlNumberAdd
 {
     private  int number = 0;
     //各ノードに管理番号を付与
-    public  void ControlNumber(GraphView graphView)
+    public  void ControlNumber(GraphAsset graphAsset, GraphView graphView)
     {
         number = 0;
         var nodeList = graphView.nodes.ToList();
@@ -40,21 +41,26 @@ public class ControlNumberAdd
         }
         nodeList.Remove(startNode);
 
-
-
-        foreach (Node node in nodeList)
+        //ビヘイビアツリーでのみ動作させるようにする(SMだとループする)
+        if (graphAsset.graphViewType == GraphViewType.BehaviorTree)
+            ControlNumberBT(graphView);
+        else//ステートマシン用
         {
-            AddNumbar(node);
+            foreach (Node node in nodeList)
+            {
+                AddNumbar(node);
+            }
         }
+
     }
     public void ControlNumberBT(GraphView graphView) {
         //番号リセット
         number = 0;
-        List<Node> nodes = new();
         //スタートノードにつながっているノードを取得(0をいれる)
         var nodeList = graphView.nodes.ToList();
         var deleteStartNode = nodeList.Find(x => x.title == "StartNode") as StartNode;
         var selectorNode = deleteStartNode.OutputPort.connections.ToList();
+        Debug.Log(selectorNode.Count());
         if (selectorNode[0].input.node is SelectorNode caseSelectorNode)
         {
             caseSelectorNode.NodeID = number;
@@ -62,17 +68,27 @@ public class ControlNumberAdd
         }
         //Node0につながっているノードを取得する
         var selectNode = selectorNode[0].input.node;
-        //ここでループ
-        BaseNode caseStartNode=selectNode as BaseNode;
+        PriorityAddNumbar(selectNode);
+    }
+    private void PriorityAddNumbar(Node loopTaget) {
+
+        BaseNode caseStartNode = loopTaget as BaseNode;
+        //loopTagetにつながっているエッジをすべて取得する
         var edgeList = caseStartNode.OutputPort.connections.ToList();
         //edgeからnodeに変換
-        foreach (Edge edge in edgeList) {
+        List<Node> nodes = new();
+        foreach (Edge edge in edgeList)
+        {
             nodes.Add(edge.input.node);
         }
+
         //位置がGraphView上での位置が上の順に並び替え
-        for (int i = 0; i < nodes.Count-1; i++) {
-            for (int j = nodes.Count - 1; j >= i + 1; j--) {
-                if (nodes[j].GetPosition().y > nodes[j-1].GetPosition().y)
+        //今回は位置が上の方が優先度が高くする
+        for (int i = 0; i < nodes.Count - 1; i++)
+        {
+            for (int j = nodes.Count - 1; j >= i + 1; j--)
+            {
+                if (nodes[j].GetPosition().y < nodes[j - 1].GetPosition().y)
                 {
                     var value = nodes[j];
                     nodes[j] = nodes[j - 1];
@@ -80,15 +96,22 @@ public class ControlNumberAdd
                 }
             }
         }
+
         //つながっているノードに管理番号を振る
-        foreach (Node node in nodes) {
+        //優先度が高いほうから降ることによって比べるときに番号が低いほうが優先度が高いとすることができる
+        foreach (Node node in nodes)
+        {
             BaseNode caseBaseNode = node as BaseNode;
             caseBaseNode.NodeID = number;
+            Debug.Log("管理番号を振りました"+number);
             number++;
         }
-    }
-    private void Loop1() { 
-    
+
+        //次のノードにつながっていた場合はこの関数(Loop1)をそのnodeで呼び出す
+        foreach (Node node in nodes)
+        {
+            PriorityAddNumbar(node);
+        }
     }
     //管理番号を付与する
     private void AddNumbar(Node node)
