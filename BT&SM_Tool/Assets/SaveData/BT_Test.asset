@@ -17,7 +17,7 @@ MonoBehaviour:
   - position: {x: 149, y: 50}
     scriptID: 1
     object: {fileID: 0}
-    stringValue: Random
+    stringValue: Priority
     controlNumber: 0
     fieldData: []
     fieldDataObject: []
@@ -27,7 +27,7 @@ MonoBehaviour:
     - controlNumber: 1
       inputNodeId: 2
   - position: {x: 506, y: -53}
-    scriptID: 3
+    scriptID: 2
     object: {fileID: 11500000, guid: ba60a44ef93efc44fb58c4e82e83dc85, type: 3}
     stringValue: 
     controlNumber: 1
