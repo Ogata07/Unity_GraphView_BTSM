@@ -4,6 +4,7 @@ using UnityEngine;
 using ScriptFlow;
 using System;
 using Unity.VisualScripting.Antlr3.Runtime.Tree;
+using UnityEngine.Experimental.GlobalIllumination;
 //using UnityEditorInternal;
 /// <summary>
 /// ビヘイビアツリーのヴィジュアルスクリプティングを動作させるスクリプト
@@ -64,6 +65,7 @@ public class BTManager : MonoBehaviour
         //今回はNode0はSelectorNodeで固定
         //Selectorから次のノード番号が返却される
         Selector(startNode.stringValue);
+        logList.Add(new LogList(0,false));
         //読み取った動作を実行する
         //①繰り返し
         //決定したNodeを読み取る
@@ -146,7 +148,7 @@ public class BTManager : MonoBehaviour
             }
         }
         //最後まで調べて実行できなかったら失敗なのでこのノードの前のノードに戻る
-
+        //どうやって前のに戻る？ログを取る？
 
         return list[0];
     }
@@ -166,6 +168,10 @@ public class BTManager : MonoBehaviour
     }
 }
 public class LogList{ 
+     public LogList(int number,bool state) {
+        ControlNumber = number;
+        State = state;  
+    }   
     public int ControlNumber { get; set; }
     public bool State { get; set; }
 }
