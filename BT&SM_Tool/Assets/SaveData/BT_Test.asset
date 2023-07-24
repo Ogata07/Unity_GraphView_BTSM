@@ -35,9 +35,6 @@ MonoBehaviour:
     - typeName: System.Single
       fieldName: time
       valueData: 20
-    - typeName: System.Single
-      fieldName: countValue
-      valueData: 0
     fieldDataObject: []
     edgesDatas:
     - controlNumber: 0

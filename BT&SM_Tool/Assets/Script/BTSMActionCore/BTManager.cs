@@ -5,6 +5,7 @@ using ScriptFlow;
 using System;
 using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine.Experimental.GlobalIllumination;
+using Unity.VisualScripting;
 //using UnityEditorInternal;
 /// <summary>
 /// ビヘイビアツリーのヴィジュアルスクリプティングを動作させるスクリプト
@@ -39,7 +40,10 @@ public class BTManager : MonoBehaviour
                 var startNode = graphAsset.nodes[i].@object;
                 var scriptName = startNode.name;
                 var activeScript = Activator.CreateInstance(Type.GetType(scriptName));
-                graphViewScriptBases.Add((GraphViewScriptBase)activeScript) ;
+                GraphViewScriptBase castGraphViewScriptBase= activeScript as GraphViewScriptBase;
+                //同じクラスでも判別できるようにするため
+                castGraphViewScriptBase.nodeNumbar = graphAsset.nodes[i].controlNumber;
+                graphViewScriptBases.Add(castGraphViewScriptBase) ;
             }
         }
     }
@@ -47,13 +51,10 @@ public class BTManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Normal");
+        //Debug.Log("Normal");
         foreach (GraphViewScriptBase unit in graphViewScriptBases) {
             Debug.Log("mawasityuu");
             unit.BTUpdate();
-            if (unit is ConditionBase) {
-                Debug.Log("dekru");
-            }
         }
         Search();
     }
@@ -64,14 +65,28 @@ public class BTManager : MonoBehaviour
         var startNode = graphAsset.nodes[activeNodeId];
         //今回はNode0はSelectorNodeで固定
         //Selectorから次のノード番号が返却される
-        Selector(startNode.stringValue);
-        logList.Add(new LogList(0,false));
+        logList.Add(new LogList(0,true));
+        int goalValue=Next(Selector(startNode.stringValue));
+        Debug.Log(goalValue);
         //読み取った動作を実行する
         //①繰り返し
         //決定したNodeを読み取る
         //読み取った動作を実行する
         //次のノードがある場合は①に戻る
         //次のノードがなければ挿入して実行する
+    }
+    //tagetNumbarからつながっている次のノードにいけるか調べる
+    private int Next(int tagetNumbar) {
+        int value = 0;
+        Debug.Log(tagetNumbar);
+        foreach (var i in graphAsset.nodes[tagetNumbar].edgesDatas) {
+
+            if (NextChack(i.inputNodeId)) {
+                value = i.inputNodeId;
+            }
+        }
+        
+        return value;
     }
     private bool NextChack(int tagetNumbar) {
         activeNodeId = tagetNumbar;
@@ -80,14 +95,14 @@ public class BTManager : MonoBehaviour
         switch (nodeData.scriptID) {
             //SelectorNodeならSelectorに回す
             case NodeType.BT_Selector:
-                return false;
+                return true;
             //ConditionBaseに対応したのならその中身を調べる
             case NodeType.BT_Condition:
                 
                 return ConditionChack(nodeData.controlNumber);
             //ActionNodeなら中身を実行する
             case NodeType.BT_Action:
-                return false;
+                return true;
 
             default:
                 Debug.Log("ビヘイビアツリーでは実行できないNodeがありました。");
@@ -98,20 +113,21 @@ public class BTManager : MonoBehaviour
     private bool ConditionChack(int serchNumbar) {
         //毎回updateで回しているのでそれから一致しているNodeを取得する
         //検索
-        var hitBase=graphViewScriptBases.Find(x=>x.nodeNumbar== serchNumbar);
-        ConditionBase conditionBase= hitBase as ConditionBase;
-        //
+        var hitBase=graphViewScriptBases.FindAll(x=>x.nodeNumbar == 1);
+
+        ConditionBase conditionBase= hitBase[0] as ConditionBase;
         if (conditionBase.conditionFlag)
         {
             //trueなので次につながっているノードに行く
-
+            return true;
         }
         else
-        { 
+        {
             //Falseなので失敗を返す
+            return false;
         }
 
-        return false;
+        
     }
     /// <summary>
     /// SelectorNodeの選択を読んで対応した関数を呼び出す
@@ -119,7 +135,6 @@ public class BTManager : MonoBehaviour
     /// <param name="value">次のnodeを選ぶ方法のString値</param>
     /// <returns></returns>
     private int Selector(string value) {
-        Debug.Log(value);
         var returnValue = 100;
         if (value == "Priority")
             returnValue = Priority();
