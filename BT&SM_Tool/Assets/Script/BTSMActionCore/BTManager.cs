@@ -6,6 +6,7 @@ using System;
 using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine.Experimental.GlobalIllumination;
 using Unity.VisualScripting;
+using UnityEngine.UIElements;
 //using UnityEditorInternal;
 /// <summary>
 /// ビヘイビアツリーのヴィジュアルスクリプティングを動作させるスクリプト
@@ -17,9 +18,16 @@ public class BTManager : MonoBehaviour
     private GraphViewScriptBase graphViewScriptBase;
     //現在実行中のノードの管理番号
     private int activeNodeId = 0;
+    //BT_Conditionなどの常時実行するスクリプトをまとめるリスト
     private List<GraphViewScriptBase> graphViewScriptBases = new();
-    private List<ConditionBase> conditionBases = new(); 
+    //***実際に実行する部分関連***
+    //実際に動作するActionNodeのスクリプトを入れる場所
+    private ActionList action = default;
+    //BTStart()を実行しているのか管理するBool文
+    private bool actionStartFlag = false;
 
+    //臨時
+    public SMManager sMManager = null;  
     //現在土の管理番号順にチェックしたのかの管理用リスト
     List<LogList> logList= new();
     // Start is called before the first frame update
@@ -56,6 +64,15 @@ public class BTManager : MonoBehaviour
             Debug.Log("mawasityuu");
             unit.BTUpdate();
         }
+        if (action != null)
+        {
+            if (actionStartFlag == false)
+            {
+                action.Script.SMStart(sMManager);
+                actionStartFlag = true;
+            }
+            action.Script.BTUpdate();
+        }
         Search();
     }
     private void Search() {
@@ -68,12 +85,25 @@ public class BTManager : MonoBehaviour
         logList.Add(new LogList(0,true));
         int goalValue=Next(Selector(startNode.stringValue));
         Debug.Log(goalValue);
-        //読み取った動作を実行する
-        //①繰り返し
-        //決定したNodeを読み取る
-        //読み取った動作を実行する
-        //次のノードがある場合は①に戻る
-        //次のノードがなければ挿入して実行する
+        //どのノードを実行するか決定後
+        //List<GraphViewScriptBase>に追加する
+        //すでに追加していたなら追加しない()
+        //前に追加していたのは上書き
+        if (graphAsset.nodes[activeNodeId].scriptID == NodeType.BT_Action)
+        {
+            if (action == null || action.ActionNumber != goalValue)
+            {
+                //入れ替え
+                var actionNode = graphAsset.nodes[goalValue].@object;
+                var scriptName = actionNode.name;
+                var activeScript = Activator.CreateInstance(Type.GetType(scriptName));
+                GraphViewScriptBase castGraphViewScriptBase = activeScript as GraphViewScriptBase;
+                action = new ActionList(goalValue, castGraphViewScriptBase);
+                actionStartFlag = false;
+            }
+        }
+
+
     }
     //tagetNumbarからつながっている次のノードにいけるか調べる
     private int Next(int tagetNumbar) {
@@ -88,6 +118,11 @@ public class BTManager : MonoBehaviour
         
         return value;
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="tagetNumbar">対象のNode管理番号</param>
+    /// <returns></returns>
     private bool NextChack(int tagetNumbar) {
         activeNodeId = tagetNumbar;
         //受け取った管理番号のnodeを調べる
@@ -110,10 +145,15 @@ public class BTManager : MonoBehaviour
         
         }
     }
+    /// <summary>
+    /// ConditionNodeでserchNumbarと一致しているNodeのFlagを返却する
+    /// </summary>
+    /// <param name="serchNumbar">見つけたいConditionNodeの管理番号</param>
+    /// <returns></returns>
     private bool ConditionChack(int serchNumbar) {
         //毎回updateで回しているのでそれから一致しているNodeを取得する
         //検索
-        var hitBase=graphViewScriptBases.FindAll(x=>x.nodeNumbar == 1);
+        var hitBase=graphViewScriptBases.FindAll(x=>x.nodeNumbar == serchNumbar);
 
         ConditionBase conditionBase= hitBase[0] as ConditionBase;
         if (conditionBase.conditionFlag)
@@ -189,4 +229,12 @@ public class LogList{
     }   
     public int ControlNumber { get; set; }
     public bool State { get; set; }
+}
+public class ActionList {
+    public ActionList(int number, GraphViewScriptBase script) { 
+        ActionNumber = number;
+        Script = script;
+    }
+    public int ActionNumber { get; set; }
+    public GraphViewScriptBase Script { get; set; }
 }
