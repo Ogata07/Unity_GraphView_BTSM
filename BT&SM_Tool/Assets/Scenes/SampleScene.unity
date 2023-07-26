@@ -343,6 +343,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   graphAsset: {fileID: 11400000, guid: f1ea4f8a7da15bb4581da5187d675b53, type: 2}
+  sMManager: {fileID: 788324213}
 --- !u!54 &788324215
 Rigidbody:
   m_ObjectHideFlags: 0

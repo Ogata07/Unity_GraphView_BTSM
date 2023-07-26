@@ -1,19 +1,18 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using ScriptFlow;
 
-        using System.Collections;
-        using System.Collections.Generic;
-        using UnityEngine;
-        using ScriptFlow;
+public class #SCRIPTNAME# : GraphViewScriptBase
+{
+    private SMManager m_SMManager = default;
+    public override void SMStart(SMManager manager)
+    {
+        m_SMManager = manager;
+    }
+    public override void BTUpdate()
+    {
 
-        public class #SCRIPTNAME# : GraphViewScriptBase
-        {
-            private SMManager m_SMManager = default;
-            public override void SMStart(SMManager manager)
-            {
-                m_SMManager = manager;
-            }
-            public override void BTUpdate()
-            {
-
-            }
-        }
+    }
+}
     
