@@ -83,11 +83,17 @@ public class GraphEditorWindow : EditorWindow
         saveField.RegisterCallback<ChangeEvent<string>>(events => {
             graphViewManager.SaveLog(saveField.value as GraphAsset);
         });
-
         toolbar.Add(saveField);
+
+        var backBordbtn = new ToolbarButton(graphViewManager.CreateBackBord) { text = "関数生成" };
+        toolbar.Add(backBordbtn);
+
+
 
         visualElement.Add(graphViewManager);
         rootVisualElement.Add(toolbar);
+        var graphViewManager2 = new TestBackBord(this, this.graphAsset);
+        visualElement.Add(graphViewManager2);
 
     }
 }

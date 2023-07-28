@@ -28,6 +28,10 @@ public class GraphViewManager : GraphView
         this.graphAsset= graphAsset;
         SetInitial(editorWindow); 
     }
+    //外部でもいじれる関数を作成するための別ウィンドウ作成(テスト用)
+    public void CreateBackBord() {
+        Debug.Log("生成ウィンドウ表示");
+    }
     //TODO　保存機能の分離を行う可能性あり
     public void SaveStart() {
         if (graphAsset != null)
