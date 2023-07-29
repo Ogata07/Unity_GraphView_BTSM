@@ -4,6 +4,7 @@ using UnityEditor.Experimental.GraphView;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
+using UnityEditor.UIElements;
 
 public class TestBackBord : GraphView
 {
@@ -22,6 +23,12 @@ public class TestBackBord : GraphView
         var colorCode = ColorConversion.GetColor(backColorCode);
         colorCode.a = 0.2f;//Aだけ半透明にするために変更
         this.style.backgroundColor = colorCode;
-        this.Add(new Box());
+        var box = new Box ();
+        box.Add(new TextField());
+        box.Add(new IntegerField());
+        box.Add(new TextField());
+        box.Add(new IntegerField());
+        box.Add(new EnumField());
+        this.Add(box);
     }
 }
