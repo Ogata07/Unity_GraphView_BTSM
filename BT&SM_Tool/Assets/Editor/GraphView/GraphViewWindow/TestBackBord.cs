@@ -24,11 +24,11 @@ public class TestBackBord : GraphView
         colorCode.a = 0.2f;//Aだけ半透明にするために変更
         this.style.backgroundColor = colorCode;
         var box = new Box ();
-        box.Add(new TextField());
-        box.Add(new IntegerField());
-        box.Add(new TextField());
-        box.Add(new IntegerField());
-        box.Add(new EnumField());
+        
+        BackBordElement<IntegerField,int> backBordElement = new BackBordElement<IntegerField,int>();
+        box.Add(backBordElement);
+        var scroll = new Scroller();
+        box.Add(scroll);   
         this.Add(box);
     }
 }
