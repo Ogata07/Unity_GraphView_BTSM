@@ -79,6 +79,16 @@ public class TestObjects
     public CreateType ss = CreateType.Int;
     public string name;
 }
+//外部からいじれる変数
+[System.Serializable]
+public class ExternalVariable{
+    //型名
+    public string variableType;
+    //変数名
+    public string variableName;
+    //値
+    public string variableValue;
+}
 public enum CreateType 
 {
     Float,

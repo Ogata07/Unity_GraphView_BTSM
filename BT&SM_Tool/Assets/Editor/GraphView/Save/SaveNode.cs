@@ -34,11 +34,8 @@ public class SaveNode
 
             if (node is ScriptNode castScriptNode)
             {
-                if (graphAsset.graphViewType == GraphViewType.BehaviorTree) {
-                    //ID登録
-                    graphAsset.nodes[listNumber].scriptID = NodeType.BT_Action;
-                }else
-                    graphAsset.nodes[listNumber].scriptID = NodeType.SM;
+                //Scriptタイプ保存
+                graphAsset.nodes[listNumber].scriptID = castScriptNode.nodeType;
                 //スクリプトの保存
                 graphAsset.nodes[listNumber].@object = castScriptNode.ObjectField.value;
                 //管理番号の保存

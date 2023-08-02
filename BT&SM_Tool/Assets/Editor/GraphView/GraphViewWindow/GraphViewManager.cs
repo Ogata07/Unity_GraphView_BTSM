@@ -17,6 +17,8 @@ public class GraphViewManager : GraphView
     public string StartColorCode { get;} = "#FFA500";
     private readonly GraphViewLoad graphViewLoad = new GraphViewLoad();
     private readonly GraphViewSave graphViewSave = new GraphViewSave();
+    //TODO GraphViewがBTかSMかの区別をするために持たせているがいるのか微妙
+    public GraphViewType GraphViewType { get; set; } = GraphViewType.BehaviorTree;
     public GraphViewManager() : base()
     {
         //TODO 初期作成ができなくなる
@@ -26,7 +28,9 @@ public class GraphViewManager : GraphView
     public GraphViewManager(EditorWindow editorWindow, GraphAsset graphAsset)
     {
         this.graphAsset= graphAsset;
-        SetInitial(editorWindow); 
+        //更新
+        GraphViewType= graphAsset.graphViewType;
+        SetInitial(editorWindow);
     }
     //外部でもいじれる関数を作成するための別ウィンドウ作成(テスト用)
     public void CreateBackBord() {

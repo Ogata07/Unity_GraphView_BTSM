@@ -10,6 +10,7 @@ public class ScriptNode : BaseNode
 {
     private ObjectField objectField = default;
     private readonly ScriptFieldCheck scriptFieldCheck= new ScriptFieldCheck();
+    public NodeType nodeType = NodeType.BT_Action;
     //public Port OutputPort { get; set; }
     //public int NodeID { get; set; } = default;
     public ObjectField ObjectField

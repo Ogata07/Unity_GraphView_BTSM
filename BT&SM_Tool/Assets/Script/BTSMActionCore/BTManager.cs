@@ -221,6 +221,11 @@ public class BTManager : MonoBehaviour
         var randomvalue= random.Next(list.Count);
         return list[randomvalue];
     }
+    public T SerchExternalVariable<T>(string serchName )
+    {
+        T value=default(T);
+        return value;
+    }
 }
 public class LogList{ 
      public LogList(int number,bool state) {

@@ -62,6 +62,8 @@ public class CreateNode
     private  void SetNodeInitial(NodeData nodeData, ScriptNode node) {
         //ノードの位置
         node.SetPosition(new Rect(nodeData.position, defaltSize));
+        //ノードの種類
+        node.nodeType = nodeData.scriptID;
         //スクリプト
         if (nodeData.@object != null)
             node.ObjectField.value = nodeData.@object;

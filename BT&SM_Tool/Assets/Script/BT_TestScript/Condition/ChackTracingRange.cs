@@ -1,9 +1,9 @@
 
 using UnityEngine;
 /// <summary>
-/// キャラのHPを見て判定値以下ならTrueにする
+/// プレイヤーが追跡範囲に入っているかどうか
 /// </summary>
-public class ChackHp : ConditionBase
+public class ChackTracingRange : ConditionBase
 {
     private BTManager bTManager = default;
     public override void BTStart(BTManager manager)
@@ -12,10 +12,12 @@ public class ChackHp : ConditionBase
     }
     public override void BTUpdate()
     {
-        //TODO BTManagerに
-        if (0 > bTManager.SerchExternalVariable<int>("Hp")) { 
+
+    }
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player")
             conditionFlag = true;
-        }
     }
 }
     

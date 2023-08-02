@@ -97,6 +97,18 @@ public class NodeSearchWindow : ScriptableObject,ISearchWindowProvider
             Vector2 worldMousePosition = editorWindow.rootVisualElement.ChangeCoordinatesTo(editorWindow.rootVisualElement.parent, context.screenMousePosition - editorWindow.position.position);
             Vector2 localMousePosition = graphViewManager.contentViewContainer.WorldToLocal(worldMousePosition);
 
+
+
+            //GraphView上に追加時に内容によってどの役割をするのか分類をする
+            //TODO SelectorNodeは未実装
+            if (graphViewManager.GraphViewType == GraphViewType.BehaviorTree) {
+                debugNode.nodeType = NodeType.BT_Action;
+            }else
+                debugNode.nodeType = NodeType.SM;
+            if (type.IsSubclassOf(typeof(ConditionBase)))
+            {
+                debugNode.nodeType = NodeType.BT_Condition;
+            }
             //ノードの位置を設定
             debugNode.SetPosition(new Rect(localMousePosition, defaultSize));
             //ノードの中身を設定
