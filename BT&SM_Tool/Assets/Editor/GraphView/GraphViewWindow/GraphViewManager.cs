@@ -17,6 +17,7 @@ public class GraphViewManager : GraphView
     public string StartColorCode { get;} = "#FFA500";
     private readonly GraphViewLoad graphViewLoad = new GraphViewLoad();
     private readonly GraphViewSave graphViewSave = new GraphViewSave();
+    public GraphEditorWindow SetGraphEditorWindow { get; set; }
     //TODO GraphViewがBTかSMかの区別をするために持たせているがいるのか微妙
     public GraphViewType GraphViewType { get; set; } = GraphViewType.BehaviorTree;
     public GraphViewManager() : base()
@@ -41,7 +42,7 @@ public class GraphViewManager : GraphView
         if (graphAsset != null)
         {
             Debug.Log("<color=green>セーブをしました</color>");
-            graphViewSave.SaveNodeElement(graphAsset, this);
+            graphViewSave.SaveNodeElement(graphAsset,this);
             EditorUtility.SetDirty(graphAsset);
             AssetDatabase.SaveAssets();
         }

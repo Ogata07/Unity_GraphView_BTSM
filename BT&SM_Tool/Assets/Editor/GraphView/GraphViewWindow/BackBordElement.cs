@@ -12,7 +12,10 @@ public class BackBordElement<T,V> : FieldElement
     where T : BaseField<V>, new()
 {
     //型データ
+    public TextField typeText = default;
+    public TextField nameText = default;
     public T value=default;
+
     public BackBordElement() {
         Inialize();
     }
@@ -22,7 +25,7 @@ public class BackBordElement<T,V> : FieldElement
         box.style.flexDirection=new StyleEnum<FlexDirection>(FlexDirection.Row);
         box.style.flexWrap = new StyleEnum<Wrap>(Wrap.Wrap);
         //型名
-        TextField typeText = new TextField();
+        typeText = new TextField();
         typeText.value = "型名表示";
         typeText.style.width = new StyleLength(new Length(45, LengthUnit.Percent));
         box.Add(typeText);
@@ -34,7 +37,7 @@ public class BackBordElement<T,V> : FieldElement
         box.Add(button);
 
         //変数名
-        TextField nameText = new TextField();
+        nameText = new TextField();
         nameText.value = "変数名表示";
         nameText.style.width = new StyleLength(new Length(45, LengthUnit.Percent));
         box.Add(nameText);

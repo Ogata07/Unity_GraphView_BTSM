@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Reflection;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -14,6 +15,7 @@ public class GraphAsset :ScriptableObject
     public List<NodeData> nodes = new List<NodeData>();
     public List<EdgeData> edges = new List<EdgeData>();
     public List<TestObjects> getObject=new List<TestObjects>();
+    public List<ExternalVariable> keyValues=new List<ExternalVariable>();
     public GameObject gameObject = default;
     public MonoBehaviour monoBehaviour = null;
 }

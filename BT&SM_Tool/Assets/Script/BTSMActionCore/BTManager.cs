@@ -27,9 +27,9 @@ public class BTManager : MonoBehaviour
     private bool actionStartFlag = false;
 
     //臨時
-    public SMManager sMManager = null;  
+    public SMManager sMManager = null;
     //現在土の管理番号順にチェックしたのかの管理用リスト
-    List<LogList> logList= new();
+    List<LogList> logList = new();
     // Start is called before the first frame update
     void Start()
     {
@@ -42,16 +42,16 @@ public class BTManager : MonoBehaviour
         */
         //TODO 分岐ができていないので現時点ではここまで
         //BT_Conditionのスクリプトを取得する
-        for (int i = 0; i <= graphAsset.nodes.Count-1; i++) {
+        for (int i = 0; i <= graphAsset.nodes.Count - 1; i++) {
 
             if (graphAsset.nodes[i].scriptID == NodeType.BT_Condition) {
                 var startNode = graphAsset.nodes[i].@object;
                 var scriptName = startNode.name;
                 var activeScript = Activator.CreateInstance(Type.GetType(scriptName));
-                GraphViewScriptBase castGraphViewScriptBase= activeScript as GraphViewScriptBase;
+                GraphViewScriptBase castGraphViewScriptBase = activeScript as GraphViewScriptBase;
                 //同じクラスでも判別できるようにするため
                 castGraphViewScriptBase.nodeNumbar = graphAsset.nodes[i].controlNumber;
-                graphViewScriptBases.Add(castGraphViewScriptBase) ;
+                graphViewScriptBases.Add(castGraphViewScriptBase);
             }
         }
     }
@@ -82,8 +82,8 @@ public class BTManager : MonoBehaviour
         var startNode = graphAsset.nodes[activeNodeId];
         //今回はNode0はSelectorNodeで固定
         //Selectorから次のノード番号が返却される
-        logList.Add(new LogList(0,true));
-        int goalValue=Next(Selector(startNode.stringValue));
+        logList.Add(new LogList(0, true));
+        int goalValue = Next(Selector(startNode.stringValue));
         Debug.Log(goalValue);
         //どのノードを実行するか決定後
         //List<GraphViewScriptBase>に追加する
@@ -115,7 +115,7 @@ public class BTManager : MonoBehaviour
                 value = i.inputNodeId;
             }
         }
-        
+
         return value;
     }
     /// <summary>
@@ -133,7 +133,7 @@ public class BTManager : MonoBehaviour
                 return true;
             //ConditionBaseに対応したのならその中身を調べる
             case NodeType.BT_Condition:
-                
+
                 return ConditionChack(nodeData.controlNumber);
             //ActionNodeなら中身を実行する
             case NodeType.BT_Action:
@@ -142,7 +142,7 @@ public class BTManager : MonoBehaviour
             default:
                 Debug.Log("ビヘイビアツリーでは実行できないNodeがありました。");
                 return false;
-        
+
         }
     }
     /// <summary>
@@ -153,9 +153,9 @@ public class BTManager : MonoBehaviour
     private bool ConditionChack(int serchNumbar) {
         //毎回updateで回しているのでそれから一致しているNodeを取得する
         //検索
-        var hitBase=graphViewScriptBases.FindAll(x=>x.nodeNumbar == serchNumbar);
+        var hitBase = graphViewScriptBases.FindAll(x => x.nodeNumbar == serchNumbar);
 
-        ConditionBase conditionBase= hitBase[0] as ConditionBase;
+        ConditionBase conditionBase = hitBase[0] as ConditionBase;
         if (conditionBase.conditionFlag)
         {
             //trueなので次につながっているノードに行く
@@ -167,7 +167,7 @@ public class BTManager : MonoBehaviour
             return false;
         }
 
-        
+
     }
     /// <summary>
     /// SelectorNodeの選択を読んで対応した関数を呼び出す
@@ -178,8 +178,8 @@ public class BTManager : MonoBehaviour
         var returnValue = 100;
         if (value == "Priority")
             returnValue = Priority();
-        if(value == "Random")
-            returnValue=Random();
+        if (value == "Random")
+            returnValue = Random();
         return returnValue;
     }
     /// <summary>
@@ -218,12 +218,19 @@ public class BTManager : MonoBehaviour
             list.Add(i.inputNodeId);
         }
         System.Random random = new();
-        var randomvalue= random.Next(list.Count);
+        var randomvalue = random.Next(list.Count);
         return list[randomvalue];
     }
-    public T SerchExternalVariable<T>(string serchName )
+    public T SerchExternalVariable<T>(string serchName)
     {
-        T value=default(T);
+        T value = default(T);
+        var ansar = graphAsset.keyValues.FindAll(name => name.variableType == serchName);
+
+        if (typeof(T) == typeof(int)) {
+            var aasa = Convert.ToInt32(ansar[0].variableValue.ToString());
+            value = (T)(System.Object)aasa;
+            return value;
+        }
         return value;
     }
 }

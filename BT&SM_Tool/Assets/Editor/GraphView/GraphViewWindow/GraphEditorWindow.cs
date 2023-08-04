@@ -64,7 +64,7 @@ public class GraphEditorWindow : EditorWindow
         this.graphAsset = graphAsset;
         graphViewManager = new GraphViewManager(this, this.graphAsset);
 
-
+        graphViewManager.SetGraphEditorWindow = this;
         graphViewManager.style.flexGrow = 1;
         VisualElement visualElement = this.rootVisualElement;
 
