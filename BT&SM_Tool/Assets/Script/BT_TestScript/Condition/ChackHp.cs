@@ -12,6 +12,7 @@ public class ChackHp : ConditionBase
     }
     public override void BTUpdate()
     {
+        Debug.Log(bTManager.SerchExternalVariable<int>("Hp"));
         //TODO BTManagerに
         if (0 > bTManager.SerchExternalVariable<int>("Hp")) { 
             conditionFlag = true;

@@ -25,7 +25,6 @@ public class BTManager : MonoBehaviour
     private ActionList action = default;
     //BTStart()を実行しているのか管理するBool文
     private bool actionStartFlag = false;
-
     //臨時
     public SMManager sMManager = null;
     //現在土の管理番号順にチェックしたのかの管理用リスト
@@ -51,6 +50,7 @@ public class BTManager : MonoBehaviour
                 GraphViewScriptBase castGraphViewScriptBase = activeScript as GraphViewScriptBase;
                 //同じクラスでも判別できるようにするため
                 castGraphViewScriptBase.nodeNumbar = graphAsset.nodes[i].controlNumber;
+                castGraphViewScriptBase.BTStart(this);
                 graphViewScriptBases.Add(castGraphViewScriptBase);
             }
         }
@@ -225,10 +225,18 @@ public class BTManager : MonoBehaviour
     {
         T value = default(T);
         var ansar = graphAsset.keyValues.FindAll(name => name.variableType == serchName);
-
+        if (ansar.Count<=0)
+        {
+            Debug.Log("下記変数が未発見でした" + typeof(T).ToString() + "型=" + serchName);
+            return default(T);
+        }
         if (typeof(T) == typeof(int)) {
-            var aasa = Convert.ToInt32(ansar[0].variableValue.ToString());
-            value = (T)(System.Object)aasa;
+            foreach (var i in ansar) {                 
+                Debug.Log(i.variableValue.ToString());
+            }
+            //Debug.Log("sa" + ansar[0].variableValue.ToString());
+            var castInt = Convert.ToInt32(ansar[0].variableValue.ToString());
+            value = (T)(System.Object)castInt;
             return value;
         }
         return value;
