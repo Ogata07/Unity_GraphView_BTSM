@@ -224,7 +224,8 @@ public class BTManager : MonoBehaviour
     public T SerchExternalVariable<T>(string serchName)
     {
         T value = default(T);
-        var ansar = graphAsset.keyValues.FindAll(name => name.variableType == serchName);
+        var ansar = graphAsset.keyValues.FindAll(name => name.variableName == serchName);
+        Debug.Log(ansar.Count);
         if (ansar.Count<=0)
         {
             Debug.Log("下記変数が未発見でした" + typeof(T).ToString() + "型=" + serchName);

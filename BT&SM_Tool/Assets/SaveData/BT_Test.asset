@@ -115,8 +115,8 @@ MonoBehaviour:
   edges: []
   getObject: []
   keyValues:
-  - variableType: "\u578B\u540D\u8868\u793A"
-    variableName: "\u5909\u6570\u540D\u8868\u793A"
+  - variableType: int
+    variableName: Hp
     variableValue: 1001
   gameObject: {fileID: 0}
   monoBehaviour: {fileID: 0}
