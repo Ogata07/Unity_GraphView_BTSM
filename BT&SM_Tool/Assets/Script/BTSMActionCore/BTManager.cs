@@ -84,7 +84,7 @@ public class BTManager : MonoBehaviour
         //Selectorから次のノード番号が返却される
         logList.Add(new LogList(0, true));
         int goalValue = Next(Selector(startNode.stringValue));
-        Debug.Log(goalValue);
+        Debug.Log("実行しようとしているNode番号＝"+goalValue);
         //どのノードを実行するか決定後
         //List<GraphViewScriptBase>に追加する
         //すでに追加していたなら追加しない()
@@ -175,7 +175,7 @@ public class BTManager : MonoBehaviour
     /// <param name="value">次のnodeを選ぶ方法のString値</param>
     /// <returns></returns>
     private int Selector(string value) {
-        var returnValue = 100;
+        var returnValue = 0;
         if (value == "Priority")
             returnValue = Priority();
         if (value == "Random")
@@ -225,17 +225,13 @@ public class BTManager : MonoBehaviour
     {
         T value = default(T);
         var ansar = graphAsset.keyValues.FindAll(name => name.variableName == serchName);
-        Debug.Log(ansar.Count);
         if (ansar.Count<=0)
         {
             Debug.Log("下記変数が未発見でした" + typeof(T).ToString() + "型=" + serchName);
             return default(T);
         }
+        //TODO 別クラスに移動してもいいかも
         if (typeof(T) == typeof(int)) {
-            foreach (var i in ansar) {                 
-                Debug.Log(i.variableValue.ToString());
-            }
-            //Debug.Log("sa" + ansar[0].variableValue.ToString());
             var castInt = Convert.ToInt32(ansar[0].variableValue.ToString());
             value = (T)(System.Object)castInt;
             return value;
